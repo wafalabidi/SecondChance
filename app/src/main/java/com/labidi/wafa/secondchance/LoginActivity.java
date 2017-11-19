@@ -5,4 +5,5 @@ package com.labidi.wafa.secondchance;
  */
 
 public class LoginActivity {
+
 }
