@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
         animationDrawable.setEnterFadeDuration(1000);
         animationDrawable.setExitFadeDuration(2000);
         button = (Button) findViewById(R.id.change);
+        CommitFragment(  new SignUpFragment(),new LoginFragment());
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
