@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransactionExtended fragmentTransactionExtended =
                 new FragmentTransactionExtended(this, fragmentTransaction,
                         fragment1, fragment2, R.id.container);
-        fragmentTransactionExtended.addTransition(FragmentTransactionExtended.FLIP_VERTICAL);
+        fragmentTransactionExtended.addTransition(FragmentTransactionExtended.FADE);
         fragmentTransactionExtended.commit();
     }
 
