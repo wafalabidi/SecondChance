@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         relativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
         animationDrawable = (AnimationDrawable) relativeLayout.getBackground();
-        animationDrawable.setEnterFadeDuration(5000);
+        animationDrawable.setEnterFadeDuration(1000);
         animationDrawable.setExitFadeDuration(2000);
 
     }
