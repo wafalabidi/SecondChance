@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     public void CommitFragment(Fragment fragment1 , Fragment fragment2) {
         FragmentManager fm = getFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
