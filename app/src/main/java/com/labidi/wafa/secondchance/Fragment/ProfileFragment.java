@@ -1,11 +1,14 @@
 package com.labidi.wafa.secondchance.Fragment;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,10 +54,10 @@ public class ProfileFragment extends Fragment {
 
     }
 
+
     @Override
     public void onResume() {
         super.onResume();
-        init(view);
     }
 
     public void InitBottomNavigationView() {
@@ -79,7 +82,7 @@ public class ProfileFragment extends Fragment {
         navigationTabBar.setBadgeTitleColor(Color.RED);
         navigationTabBar.setIsSwiped(true);
         navigationTabBar.setTitleMode(NavigationTabBar.TitleMode.ALL);
-        //navigationTabBar.setViewPager(viewPager);
+        navigationTabBar.setViewPager(viewPager);
         navigationTabBar.setOnTabBarSelectedIndexListener(new NavigationTabBar.OnTabBarSelectedIndexListener() {
             @Override
             public void onStartTabSelected(NavigationTabBar.Model model, int index) {
@@ -99,6 +102,12 @@ public class ProfileFragment extends Fragment {
                         break;
 
                 }
+                Log.e("CheckPoint" , "checkPoint 1");
+                ObjectAnimator animatorX = ObjectAnimator.ofFloat(navigationTabBar, "y", 90f);
+                animatorX.setDuration(1000) ;
+                AnimatorSet animatorSet = new AnimatorSet() ;
+                animatorSet.play(animatorX) ;
+                animatorSet.start();
             }
 
             @Override

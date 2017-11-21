@@ -8,7 +8,7 @@
     <ImageView
         android:id="@+id/ivProfilCover"
         android:layout_width="0dp"
-        android:layout_height="200dp"
+        android:layout_height="171dp"
         android:scaleType="fitXY"
         android:src="@drawable/toureiffel"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,7 +22,7 @@
         android:layout_height="114dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="68dp"
         android:src="@drawable/unknown"
 
         app:layout_constraintEnd_toEndOf="parent"
@@ -64,7 +64,7 @@
         android:layout_height="40dp"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvProfilDateNaissance"
         app:ntb_animation_duration="400"
@@ -88,12 +88,11 @@
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vpProfil"
-        android:layout_width="match_parent"
-        android:layout_height="168dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="395dp"
+        android:layout_height="224dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ntbProfil" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

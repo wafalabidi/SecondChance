@@ -6,20 +6,30 @@
     android:layout_height="match_parent"
     tools:context="com.labidi.wafa.secondchance.HomeActivity">
 
+    <android.support.v7.widget.SearchView
+        android:elevation="2dp"
+        android:background="@color/cardview_light_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+    </android.support.v7.widget.SearchView>
+
     <FrameLayout
         android:id="@+id/flContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
+
     <devlight.io.library.ntb.NavigationTabBar
         android:id="@+id/ntb"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginBottom="0dp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="0dp"
         app:ntb_animation_duration="400"
         app:ntb_badge_bg_color="#ffff0000"
         app:ntb_badge_gravity="top"
