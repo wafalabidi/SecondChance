@@ -43,7 +43,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
     public void InitBottomNavigationView() {
-        getSupportActionBar().hide();
+//        getSupportActionBar().hide();
         models.add(new NavigationTabBar.Model.Builder(getDrawable(R.drawable.ic_home),
                 Color.BLUE).title("Home").badgeTitle("Home").build());
         models.add(new NavigationTabBar.Model.Builder(getDrawable(R.drawable.ic_profil),
