@@ -8,6 +8,24 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class User {
+    public static String FirstName;
+    public static String LastName;
+    public static String Password;
+    public static String Mail;
+    public static String BirthDate;
+    public static String Eyes;
+    public static String Size;
+    public static String Weight;
+    public static String Shape;
+    public static String SkinColour;
+    public static String Tobaco;
+    public static String Drug;
+    public static String Work;
+    public static String Studies;
+    public static String Alchool;
+    public static String Hobbies;
+    public static int Id;
+    public static String kids;
     @SerializedName("FirstName")
     @Expose
     String firstName;
@@ -68,75 +86,59 @@ public class User {
     @SerializedName("Hobbies")
     @Expose
     String hobbies;
-
+    public User(){
+    }
     public String getBirthDate() {
         return birthDate;
     }
-
     public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
     }
-
     public String getEyes() {
         return eyes;
     }
-
     public void setEyes(String eyes) {
         this.eyes = eyes;
     }
-
     public String getSize() {
         return size;
     }
-
     public void setSize(String size) {
         this.size = size;
     }
-
     public String getWeight() {
         return weight;
     }
-
     public void setWeight(String weight) {
         this.weight = weight;
     }
-
     public String getShape() {
         return shape;
     }
-
     public void setShape(String shape) {
         this.shape = shape;
     }
-
     public String getSkinColour() {
         return skinColour;
     }
-
     public void setSkinColour(String skinColour) {
         this.skinColour = skinColour;
     }
-
     public String getAlchool() {
         return alchool;
     }
-
     public void setAlchool(String alchool) {
         this.alchool = alchool;
     }
-
     public String getTobaco() {
         return tobaco;
     }
-
     public void setTobaco(String tobaco) {
         this.tobaco = tobaco;
     }
-
     public String getDrug() {
         return drug;
     }
-
     public void setDrug(String drug) {
         this.drug = drug;
     }

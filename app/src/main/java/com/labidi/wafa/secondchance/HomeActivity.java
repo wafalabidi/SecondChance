@@ -1,6 +1,8 @@
 package com.labidi.wafa.secondchance;
 
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -9,8 +11,12 @@ import android.widget.Toast;
 
 import com.labidi.wafa.secondchance.Fragment.HomeFragment;
 import com.labidi.wafa.secondchance.Fragment.ProfileFragment;
+import com.yalantis.contextmenu.lib.ContextMenuDialogFragment;
+import com.yalantis.contextmenu.lib.MenuObject;
+import com.yalantis.contextmenu.lib.MenuParams;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,7 +25,7 @@ import devlight.io.library.ntb.NavigationTabBar;
 public class HomeActivity extends AppCompatActivity {
     @BindView(R.id.ntb)
     NavigationTabBar navigationTabBar;
-    final Fragment[] fragments = {new HomeFragment() , new ProfileFragment() } ;
+    final Fragment[] fragments = {new HomeFragment(), new ProfileFragment()};
     final ArrayList<NavigationTabBar.Model> models = new ArrayList<>();
 
     @Override
@@ -30,6 +36,7 @@ public class HomeActivity extends AppCompatActivity {
         navigationTabBar = (NavigationTabBar) findViewById(R.id.ntb);
         InitBottomNavigationView();
         this.CommitFragment(new HomeFragment());
+       // InitMenu();
 
     }
 
@@ -75,11 +82,9 @@ public class HomeActivity extends AppCompatActivity {
                 switch (index) {
                     case 0:
                         CommitFragment(fragments[0]);
-                        Toast.makeText(HomeActivity.this, "Home", Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
                         CommitFragment(fragments[1]);
-                        Toast.makeText(HomeActivity.this, "Profil", Toast.LENGTH_SHORT).show();
                         break;
                     case 2:
                         Toast.makeText(HomeActivity.this, "Notification ", Toast.LENGTH_SHORT).show();
@@ -96,5 +101,28 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void InitMenu() {
+        MenuObject addFr = new MenuObject("Add to friends");
+        BitmapDrawable bd = new BitmapDrawable(getResources(),
+                BitmapFactory.decodeResource(getResources(), R.drawable.ic_profil));
+        addFr.setDrawable(bd);
+        MenuObject close = new MenuObject();
+
+        close.setResource(R.drawable.ic_message);
+
+        MenuObject send = new MenuObject("Send message");
+        send.setResource(R.drawable.ic_notification);
+
+        List<MenuObject> menuObjects = new ArrayList<>();
+        menuObjects.add(close);
+        menuObjects.add(send);
+        MenuParams menuParams = new MenuParams();
+        menuParams.setActionBarSize((int) getResources().getDimension(R.dimen.tool_bar_height));
+        menuParams.setMenuObjects(menuObjects);
+        menuParams.setClosableOutside(true);
+        // set other settings to meet your needs
+        ContextMenuDialogFragment mMenuDialogFragment = ContextMenuDialogFragment.newInstance(menuParams);
     }
 }

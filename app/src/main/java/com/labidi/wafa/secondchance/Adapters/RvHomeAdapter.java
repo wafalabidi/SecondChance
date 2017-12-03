@@ -1,6 +1,7 @@
 package com.labidi.wafa.secondchance.Adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,8 +13,11 @@ import android.widget.TextView;
 
 import com.labidi.wafa.secondchance.Entities.Post;
 import com.labidi.wafa.secondchance.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,18 +27,29 @@ import butterknife.ButterKnife;
  */
 
 public class RvHomeAdapter extends RecyclerView.Adapter<RvHomeAdapter.HomeViewAdapter> {
-    ArrayList<Post> items;
+    List<Post> items;
     Context context;
 
-    public RvHomeAdapter(Context context, ArrayList<Post> items) {
+    public List<Post> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Post> items) {
+        this.items = items;
+    }
+
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
         this.context = context;
-        //if(items!= null)
-        this.items = new ArrayList<>();
-        this.items.add(new Post(null, "Ok ok "));
-        this.items.add(new Post(null, "Ok ok "));
-        this.items.add(new Post(null, "Ok ok "));
-        this.items.add(new Post(null, "Ok ok "));
-        this.items.add(new Post(null, "Ok ok "));
+    }
+
+    public RvHomeAdapter(Context context, List<Post> items) {
+        this.context = context;
+        this.items = items;
+
     }
 
     @Override
@@ -48,12 +63,12 @@ public class RvHomeAdapter extends RecyclerView.Adapter<RvHomeAdapter.HomeViewAd
 
     @Override
     public void onBindViewHolder(HomeViewAdapter holder, int position) {
-       // if (items.get(position) != null) {
-            String saying = items.get(position).getSaying();
-            String name = "Mohamed Ali clay";
-            holder.ivRow.setImageResource(R.drawable.unknown);
-            holder.tvSayaing.setText(saying);
-            holder.tvUserName.setText(name);
+        // if (items.get(position) != null) {
+        String saying = items.get(position).getSaying();
+        String name = items.get(position).getFirstName() + " " + items.get(position).getLastName();
+        Picasso.with(context).load(items.get(position).getImage()).rotate(90).into(holder.ivRow);//TODO FIX this
+        holder.tvSayaing.setText(saying);
+        holder.tvUserName.setText(name);
         //}
     }
 
@@ -78,11 +93,11 @@ public class RvHomeAdapter extends RecyclerView.Adapter<RvHomeAdapter.HomeViewAd
         public HomeViewAdapter(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            ivRow = (ImageView) itemView.findViewById(R.id.ivRow) ;
-            ibDislike = (ImageButton) itemView.findViewById(R.id.ibDislike) ;
-            ibLike = (ImageButton)itemView.findViewById(R.id.ibLike) ;
+            ivRow = (ImageView) itemView.findViewById(R.id.ivRow);
+            ibDislike = (ImageButton) itemView.findViewById(R.id.ibDislike);
+            ibLike = (ImageButton) itemView.findViewById(R.id.ibLike);
             tvUserName = (TextView) itemView.findViewById(R.id.tvUserName);
-            tvSayaing = (TextView)itemView.findViewById(R.id.tvSaying);
+            tvSayaing = (TextView) itemView.findViewById(R.id.tvSaying);
 
         }
     }

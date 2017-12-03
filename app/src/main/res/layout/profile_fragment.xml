@@ -62,11 +62,12 @@
         android:id="@+id/ntbProfil"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:layout_marginTop="252dp"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvProfilDateNaissance"
+        app:layout_constraintTop_toTopOf="parent"
         app:ntb_animation_duration="400"
         app:ntb_badge_bg_color="#ffff0000"
         app:ntb_badge_gravity="top"
@@ -83,16 +84,28 @@
         app:ntb_tinted="true"
         app:ntb_title_mode="all"
         app:ntb_title_size="10sp"
-        app:ntb_titled="true"
-        app:ntb_typeface="fonts/custom_typeface.ttf" />
+        app:ntb_titled="true" />
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/vpProfil"
-        android:layout_width="395dp"
-        android:layout_height="224dp"
+    <com.github.aakira.expandablelayout.ExpandableLinearLayout
+        android:id="@+id/expandableLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/black"
+        app:ael_duration="1000"
+        app:ael_interpolator="anticipateOvershoot"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ntbProfil">
+
+        <android.support.v4.view.ViewPager
+
+            android:id="@+id/vpProfil"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.github.aakira.expandablelayout.ExpandableLinearLayout>
 
 </android.support.constraint.ConstraintLayout>

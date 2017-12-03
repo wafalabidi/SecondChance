@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.github.aakira.expandablelayout.ExpandableLinearLayout;
+import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 import com.labidi.wafa.secondchance.Adapters.CustomPagerAdapter;
 import com.labidi.wafa.secondchance.R;
 
@@ -30,6 +32,7 @@ public class ProfileFragment extends Fragment {
     ArrayList<NavigationTabBar.Model> models;
     ViewPager viewPager;
     final Fragment[] fragments = {new HomeFragment(), new FriendsListFragments()};
+    ExpandableLinearLayout expandableRelativeLayout ;
     View view;
 
     @Nullable
@@ -51,6 +54,12 @@ public class ProfileFragment extends Fragment {
         CustomPagerAdapter adapter = new CustomPagerAdapter(getChildFragmentManager(), fragments);
         viewPager.setAdapter(adapter);
         InitBottomNavigationView();
+        expandableRelativeLayout = (ExpandableLinearLayout) view.findViewById(R.id.expandableLayout);
+       // expandableRelativeLayout.initLayout();
+
+        expandableRelativeLayout.toggle();
+        expandableRelativeLayout.collapse();
+        expandableRelativeLayout.moveChild(0);
 
     }
 
@@ -108,6 +117,7 @@ public class ProfileFragment extends Fragment {
                 AnimatorSet animatorSet = new AnimatorSet() ;
                 animatorSet.play(animatorX) ;
                 animatorSet.start();
+                //expandableRelativeLayout.expand();
             }
 
             @Override
