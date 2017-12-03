@@ -7,6 +7,7 @@
     android:orientation="vertical"
     android:id="@+id/homRacine"
     android:layout_gravity="center"
+    android:background="@color/divider_color"
     >
 
 
@@ -75,6 +76,7 @@
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
+
         android:id="@+id/rvHome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

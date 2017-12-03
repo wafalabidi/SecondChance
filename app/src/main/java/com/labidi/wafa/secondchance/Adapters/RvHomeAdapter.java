@@ -66,7 +66,7 @@ public class RvHomeAdapter extends RecyclerView.Adapter<RvHomeAdapter.HomeViewAd
         // if (items.get(position) != null) {
         String saying = items.get(position).getSaying();
         String name = items.get(position).getFirstName() + " " + items.get(position).getLastName();
-        Picasso.with(context).load(items.get(position).getImage()).rotate(90).into(holder.ivRow);//TODO FIX this
+        Picasso.with(context).load(items.get(position).getImage()).rotate(270).into(holder.ivRow);//TODO FIX this
         holder.tvSayaing.setText(saying);
         holder.tvUserName.setText(name);
         //}
