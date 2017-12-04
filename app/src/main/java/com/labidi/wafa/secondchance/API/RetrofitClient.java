@@ -16,7 +16,7 @@ public class RetrofitClient extends AppCompatActivity {
 
     //  private static final String BASE_URL ="http://172.16.153.116:8888/DivroceBook/";
     public static final String BASE_URL ="http://192.168.1.3:80/DivroceBook/";
-    //private static final String BASE_URL ="http://10.0.2.2:8888/DivroceBook/";
+    //public static final String BASE_URL ="http://10.0.2.2:80/DivroceBook/";
     protected Retrofit retrofit;
 
     public Retrofit getRetrofit() {

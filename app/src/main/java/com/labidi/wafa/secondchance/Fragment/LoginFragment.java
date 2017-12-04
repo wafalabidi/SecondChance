@@ -11,11 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.labidi.wafa.secondchance.API.RetrofitClient;
 import com.labidi.wafa.secondchance.API.UserService;
 import com.labidi.wafa.secondchance.Entities.InscriptionBody;
 import com.labidi.wafa.secondchance.Entities.Response.LoginResponse;
+import com.labidi.wafa.secondchance.Entities.User;
 import com.labidi.wafa.secondchance.HomeActivity;
 import com.labidi.wafa.secondchance.R;
 import com.labidi.wafa.secondchance.customfonts.MyEditText;
@@ -65,22 +67,40 @@ public class LoginFragment extends Fragment {
                     ok = false;
                 }
                 if (ok){
-                    Log.e("hello","fama mochkla");
                     final ProgressDialog progressDialog = new ProgressDialog(getActivity());
                     progressDialog.setTitle("Processing ...");
                     progressDialog.show();
-                    InscriptionBody user = new InscriptionBody() ;
+                    InscriptionBody user = new InscriptionBody();
                     user.setMail(email_edittext.getText().toString());
                     user.setPassword(password_edittext.getText().toString());
-                    RetrofitClient retrofitClient = new RetrofitClient() ;
-                    UserService.LoginInterface loginInterface = retrofitClient.getRetrofit().create(UserService.LoginInterface.class) ;
+                    RetrofitClient retrofitClient = new RetrofitClient();
+                    UserService.LoginInterface loginInterface = retrofitClient.getRetrofit().create(UserService.LoginInterface.class);
                     Call<LoginResponse> call = loginInterface.userLogin(user);
-                    call.enqueue(new Callback<LoginResponse>() {
+                    call.enqueue(new retrofit2.Callback<LoginResponse>() {
                         public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                            Log.e("Ok" , response.body().getUser().toString());
+                            User user = response.body().getUser();
+                            user.FirstName = user.getFirstName();
+                            User.LastName = user.getLastName();
+                            User.Password = user.getPassword();
+                            User.Mail = user.getMail();
+                            User.BirthDate = user.getBirthDate();
+                            user.Eyes = user.getEyes();
+                            User.Size = user.getSize();
+                            User.Weight = user.getWeight();
+                            User.Shape = user.getShape();
+                            User.SkinColour = user.getSkinColour();
+                            User.Tobaco = user.getTobaco();
+                            User.Drug = user.getDrug();
+                            User.Work = user.getWork();
+                            User.Studies = user.getStudies();
+                            User.Alchool = user.getAlchool();
+                            User.Hobbies = user.getHobbies();
+                            User.Id = user.getId();
+                            User.kids = user.getChild();
+                            User.imgprofile= user.getImg_profile();
                             progressDialog.dismiss();
-                            Intent intent = new Intent( getActivity(),  HomeActivity.class) ;
-                            startActivity(intent);
+                            Intent intent = new Intent(getActivity(), HomeActivity.class);
+                           startActivity(intent);
 
                         }
 

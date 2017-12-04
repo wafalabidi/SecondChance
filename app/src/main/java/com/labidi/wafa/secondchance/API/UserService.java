@@ -52,5 +52,15 @@ public interface UserService {
         @GET("getPost.php")
         Call<PostsResponse> getPost (@Query("idUser") int idUser);
     }
+    public interface profilepic{
+        @FormUrlEncoded
+        @POST("profilepic.php")
+        Call<ResponseBody> profilepic(@Field("image") String image ,
+                                      @Field("idUser") int idUser,
+                                      @Field("title") String imageTitle
+        );
+
+
+    }
 
 }

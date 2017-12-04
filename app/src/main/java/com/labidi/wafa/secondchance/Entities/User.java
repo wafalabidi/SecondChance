@@ -26,6 +26,7 @@ public class User {
     public static String Hobbies;
     public static int Id;
     public static String kids;
+    public  static  String imgprofile;
     @SerializedName("FirstName")
     @Expose
     String firstName;
@@ -86,6 +87,12 @@ public class User {
     @SerializedName("Hobbies")
     @Expose
     String hobbies;
+    @SerializedName("Img_profile")
+    @Expose
+    String img_profile;
+
+
+
     public User(){
     }
     public String getBirthDate() {
@@ -141,6 +148,14 @@ public class User {
     }
     public void setDrug(String drug) {
         this.drug = drug;
+    }
+
+    public String getImg_profile() {
+        return img_profile;
+    }
+
+    public void setImg_profile(String img_profile) {
+        this.img_profile = img_profile;
     }
 
     public String getWork() {
