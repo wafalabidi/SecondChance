@@ -14,8 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.github.aakira.expandablelayout.ExpandableLinearLayout;
-import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 import com.labidi.wafa.secondchance.Adapters.CustomPagerAdapter;
 import com.labidi.wafa.secondchance.R;
 
@@ -28,102 +26,10 @@ import devlight.io.library.ntb.NavigationTabBar;
  */
 
 public class ProfileFragment extends Fragment {
-    NavigationTabBar navigationTabBar;
-    ArrayList<NavigationTabBar.Model> models;
-    ViewPager viewPager;
-    final Fragment[] fragments = {new HomeFragment(), new FriendsListFragments()};
-    ExpandableLinearLayout expandableRelativeLayout ;
-    View view;
-
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (inflater == null) {
-            inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        }
-
-        view = inflater.inflate(R.layout.profile_fragment, null);
-        init(view);
-        return view;
-    }
-
-    void init(View view) {
-        navigationTabBar = (NavigationTabBar) view.findViewById(R.id.ntbProfil);
-        models = new ArrayList<>();
-        viewPager = (ViewPager) view.findViewById(R.id.vpProfil);
-        CustomPagerAdapter adapter = new CustomPagerAdapter(getChildFragmentManager(), fragments);
-        viewPager.setAdapter(adapter);
-        InitBottomNavigationView();
-        expandableRelativeLayout = (ExpandableLinearLayout) view.findViewById(R.id.expandableLayout);
-       // expandableRelativeLayout.initLayout();
-
-        expandableRelativeLayout.toggle();
-        expandableRelativeLayout.collapse();
-        expandableRelativeLayout.moveChild(0);
-
-    }
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    public void InitBottomNavigationView() {
-        models.add(new NavigationTabBar.Model.Builder(getActivity().getDrawable(R.drawable.ic_home),
-                Color.BLUE).title("Home").badgeTitle("Home").build());
-        models.add(new NavigationTabBar.Model.Builder(getActivity().getDrawable(R.drawable.ic_profil),
-                Color.GRAY).title("Profile").badgeTitle("Profile").build());
-        models.add(new NavigationTabBar.Model.Builder(getActivity().getDrawable(R.drawable.ic_notification),
-                Color.DKGRAY).title("Notification ").badgeTitle("Notification").build());
-        models.add(new NavigationTabBar.Model.Builder(getActivity().getDrawable(R.drawable.ic_message),
-                R.drawable.gradient_1).title("Message").badgeTitle("Message").build());
-        navigationTabBar.setSelected(true);
-        navigationTabBar.setModels(models);
-        navigationTabBar.show();
-        navigationTabBar.setIsTitled(false);
-        navigationTabBar.setTitleMode(NavigationTabBar.TitleMode.ALL);
-        navigationTabBar.setBadgeGravity(NavigationTabBar.BadgeGravity.TOP);
-        navigationTabBar.setIsBadged(true);
-        navigationTabBar.setIsTinted(true);
-        navigationTabBar.setIsBadgeUseTypeface(true);
-        navigationTabBar.setBadgeBgColor(R.drawable.gradient_1);
-        navigationTabBar.setBadgeTitleColor(Color.RED);
-        navigationTabBar.setIsSwiped(true);
-        navigationTabBar.setTitleMode(NavigationTabBar.TitleMode.ALL);
-        navigationTabBar.setViewPager(viewPager);
-        navigationTabBar.setOnTabBarSelectedIndexListener(new NavigationTabBar.OnTabBarSelectedIndexListener() {
-            @Override
-            public void onStartTabSelected(NavigationTabBar.Model model, int index) {
-                switch (index) {
-                    case 0:
-                        Toast.makeText(getActivity(), "Home", Toast.LENGTH_SHORT).show();
-                        break;
-                    case 1:
-
-                        Toast.makeText(getActivity(), "Profil", Toast.LENGTH_SHORT).show();
-                        break;
-                    case 2:
-                        Toast.makeText(getActivity(), "Notification ", Toast.LENGTH_SHORT).show();
-                        break;
-                    case 3:
-                        Toast.makeText(getActivity(), "Message", Toast.LENGTH_SHORT).show();
-                        break;
-
-                }
-                Log.e("CheckPoint" , "checkPoint 1");
-                ObjectAnimator animatorX = ObjectAnimator.ofFloat(navigationTabBar, "y", 90f);
-                animatorX.setDuration(1000) ;
-                AnimatorSet animatorSet = new AnimatorSet() ;
-                animatorSet.play(animatorX) ;
-                animatorSet.start();
-                //expandableRelativeLayout.expand();
-            }
-
-            @Override
-            public void onEndTabSelected(NavigationTabBar.Model model, int index) {
-
-            }
-        });
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.profile_fragment, container, false);
     }
 }

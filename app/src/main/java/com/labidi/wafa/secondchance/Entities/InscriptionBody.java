@@ -8,10 +8,10 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class InscriptionBody {
-    @SerializedName("firstName")
+    @SerializedName("firstname")
     @Expose
     String firstName ;
-    @SerializedName("lastName")
+    @SerializedName("lastname")
     @Expose
     String lastName ;
     @SerializedName("mail")
@@ -20,6 +20,9 @@ public class InscriptionBody {
     @SerializedName("password")
     @Expose
     String password ;
+    @SerializedName("birthdate")
+    @Expose
+    String birthdate ;
 
     public InscriptionBody() {
 
@@ -57,10 +60,19 @@ public class InscriptionBody {
         this.password = password;
     }
 
-    public InscriptionBody(String firstName, String lastName, String mail, String password) {
+    public String getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(String birthdate) {
+        this.birthdate= birthdate;
+    }
+
+    public InscriptionBody(String firstName, String lastName, String mail, String password, String birthdate) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.mail = mail;
         this.password = password;
+        this.birthdate= birthdate;
     }
 }

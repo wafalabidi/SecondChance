@@ -1,79 +1,117 @@
 package com.labidi.wafa.secondchance;
 
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
-import android.graphics.Bitmap;
-import android.graphics.Point;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
-import android.support.annotation.ColorRes;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.view.Display;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.target.ImageViewTarget;
+import com.labidi.wafa.secondchance.Tools.CustomViewPager;
+import com.labidi.wafa.secondchance.Tools.ViewPagerAdapter;
 
-import java.util.List;
 
-import butterknife.BindViews;
-import butterknife.ButterKnife;
+/**
+ * A login screen that offers login via email/password.
+ */
+public class LoginActivity extends BaseActivity {
 
-public class LoginActivity extends AppCompatActivity {
+    private static final int LOGIN_FRAGMENT = 0;
+    private static final int SIGNUP_FRAGMENT = 1;
+    private static final int RESET_PASSWORD_FRAGMENT = 2;
+    private Fragment newFragment;
+    private CustomViewPager viewPager;
+    private ViewPagerAdapter viewPagerAdapter;
 
-    @BindViews(value = {R.id.logo,R.id.first,R.id.second,R.id.last})
-    protected List<ImageView> sharedElements;
-
+    AnimationDrawable animationDrawable;
+    ImageView relativeLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        ButterKnife.bind(this);
-        final AnimatedViewPager pager= ButterKnife.findById(this,R.id.pager);
-        final ImageView background= ButterKnife.findById(this,R.id.scrolling_background);
-        int[] screenSize=screenSize();
+        viewPager = (CustomViewPager) findViewById(R.id.viewpager);
+        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(viewPagerAdapter);
+        viewPager.setPagingEnabled(false);
+        changeFragment(LOGIN_FRAGMENT);
+        //Background animation
+        relativeLayout = (ImageView)findViewById(R.id.relativeLayout);
+        animationDrawable = (AnimationDrawable) relativeLayout.getBackground();
+        animationDrawable.setEnterFadeDuration(1000);
+        animationDrawable.setExitFadeDuration(2000);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //Background animation
+        if (animationDrawable != null && !animationDrawable.isRunning())
+            animationDrawable.start();
+    }
 
-        for(ImageView element:sharedElements){
-            @ColorRes int color=element.getId()!=R.id.logo?R.color.white_transparent:R.color.color_logo_log_in;
-            DrawableCompat.setTint(element.getDrawable(), ContextCompat.getColor(this,color));
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //Background animation
+        if (animationDrawable != null && animationDrawable.isRunning())
+            animationDrawable.stop();
+    }
+
+    private void changeFragment(int fragmentType) {
+
+        switch (fragmentType) {
+            case LOGIN_FRAGMENT:
+                viewPager.setCurrentItem(LOGIN_FRAGMENT);
+                break;
+            case SIGNUP_FRAGMENT:
+                viewPager.setCurrentItem(SIGNUP_FRAGMENT);
+                break;
+            case RESET_PASSWORD_FRAGMENT:
+                viewPager.setCurrentItem(RESET_PASSWORD_FRAGMENT);
+                break;
+            default:
+                viewPager.setCurrentItem(LOGIN_FRAGMENT);
+                break;
         }
-        //load a very big image and resize it, so it fits our needs
-        Glide.with(this)
-                .load(R.drawable.couple)
-                .asBitmap()
-                .override(screenSize[0]*2,screenSize[1])
-                .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                .into(new ImageViewTarget<Bitmap>(background) {
-                    @Override
-                    protected void setResource(Bitmap resource) {
-                        background.setImageBitmap(resource);
-                        background.post(()->{
-                            //we need to scroll to the very left edge of the image
-                            //fire the scale animation
-                            background.scrollTo(-background.getWidth()/2,0);
-                            ObjectAnimator xAnimator= ObjectAnimator.ofFloat(background, View.SCALE_X,4f,background.getScaleX());
-                            ObjectAnimator yAnimator= ObjectAnimator.ofFloat(background, View.SCALE_Y,4f,background.getScaleY());
-                            AnimatorSet set=new AnimatorSet();
-                            set.playTogether(xAnimator,yAnimator);
-                            set.setDuration(getResources().getInteger(R.integer.duration));
-                            set.start();
-                        });
-                        pager.post(()->{
-                            AuthAdapter adapter = new AuthAdapter(getSupportFragmentManager(), pager, background, sharedElements);
-                            pager.setAdapter(adapter);
-                        });
-                    }
-                });
+
+
     }
 
-    private int[] screenSize(){
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        return new int[]{size.x,size.y};
+    public void signUpClick(View view) {
+        changeFragment(SIGNUP_FRAGMENT);
     }
 
+    public void signInClick(View view) {
+        changeFragment(LOGIN_FRAGMENT);
+    }
+
+    public void resetPasswordClick(View view) {
+        changeFragment(RESET_PASSWORD_FRAGMENT);
+    }
+
+    public void backClick(View view){
+        changeFragment(LOGIN_FRAGMENT);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (viewPager.getCurrentItem() == LOGIN_FRAGMENT)
+            super.onBackPressed();
+        else {
+            changeFragment(LOGIN_FRAGMENT);
+        }
+    }
+
+    public void logInButtonClicked() {
+        Toast.makeText(this, R.string.login_button_click, Toast.LENGTH_SHORT).show();
+    }
+
+    public void signUpButtonClicked() {
+        Toast.makeText(this, R.string.signup_button_click, Toast.LENGTH_SHORT).show();
+    }
+
+    public void resetPasswordButtonClicked() {
+        Toast.makeText(this, R.string.reset_password_button_clicked, Toast.LENGTH_SHORT).show();
+    }
 }
+

@@ -48,6 +48,9 @@ dependencies {
     compile 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:2.1.0'
     compile 'com.andkulikov:transitionseverywhere:1.7.4'
     compile 'com.android.support:design:26.1.0'
+    compile 'de.hdodenhof:circleimageview:2.1.0'
+    compile 'com.flaviofaria:kenburnsview:1.0.7'
+    compile project(':diagonallayout')
     compile('com.devbrackets.android:exomedia:3.0.5@aar') {
         transitive = true
     }
