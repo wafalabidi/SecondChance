@@ -32,6 +32,7 @@ import com.labidi.wafa.secondchance.Adapters.RvHomeAdapter;
 import com.labidi.wafa.secondchance.Entities.Post;
 import com.labidi.wafa.secondchance.Entities.Response.PostsResponse;
 import com.labidi.wafa.secondchance.Entities.User;
+import com.labidi.wafa.secondchance.HomeActivity;
 import com.labidi.wafa.secondchance.R;
 
 import java.io.File;
@@ -54,7 +55,7 @@ import static android.app.Activity.RESULT_OK;
  * Created by sofien on 20/11/2017.
  */
 
-public class HomeFragment extends Fragment implements View.OnClickListener {
+public class HomeFragment extends Fragment implements View.OnClickListener  {
     @BindView(R.id.rvHome)
     RecyclerView rcHome;
     RvHomeAdapter rvHomeAdapter;
@@ -91,6 +92,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void InitWidget(View view) {
+        ((HomeActivity)getActivity()).getFabCamera().setOnClickListener(this);
+        ((HomeActivity)getActivity()).getFabGallery().setOnClickListener(this);
+
+
+
         bCamera = view.findViewById(R.id.bCamera);
         bCamera.setOnClickListener(this);
         list = new ArrayList<>();
@@ -105,6 +111,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rcHome.setLayoutManager(layoutManager);
         rcHome.setAdapter(rvHomeAdapter);
+        rcHome.setNestedScrollingEnabled(false);
         ivNewPost = (ImageView) view.findViewById(R.id.ivNewPost);
         etPostSaying = (EditText) view.findViewById(R.id.etPostSaying);
         bShare = (Button) view.findViewById(R.id.bShare);
@@ -164,7 +171,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.bGallery) {
+        if (view.getId() == R.id.menu_gallery) {
             openGallery();
         } else if (view.getId() == R.id.bShare) {
             uploadPicture();
@@ -180,7 +187,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 expandableLayout.setLayoutParams(expanded);
 
             }
-        } else if (view.getId() == R.id.bCamera) {
+        } else if (view.getId() == R.id.menu_camera) {
             dispatchTakePictureIntent();
         }
     }

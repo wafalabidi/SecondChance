@@ -7,8 +7,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
+import com.github.clans.fab.FloatingActionButton;
 import com.labidi.wafa.secondchance.Fragment.HomeFragment;
 import com.labidi.wafa.secondchance.Fragment.ProfileFragment;
 import com.yalantis.contextmenu.lib.ContextMenuDialogFragment;
@@ -27,6 +29,25 @@ public class HomeActivity extends AppCompatActivity {
     NavigationTabBar navigationTabBar;
     final Fragment[] fragments = {new HomeFragment(), new ProfileFragment()};
     final ArrayList<NavigationTabBar.Model> models = new ArrayList<>();
+    FloatingActionButton fabCamera;
+    FloatingActionButton fabGallery;
+
+
+    public FloatingActionButton getFabCamera() {
+        return fabCamera;
+    }
+
+    public void setFabCamera(FloatingActionButton fabCamera) {
+        this.fabCamera = fabCamera;
+    }
+
+    public FloatingActionButton getFabGallery() {
+        return fabGallery;
+    }
+
+    public void setFabGallery(FloatingActionButton fabGallery) {
+        this.fabGallery = fabGallery;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +55,16 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
         navigationTabBar = (NavigationTabBar) findViewById(R.id.ntb);
+
         InitBottomNavigationView();
         this.CommitFragment(new HomeFragment());
-       // InitMenu();
+        // InitMenu();
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().show();
+        fabCamera = findViewById(R.id.menu_camera);
+        fabGallery = findViewById(R.id.menu_gallery);
 
     }
 
@@ -44,13 +72,12 @@ public class HomeActivity extends AppCompatActivity {
         if (!isFinishing() && !isDestroyed()) {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.replace(R.id.flContainer, fragment).commitAllowingStateLoss();
+            fragmentTransaction.replace(R.id.flContainer, fragment).commit();
         }
     }
 
 
     public void InitBottomNavigationView() {
-//        getSupportActionBar().hide();
         models.add(new NavigationTabBar.Model.Builder(getDrawable(R.drawable.ic_home),
                 Color.BLUE).title("Home").badgeTitle("Home").build());
         models.add(new NavigationTabBar.Model.Builder(getDrawable(R.drawable.ic_profil),

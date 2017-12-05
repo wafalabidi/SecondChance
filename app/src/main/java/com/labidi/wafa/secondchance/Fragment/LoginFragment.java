@@ -97,7 +97,7 @@ public class LoginFragment extends Fragment {
                             User.Hobbies = user.getHobbies();
                             User.Id = user.getId();
                             User.kids = user.getChild();
-                            User.imgprofile= user.getImg_profile();
+
                             progressDialog.dismiss();
                             Intent intent = new Intent(getActivity(), HomeActivity.class);
                            startActivity(intent);
