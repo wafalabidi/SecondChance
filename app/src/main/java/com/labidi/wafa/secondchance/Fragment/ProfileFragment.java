@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -17,22 +18,30 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.PopupMenu;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
+import com.fivehundredpx.greedolayout.GreedoLayoutManager;
+import com.fivehundredpx.greedolayout.GreedoSpacingItemDecoration;
+import com.flaviofaria.kenburnsview.KenBurnsView;
 import com.labidi.wafa.secondchance.API.RetrofitClient;
 import com.labidi.wafa.secondchance.API.UserService;
 import com.labidi.wafa.secondchance.Adapters.CustomPagerAdapter;
+import com.labidi.wafa.secondchance.Adapters.PhotosAdapter;
 import com.labidi.wafa.secondchance.Entities.Post;
 import com.labidi.wafa.secondchance.Entities.Response.PostsResponse;
 import com.labidi.wafa.secondchance.Entities.User;
+import com.labidi.wafa.secondchance.MeasUtils;
 import com.labidi.wafa.secondchance.R;
 import com.squareup.picasso.Picasso;
 
@@ -44,6 +53,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import devlight.io.library.ntb.NavigationTabBar;
@@ -67,6 +77,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener , 
     CircleImageView cim_img_profile;
     private String mCurrentPhotoPath;
     Bitmap selectedImage;
+    List<Post> posts;
+    private RecyclerView recyclerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -84,10 +96,24 @@ public class ProfileFragment extends Fragment implements View.OnClickListener , 
         cim_img_profile = (CircleImageView)getView().findViewById(R.id.avatar);
         tv_user_firstname.setText(User.FirstName);
         tv_work.setText(User.Work);
+        recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
+
         cim_img_profile.setOnClickListener(this);
         if(User.imgprofile!=""){
             Picasso.with(getActivity()).load(RetrofitClient.BASE_URL+User.imgprofile).into(cim_img_profile);       }
-        
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
+
+        //Grid profile
+
+
+        int spacing = MeasUtils.dpToPx(4, getActivity());
+        recyclerView.addItemDecoration(new GreedoSpacingItemDecoration(spacing));
+        getPosts();
+
+
     }
 
     @Override
@@ -245,4 +271,44 @@ public class ProfileFragment extends Fragment implements View.OnClickListener , 
                 return false;
         }
     }
+    private void getPosts() {
+
+        RetrofitClient retrofitClient = new RetrofitClient();
+        UserService.insertPost service = retrofitClient.getRetrofit().create(UserService.insertPost.class);
+        Call<PostsResponse> call = service.getPost(User.Id);// TODO change user ID
+        call.enqueue(new Callback<PostsResponse>() {
+            @Override
+            public void onResponse(Call<PostsResponse> call, Response<PostsResponse> response) {
+
+                if (response.isSuccessful()) {
+                    for (Post p : response.body().getPost()
+                            ) {
+                        p.setImage(RetrofitClient.BASE_URL + p.getImage());
+                        Log.e("farhat",p.toString());
+
+                    }
+                    posts= response.body().getPost();
+                    PhotosAdapter photosAdapter = new PhotosAdapter(getActivity(),posts);
+                    recyclerView.setAdapter(photosAdapter);
+
+                    final GreedoLayoutManager layoutManager = new GreedoLayoutManager(photosAdapter);
+                    layoutManager.setMaxRowHeight(MeasUtils.dpToPx(150, getActivity()));
+
+                    recyclerView.setLayoutManager(layoutManager);
+
+                } else {
+                    Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
+                }
+                Log.e("Responsoe", response.message());
+
+            }
+
+            @Override
+            public void onFailure(Call<PostsResponse> call, Throwable t) {
+                Log.e("Responsoe", t.getMessage());
+
+            }
+        });
+    }
+
 }

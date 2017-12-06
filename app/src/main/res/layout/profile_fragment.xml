@@ -5,7 +5,7 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#AAA"
+    android:background="#FFFF"
     >
 
     <com.github.florent37.diagonallayout.DiagonalLayout
@@ -181,4 +181,12 @@
         android:layout_height="wrap_content"
         />
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/avatar"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="17dp"
+        android:layout_toEndOf="@+id/toolbar" />
 </RelativeLayout>
