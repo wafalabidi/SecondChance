@@ -8,7 +8,6 @@ import android.widget.ImageView;
 
 import com.fivehundredpx.greedolayout.GreedoLayoutSizeCalculator;
 import com.labidi.wafa.secondchance.API.RetrofitClient;
-import com.labidi.wafa.secondchance.Constants;
 import com.labidi.wafa.secondchance.Entities.Post;
 import com.squareup.picasso.Picasso;
 
@@ -22,8 +21,6 @@ import java.util.List;
 public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.PhotoViewHolder> implements GreedoLayoutSizeCalculator.SizeCalculatorDelegate {
     private static final int IMAGE_COUNT = 500; // number of images adapter will show
 
-    private final int[] mImageResIds = Constants.IMAGES;
-    private final double[] mImageAspectRatios = new double[Constants.IMAGES.length];
     List<Post>  posts ;
     private Context mContext;
 
@@ -31,7 +28,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.PhotoViewH
     public double aspectRatioForIndex(int index) {
         // Precaution, have better handling for this in greedo-layout
         if (index >= getItemCount()) return 1.0;
-        return mImageAspectRatios[getLoopedIndex(index)];
+        return 0;
     }
 
     public class PhotoViewHolder extends RecyclerView.ViewHolder {
@@ -78,15 +75,11 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.PhotoViewH
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
 
-        for (int i = 0; i < mImageResIds.length; i++) {
-            BitmapFactory.decodeResource(mContext.getResources(), mImageResIds[i], options);
-            mImageAspectRatios[i] = options.outWidth / (double) options.outHeight;
-        }
     }
 
     // Index gets wrapped around <code>Constants.IMAGES.length</code> so we can loop content.
     private int getLoopedIndex(int index) {
-        return index % Constants.IMAGES.length; // wrap around
+        return 0; // wrap around
     }
 }
 
