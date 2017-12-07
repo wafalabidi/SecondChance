@@ -136,7 +136,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_above="@+id/signup_layout"
-            android:background="@color/colorAccent">
+            android:background="@color/orag">
 
             <LinearLayout
                 android:id="@+id/login_button"
