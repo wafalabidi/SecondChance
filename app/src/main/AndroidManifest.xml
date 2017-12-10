@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.labidi.wafa.secondchance">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-feature
         android:name="android.hardware.camera"
-        android:required="true"
-        />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="18">
-    </uses-permission>
+        android:required="true" />
+
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18"></uses-permission>
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -18,6 +19,7 @@
     <uses-feature
         android:name="android.hardware.camera.autofocus"
         android:required="false" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -25,7 +27,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity"
+        <activity
+            android:name=".LoginActivity"
             android:screenOrientation="sensorPortrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,24 +36,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TakePhotoActivity" android:theme="@style/AppTheme.TransparentActivity.FullScreen"/>
-        <activity android:name=".HomeActivity"></activity>
-        <activity android:name=".TestActivity"></activity>
+        <activity
+            android:name=".TakePhotoActivity"
+            android:theme="@style/AppTheme.TransparentActivity.FullScreen" />
+        <activity android:name=".HomeActivity"/>
+        <activity android:name=".TestActivity"/>
         <activity android:name=".MainActivity" />
+        <activity
+            android:name=".SearchPeoplesActivity"
+            android:parentActivityName=".MainActivity" />
+
         <provider
-            android:authorities="com.labidi.wafa.secondchance"
             android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.labidi.wafa.secondchance"
             android:exported="false"
-            android:grantUriPermissions="true"
-            >
+            android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/path"
-                >
+                android:resource="@xml/path">
 
             </meta-data>
 
         </provider>
+        <service
+            android:name=".Utils.FriendsWatcherService"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
 
 </manifest>

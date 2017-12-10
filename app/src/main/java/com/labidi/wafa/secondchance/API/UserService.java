@@ -2,8 +2,10 @@ package com.labidi.wafa.secondchance.API;
 
 import com.labidi.wafa.secondchance.Entities.ConfirmationResponse;
 import com.labidi.wafa.secondchance.Entities.InscriptionBody;
+import com.labidi.wafa.secondchance.Entities.Response.DemandesResponse;
 import com.labidi.wafa.secondchance.Entities.Response.LoginResponse;
 import com.labidi.wafa.secondchance.Entities.Response.PostsResponse;
+import com.labidi.wafa.secondchance.Entities.Response.SearchResponse;
 import com.labidi.wafa.secondchance.Entities.User;
 
 import okhttp3.MultipartBody;
@@ -28,6 +30,29 @@ public interface UserService {
     public interface RegisterInterface {
         @POST("registerUser.php")
         Call<ConfirmationResponse> studentLogin(@Body InscriptionBody inscriptionBody);
+
+        @FormUrlEncoded
+        @POST("searchUser.php")
+        Call<SearchResponse> searchUser(
+                @Field("search") String imageTitle
+        );
+
+        @FormUrlEncoded
+        @POST("EnvoyerDemande.php")
+        Call<ConfirmationResponse> sendRequest(
+                @Field("idUser") int idSender,
+                @Field("idUser2") int idReciever
+        );
+        @FormUrlEncoded
+        @POST("getDemandes.php")
+        Call<DemandesResponse> checkInvitation(
+                @Field("idUser") int idReciever
+        );
+        @FormUrlEncoded
+        @POST("getDemandesById.php")
+        Call<DemandesResponse> checkInvitationById(
+                @Field("idUser") int idReciever
+        );
     }
 
     public interface LoginInterface {
@@ -40,22 +65,23 @@ public interface UserService {
         Call<ConfirmationResponse> userUpdateInfo(@Body User user);
     }
 
-    public interface insertPost{
+    public interface insertPost {
         @FormUrlEncoded
         @POST("insertPost.php")
-        Call<ResponseBody> insertPost(@Field("description")String description ,
-                                            @Field("image") String image ,
-                                            @Field("idUser") int idUser,
-                                            @Field("title") String imageTitle
-                                  );
+        Call<ResponseBody> insertPost(@Field("description") String description,
+                                      @Field("image") String image,
+                                      @Field("idUser") int idUser,
+                                      @Field("title") String imageTitle
+        );
 
         @GET("getPost.php")
-        Call<PostsResponse> getPost (@Query("idUser") int idUser);
+        Call<PostsResponse> getPost(@Query("idUser") int idUser);
     }
-    public interface profilepic{
+
+    public interface profilepic {
         @FormUrlEncoded
         @POST("profilepic.php")
-        Call<ResponseBody> profilepic(@Field("image") String image ,
+        Call<ResponseBody> profilepic(@Field("image") String image,
                                       @Field("idUser") int idUser,
                                       @Field("title") String imageTitle
         );

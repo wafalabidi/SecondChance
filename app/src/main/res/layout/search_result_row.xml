@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingEnd="5dp"
+    android:paddingStart="5dp">
+
+    <ImageView
+        android:id="@+id/rvSearchResultImage"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/unknown" />
+
+    <TextView
+        android:id="@+id/rvSearchResultName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="Sofien Sahli"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="end|center_horizontal"
+        android:gravity="end">
+
+        <ImageButton
+            android:id="@+id/rvSearchResultAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_add" />
+    </LinearLayout>
+</LinearLayout>
