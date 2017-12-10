@@ -1,5 +1,7 @@
 package com.labidi.wafa.secondchance;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -8,9 +10,16 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
+import com.labidi.wafa.secondchance.API.RetrofitClient;
+import com.labidi.wafa.secondchance.API.UserService;
+import com.labidi.wafa.secondchance.Entities.Post;
+import com.labidi.wafa.secondchance.Entities.Response.PostsResponse;
+import com.labidi.wafa.secondchance.Entities.User;
 import com.labidi.wafa.secondchance.Fragment.HomeFragment;
 import com.labidi.wafa.secondchance.Fragment.ProfileFragment;
 import com.yalantis.contextmenu.lib.ContextMenuDialogFragment;
@@ -22,9 +31,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import devlight.io.library.ntb.NavigationTabBar;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements View.OnClickListener  {
     @BindView(R.id.ntb)
     NavigationTabBar navigationTabBar;
     final Fragment[] fragments = {new HomeFragment(), new ProfileFragment()};
@@ -66,6 +79,16 @@ public class HomeActivity extends AppCompatActivity {
         fabCamera = findViewById(R.id.menu_camera);
         fabGallery = findViewById(R.id.menu_gallery);
 
+
+    }
+
+    @OnClick(R.id.menu_camera)
+    public void onTakePhotoClick() {
+        int[] startingLocation = new int[2];
+        fabCamera.getLocationOnScreen(startingLocation);
+        startingLocation[0] += fabCamera.getWidth() / 2;
+        TakePhotoActivity.startCameraFromLocation(startingLocation, this);
+        overridePendingTransition(0, 0);
     }
 
     public void CommitFragment(Fragment fragment) {
@@ -75,6 +98,8 @@ public class HomeActivity extends AppCompatActivity {
             fragmentTransaction.replace(R.id.flContainer, fragment).commit();
         }
     }
+
+
 
 
     public void InitBottomNavigationView() {
@@ -152,4 +177,10 @@ public class HomeActivity extends AppCompatActivity {
         // set other settings to meet your needs
         ContextMenuDialogFragment mMenuDialogFragment = ContextMenuDialogFragment.newInstance(menuParams);
     }
+
+    @Override
+    public void onClick(View v) {
+
+    }
+
 }

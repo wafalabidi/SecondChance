@@ -5,7 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/SecondChance.iml" filepath="$PROJECT_DIR$/SecondChance.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/diagonallayout/diagonallayout.iml" filepath="$PROJECT_DIR$/diagonallayout/diagonallayout.iml" />
-      <module fileurl="file://$PROJECT_DIR$/greedo-layout/greedo-layout.iml" filepath="$PROJECT_DIR$/greedo-layout/greedo-layout.iml" />
+      <module fileurl="file://$PROJECT_DIR$/greed-layout/greed-layout.iml" filepath="$PROJECT_DIR$/greed-layout/greed-layout.iml" />
     </modules>
   </component>
 </project>

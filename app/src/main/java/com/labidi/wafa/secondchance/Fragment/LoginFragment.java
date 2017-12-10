@@ -19,12 +19,14 @@ import com.labidi.wafa.secondchance.Entities.InscriptionBody;
 import com.labidi.wafa.secondchance.Entities.Response.LoginResponse;
 import com.labidi.wafa.secondchance.Entities.User;
 import com.labidi.wafa.secondchance.HomeActivity;
+import com.labidi.wafa.secondchance.MainActivity;
 import com.labidi.wafa.secondchance.R;
 import com.labidi.wafa.secondchance.customfonts.MyEditText;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -97,9 +99,9 @@ public class LoginFragment extends Fragment {
                             User.Hobbies = user.getHobbies();
                             User.Id = user.getId();
                             User.kids = user.getChild();
-
+                            User.imgprofile = RetrofitClient.BASE_URL+user.getImg_profile();
                             progressDialog.dismiss();
-                            Intent intent = new Intent(getActivity(), HomeActivity.class);
+                            Intent intent = new Intent(getActivity(), MainActivity.class);
                            startActivity(intent);
 
                         }

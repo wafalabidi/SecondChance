@@ -1,1 +1,1 @@
-include ':app', ':diagonallayout', ':greedo-layout'
+include ':app', ':diagonallayout', ':greed-layout'

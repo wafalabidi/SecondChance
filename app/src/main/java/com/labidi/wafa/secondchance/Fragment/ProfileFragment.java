@@ -84,7 +84,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener , 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        
+
         return inflater.inflate(R.layout.profile_fragment, container, false);
     }
 
@@ -100,7 +100,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener , 
 
         cim_img_profile.setOnClickListener(this);
         if(User.imgprofile!=""){
-            Picasso.with(getActivity()).load(RetrofitClient.BASE_URL+User.imgprofile).into(cim_img_profile);       }
+            Picasso.with(getActivity()).load(User.imgprofile).into(cim_img_profile);       }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -120,7 +120,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener , 
     public void onClick(View v) {
         if(v.getId()==R.id.avatar){
             showPopup(v);
-            
+
         }
     }
 
@@ -162,7 +162,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener , 
         Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
         cim_img_profile.setImageBitmap(bitmap);
     }
-    
+
 
     private void uploadPicture() {
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
@@ -295,6 +295,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener , 
                     layoutManager.setMaxRowHeight(MeasUtils.dpToPx(150, getActivity()));
 
                     recyclerView.setLayoutManager(layoutManager);
+                    photosAdapter.notifyDataSetChanged();
 
                 } else {
                     Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
