@@ -2,6 +2,9 @@ package com.labidi.wafa.secondchance;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,6 +26,7 @@ import com.labidi.wafa.secondchance.Adapters.FeedItemAnimator;
 import com.labidi.wafa.secondchance.Entities.Post;
 import com.labidi.wafa.secondchance.Entities.Response.PostsResponse;
 import com.labidi.wafa.secondchance.Entities.User;
+import com.labidi.wafa.secondchance.Utils.FriendsWatcherService;
 import com.labidi.wafa.secondchance.view.FeedContextMenu;
 import com.labidi.wafa.secondchance.view.FeedContextMenuManager;
 
@@ -56,20 +60,33 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
     private FeedAdapter feedAdapter;
 
     private boolean pendingIntroAnimation;
+    private JobInfo jobInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        feedAdapter = new FeedAdapter(this);
         getPosts();
         if (savedInstanceState == null) {
             pendingIntroAnimation = true;
         } else {
             feedAdapter.updateItems(false);
         }
+        lunchService();
     }
+    public void lunchService (){
 
+        ComponentName componentName = new ComponentName(this, FriendsWatcherService.class);
+        JobInfo.Builder builder = new JobInfo.Builder(101, componentName);
+        // builder.setMinimumLatency(1000);
+        builder.setPeriodic(15*60*1000);
+        builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_NONE);
+        builder.setPersisted(true);
+        jobInfo = builder.build();
+        JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+        scheduler.schedule(jobInfo);
+    }
     private void setupFeed() {
     }
 

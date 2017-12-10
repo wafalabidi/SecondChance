@@ -37,7 +37,7 @@ public class FriendsWatcherService extends JobService {
         checkPost(jobParameters);
 
 
-        return true;
+        return false;
     }
 
     private void prepareNotification() {
@@ -45,7 +45,7 @@ public class FriendsWatcherService extends JobService {
         PendingIntent pendingIntent = PendingIntent.getActivity(this ,0,intent,0);
         notificationManager = (NotificationManager) this.getSystemService(NOTIFICATION_SERVICE);
         remoteViews = new RemoteViews(getPackageName(), R.layout.notification_friend_request);
-        notification_id = (int) System.currentTimeMillis();
+        notification_id = 100;
         builder = new NotificationCompat.Builder(this);
         builder.setSmallIcon(R.drawable.ic_x).setCustomContentView(remoteViews).setContentIntent(pendingIntent);
 
