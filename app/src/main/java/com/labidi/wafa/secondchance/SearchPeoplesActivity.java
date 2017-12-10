@@ -107,13 +107,18 @@ public class SearchPeoplesActivity extends BaseDrawerActivity implements SearchV
         progressDialog.show();
         RetrofitClient retrofitClient = new RetrofitClient();
         UserService.RegisterInterface registerInterface = retrofitClient.getRetrofit().create(UserService.RegisterInterface.class);
-        Call<DemandesResponse> call = registerInterface.checkInvitation(User.Id);
+        Log.e("User ID ", User.Id +"aa ");
+        Call<DemandesResponse> call = registerInterface.checkInvitationById(User.Id);
         call.enqueue(new Callback<DemandesResponse>() {
             @Override
             public void onResponse(Call<DemandesResponse> call, Response<DemandesResponse> response) {
                 progressDialog.dismiss();
                 if (response.body().getDemandes() != null) {
                     friendList = response.body().getDemandes();
+                    for (Demande d: friendList
+                         ) {
+                        Log.e("Demande" , d.toString());
+                    }
                 }
             }
 

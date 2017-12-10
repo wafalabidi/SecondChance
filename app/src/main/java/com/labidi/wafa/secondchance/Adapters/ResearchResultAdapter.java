@@ -61,6 +61,7 @@ public class ResearchResultAdapter extends RecyclerView.Adapter<ResearchResultAd
     public void onBindViewHolder(Holder holder, int position) {
         User user = items.get(position);
         Picasso.with(context).load(user.getImg_profile()).into(holder.image);
+
         holder.text.setText(user.getFirstName() + " " + user.getLastName());
         if (checkFriend(user)) {
             holder.add.setEnabled(true);
@@ -79,8 +80,8 @@ public class ResearchResultAdapter extends RecyclerView.Adapter<ResearchResultAd
         friendRequest1.setIdUser(User.Id);
         friendRequest1.setIdUser2(user.getId());
         Demande friendRequest2 = new Demande();
-        friendRequest2.setIdUser(User.Id);
-        friendRequest2.setIdUser2(user.getId());
+        friendRequest2.setIdUser(user.getId());
+        friendRequest2.setIdUser2(User.Id);
         if (friendRequests != null) {
             if (friendRequests.contains(friendRequest1) || friendRequests.contains(friendRequest2)) {
                 return false;
@@ -99,13 +100,13 @@ public class ResearchResultAdapter extends RecyclerView.Adapter<ResearchResultAd
             public void onResponse(Call<ConfirmationResponse> call, Response<ConfirmationResponse> response) {
                 Toast.makeText(context, "Invitation sent", Toast.LENGTH_SHORT).show();
                 ((ImageButton) view).setImageDrawable(context.getDrawable(R.drawable.ic_profil));
-                    view.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Toast.makeText(context, "go to profil", Toast.LENGTH_SHORT).show();
-                                //TODO go to profil
-                        }
-                    });
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(context, "go to profil", Toast.LENGTH_SHORT).show();
+                        //TODO go to profil
+                    }
+                });
             }
 
             @Override

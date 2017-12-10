@@ -14,6 +14,15 @@ public class Demande {
     @SerializedName("state")
     int state;
 
+    @Override
+    public String toString() {
+        return "Demande{" +
+                "idUser=" + idUser +
+                ", idUser2=" + idUser2 +
+                ", state=" + state +
+                '}';
+    }
+
     public Demande(int idUser, int idUser2, int state) {
         this.idUser = idUser;
         this.idUser2 = idUser2;
@@ -26,7 +35,7 @@ public class Demande {
 
     public Demande(int id, int id1) {
         idUser = id;
-        idUser2 = id1 ;
+        idUser2 = id1;
 
     }
 
