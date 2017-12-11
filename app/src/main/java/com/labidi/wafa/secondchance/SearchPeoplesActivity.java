@@ -80,16 +80,18 @@ public class SearchPeoplesActivity extends BaseDrawerActivity implements SearchV
             @Override
             public void onResponse(retrofit2.Call<SearchResponse> call, Response<SearchResponse> response) {
                 Log.e("All good ", "Checkpoint 1 ");
-                if (response.body().getUsers() != null) {
-                    for (User u : response.body().getUsers()
-                            ) {
-                        u.setImg_profile(RetrofitClient.BASE_URL + u.getImg_profile());
-                    }
+                if (response != null) {
+                    if (response.body().getUsers() != null) {
+                        for (User u : response.body().getUsers()
+                                ) {
+                            u.setImg_profile(RetrofitClient.BASE_URL + u.getImg_profile());
+                        }
 
-                    adapter = new ResearchResultAdapter(SearchPeoplesActivity.this, response.body().getUsers());
-                    adapter.setFriendRequests((ArrayList<Demande>) friendList);
-                    rvSearchResult.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
+                        adapter = new ResearchResultAdapter(SearchPeoplesActivity.this, response.body().getUsers());
+                        adapter.setFriendRequests((ArrayList<Demande>) friendList);
+                        rvSearchResult.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+                    }
                 }
             }
 

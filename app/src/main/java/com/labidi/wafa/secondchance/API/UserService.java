@@ -36,6 +36,12 @@ public interface UserService {
         Call<SearchResponse> searchUser(
                 @Field("search") String imageTitle
         );
+        @FormUrlEncoded
+        @POST("getUserById.php")
+        Call<LoginResponse> getUserById(
+                @Field("idUser") int idUser
+        );
+
 
         @FormUrlEncoded
         @POST("EnvoyerDemande.php")
@@ -76,6 +82,8 @@ public interface UserService {
 
         @GET("getPost.php")
         Call<PostsResponse> getPost(@Query("idUser") int idUser);
+        @GET("getAllPost.php")
+        Call<PostsResponse> getAllPost(@Query("idUser") int idUser);
     }
 
     public interface profilepic {

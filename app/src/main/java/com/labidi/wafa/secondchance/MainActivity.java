@@ -173,11 +173,11 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
     }
 
     @Override
-    public void onProfileClick(View v) {
+    public void onProfileClick(View v,int iduser) {
         int[] startingLocation = new int[2];
         v.getLocationOnScreen(startingLocation);
         startingLocation[0] += v.getWidth() / 2;
-        //UserProfileActivity.startUserProfileFromLocation(startingLocation, this);
+        UserProfileActivity.startUserProfileFromLocation(startingLocation, this,iduser);
         overridePendingTransition(0, 0);
     }
 
@@ -217,7 +217,7 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
 
         RetrofitClient retrofitClient = new RetrofitClient();
         UserService.insertPost service = retrofitClient.getRetrofit().create(UserService.insertPost.class);
-        Call<PostsResponse> call = service.getPost(User.Id);// TODO change user ID
+        Call<PostsResponse> call = service.getAllPost(User.Id);// TODO change user ID
         call.enqueue(new Callback<PostsResponse>() {
             @Override
             public void onResponse(Call<PostsResponse> call, Response<PostsResponse> response) {

@@ -153,8 +153,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener , 
             //setPic();
         }
         //Log.e("Image" , mCurrentPhotoPath) ;
-            if(selectedImage != null)
-                uploadPicture();
+        if(selectedImage != null)
+            uploadPicture();
     }
 
     private void setPic() {

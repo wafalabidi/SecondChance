@@ -59,6 +59,8 @@
             </meta-data>
 
         </provider>
+        <activity android:name=".UserProfileActivity"
+            android:parentActivityName=".MainActivity"/>
         <service
             android:name=".Utils.FriendsWatcherService"
             android:exported="true"
