@@ -52,7 +52,7 @@
                 android:hint="@string/email"
                 android:inputType="textEmailAddress"
                 android:singleLine="true"
-                android:text="wafe"
+                android:text="fahdoun@gmx.fr"
                 android:textColor="@color/white"
                 android:textColorHint="@color/light_text"
                 android:textSize="@dimen/text_size_medium" />
@@ -93,7 +93,7 @@
                 android:hint="@string/password"
                 android:inputType="textPassword"
                 android:singleLine="true"
-                android:text="wafe"
+                android:text="wa"
                 android:textColor="@color/white"
                 android:textColorHint="@color/light_text"
                 android:textSize="@dimen/text_size_medium" />
@@ -136,7 +136,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_above="@+id/signup_layout"
-            android:background="@color/orag">
+            android:background="@color/colorPrimary">
 
             <LinearLayout
                 android:id="@+id/login_button"

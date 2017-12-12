@@ -5,5 +5,5 @@
         <!--android:width="1px"-->
         <!--android:color="@color/colorPrimary" />-->
     <solid
-        android:color="@color/orag"  />
+        android:color="@color/colorPrimary"  />
 </shape>

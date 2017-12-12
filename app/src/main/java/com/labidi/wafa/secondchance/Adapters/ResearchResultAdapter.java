@@ -1,5 +1,6 @@
 package com.labidi.wafa.secondchance.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,6 +18,7 @@ import com.labidi.wafa.secondchance.Entities.ConfirmationResponse;
 import com.labidi.wafa.secondchance.Entities.Demande;
 import com.labidi.wafa.secondchance.Entities.User;
 import com.labidi.wafa.secondchance.R;
+import com.labidi.wafa.secondchance.UserProfileActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -68,10 +70,20 @@ public class ResearchResultAdapter extends RecyclerView.Adapter<ResearchResultAd
                 sendInvitation(new Demande(User.Id, user.getId()), view);
             });
         } else {
-            holder.add.setEnabled(false);
             holder.add.setImageDrawable(context.getDrawable(R.drawable.ic_profil));
+            holder.add.setOnClickListener(view -> {
+                openProfil(view , user.getId());
+            });
         }
 
+    }
+
+    public void openProfil(View v, int idUser) {
+        int[] startingLocation = new int[2];
+        v.getLocationOnScreen(startingLocation);
+        startingLocation[0] += v.getWidth() / 2;
+        UserProfileActivity.startUserProfileFromLocation(startingLocation, (Activity) context, idUser);
+        ((Activity) context).overridePendingTransition(0, 0);
     }
 
     private boolean checkFriend(User user) {
@@ -79,8 +91,8 @@ public class ResearchResultAdapter extends RecyclerView.Adapter<ResearchResultAd
         friendRequest1.setIdUser(User.Id);
         friendRequest1.setIdUser2(user.getId());
         Demande friendRequest2 = new Demande();
-        friendRequest2.setIdUser(User.Id);
-        friendRequest2.setIdUser2(user.getId());
+        friendRequest2.setIdUser(user.getId());
+        friendRequest2.setIdUser2(User.Id);
         if (friendRequests != null) {
             if (friendRequests.contains(friendRequest1) || friendRequests.contains(friendRequest2)) {
                 return false;
@@ -99,13 +111,13 @@ public class ResearchResultAdapter extends RecyclerView.Adapter<ResearchResultAd
             public void onResponse(Call<ConfirmationResponse> call, Response<ConfirmationResponse> response) {
                 Toast.makeText(context, "Invitation sent", Toast.LENGTH_SHORT).show();
                 ((ImageButton) view).setImageDrawable(context.getDrawable(R.drawable.ic_profil));
-                    view.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Toast.makeText(context, "go to profil", Toast.LENGTH_SHORT).show();
-                                //TODO go to profil
-                        }
-                    });
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(context, "go to profil", Toast.LENGTH_SHORT).show();
+                        //TODO go to profil
+                    }
+                });
             }
 
             @Override

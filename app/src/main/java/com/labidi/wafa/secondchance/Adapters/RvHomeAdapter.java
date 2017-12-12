@@ -56,9 +56,9 @@ public class RvHomeAdapter extends RecyclerView.Adapter<RvHomeAdapter.HomeViewAd
     public RvHomeAdapter.HomeViewAdapter onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.home_row, null, false);
-        HomeViewAdapter viewAdapter = new HomeViewAdapter(view);
+        view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
 
-        return viewAdapter;
+        return new HomeViewAdapter(view);
     }
 
     @Override

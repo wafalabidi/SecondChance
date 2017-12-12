@@ -3,12 +3,18 @@ package com.labidi.wafa.secondchance;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.labidi.wafa.secondchance.API.RetrofitClient;
@@ -38,6 +44,8 @@ public class SearchPeoplesActivity extends BaseDrawerActivity implements SearchV
     private ResearchResultAdapter adapter;
     @BindView(R.id.rvSearchResult)
     RecyclerView rvSearchResult;
+    @BindView(R.id.searchLayout)
+    ConstraintLayout searchLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,6 +81,14 @@ public class SearchPeoplesActivity extends BaseDrawerActivity implements SearchV
     }
 
     public void Search(String query) {
+        ProgressBar progressBar = new ProgressBar(this, null, android.R.attr.progressBarStyleLarge);
+        ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100);
+        //params.addRule(RelativeLayout.CENTER_IN_PARENT);
+        searchLayout.addView(progressBar, params);
+        progressBar.setVisibility(View.VISIBLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
         RetrofitClient retrofitClient = new RetrofitClient();
         UserService.RegisterInterface registerInterface = retrofitClient.getRetrofit().create(UserService.RegisterInterface.class);
         retrofit2.Call<SearchResponse> call = registerInterface.searchUser(query);
@@ -91,6 +107,8 @@ public class SearchPeoplesActivity extends BaseDrawerActivity implements SearchV
                         adapter.setFriendRequests((ArrayList<Demande>) friendList);
                         rvSearchResult.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
+                        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                        progressBar.setVisibility(View.GONE);
                     }
                 }
             }

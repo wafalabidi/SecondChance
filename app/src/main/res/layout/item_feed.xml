@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_margin="8dp"
+    android:layout_margin="12dp"
     card_view:cardCornerRadius="4dp">
 
     <LinearLayout
@@ -30,8 +30,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Please Work"
+                android:textSize="10sp"
                 android:layout_marginLeft="20dp"
-                android:textColor="@color/pink2" />
+                android:textColor="@color/black" />
         </LinearLayout>
         <com.labidi.wafa.secondchance.view.SquaredFrameLayout
             android:id="@+id/vImageRoot"
@@ -62,6 +63,7 @@
         </com.labidi.wafa.secondchance.view.SquaredFrameLayout>
 
         <TextView
+            android:layout_marginLeft="10dp"
             android:id="@+id/ivFeedBottom"
             android:text="Hello i'm farhat "
             android:layout_width="match_parent"
