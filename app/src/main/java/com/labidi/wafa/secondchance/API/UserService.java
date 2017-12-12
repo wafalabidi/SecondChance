@@ -36,10 +36,25 @@ public interface UserService {
         Call<SearchResponse> searchUser(
                 @Field("search") String imageTitle
         );
+
         @FormUrlEncoded
         @POST("getUserById.php")
         Call<LoginResponse> getUserById(
                 @Field("idUser") int idUser
+        );
+
+        @FormUrlEncoded
+        @POST("AccepterDemande.php")
+        Call<ConfirmationResponse> accepterDemande(
+                @Field("idUser") int idSender,
+                @Field("idUser2") int idReciever
+        );
+
+        @FormUrlEncoded
+        @POST("RefuserDemande.php")
+        Call<ConfirmationResponse> refuserDemande(
+                @Field("idUser") int idSender,
+                @Field("idUser2") int idReciever
         );
 
 
@@ -49,11 +64,13 @@ public interface UserService {
                 @Field("idUser") int idSender,
                 @Field("idUser2") int idReciever
         );
+
         @FormUrlEncoded
         @POST("getDemandes.php")
         Call<DemandesResponse> checkInvitation(
                 @Field("idUser") int idReciever
         );
+
         @FormUrlEncoded
         @POST("getDemandesById.php")
         Call<DemandesResponse> checkInvitationById(
@@ -82,6 +99,7 @@ public interface UserService {
 
         @GET("getPost.php")
         Call<PostsResponse> getPost(@Query("idUser") int idUser);
+
         @GET("getAllPost.php")
         Call<PostsResponse> getAllPost(@Query("idUser") int idUser);
     }

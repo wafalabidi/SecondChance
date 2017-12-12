@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by sofien on 09/12/2017.
  */
 
-public class Demande {
+public class Demande extends User {
     @SerializedName("idUser")
     int idUser;
     @SerializedName("idUser2")

@@ -40,8 +40,8 @@
         <activity
             android:name=".TakePhotoActivity"
             android:theme="@style/AppTheme.TransparentActivity.FullScreen" />
-        <activity android:name=".HomeActivity"/>
-        <activity android:name=".TestActivity"/>
+        <activity android:name=".HomeActivity" />
+        <activity android:name=".TestActivity" />
         <activity android:name=".MainActivity" />
         <activity
             android:name=".SearchPeoplesActivity"
@@ -59,8 +59,14 @@
             </meta-data>
 
         </provider>
-        <activity android:name=".UserProfileActivity"
-            android:parentActivityName=".MainActivity"/>
+
+        <activity
+            android:name=".UserProfileActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".PendingFriendRequestActivity"
+            android:parentActivityName=".MainActivity" />
+
         <service
             android:name=".Utils.FriendsWatcherService"
             android:exported="true"

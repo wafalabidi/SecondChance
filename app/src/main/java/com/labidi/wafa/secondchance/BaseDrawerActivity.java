@@ -101,10 +101,14 @@ public class BaseDrawerActivity extends BaseActivity implements NavigationView.O
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Toast.makeText(this, "Toaaaaaassssst", Toast.LENGTH_SHORT).show();
         if (item.getItemId() == R.id.menu_search_peoples) {
-            Intent intent =new Intent(this , SearchPeoplesActivity.class) ;
+            Intent intent = new Intent(this, SearchPeoplesActivity.class);
             startActivity(intent);
+
+        } else if (item.getItemId() == R.id.menu_pending_request) {
+            Intent intent = new Intent(this, PendingFriendRequestActivity.class);
+            startActivity(intent);
+        } else if (item.getItemId() == R.id.menu_friends) {
 
         }
         return false;

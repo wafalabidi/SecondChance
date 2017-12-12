@@ -14,7 +14,9 @@ import com.labidi.wafa.secondchance.API.UserService;
 import com.labidi.wafa.secondchance.Entities.Response.DemandesResponse;
 import com.labidi.wafa.secondchance.Entities.User;
 import com.labidi.wafa.secondchance.HomeActivity;
+import com.labidi.wafa.secondchance.LoginActivity;
 import com.labidi.wafa.secondchance.MainActivity;
+import com.labidi.wafa.secondchance.PendingFriendRequestActivity;
 import com.labidi.wafa.secondchance.R;
 
 import retrofit2.Call;
@@ -41,13 +43,13 @@ public class FriendsWatcherService extends JobService {
     }
 
     private void prepareNotification() {
-        Intent intent = new Intent(this , MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this ,0,intent,0);
+        Intent intent = new Intent(this, PendingFriendRequestActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
         notificationManager = (NotificationManager) this.getSystemService(NOTIFICATION_SERVICE);
         remoteViews = new RemoteViews(getPackageName(), R.layout.notification_friend_request);
         notification_id = 100;
         builder = new NotificationCompat.Builder(this);
-        builder.setSmallIcon(R.drawable.ic_x).setCustomContentView(remoteViews).setContentIntent(pendingIntent);
+        builder.setSmallIcon(R.drawable.ic_x).setCustomContentView(remoteViews).setContentIntent(pendingIntent).setAutoCancel(true);
 
     }
 
@@ -59,7 +61,7 @@ public class FriendsWatcherService extends JobService {
             @Override
             public void onResponse(Call<DemandesResponse> call, Response<DemandesResponse> response) {
                 if (response.body().getDemandes() != null) {
-                    notificationManager.notify(notification_id,builder.build());
+                    notificationManager.notify(notification_id, builder.build());
                     jobFinished(jobParameters, false);
                 }
             }
