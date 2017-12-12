@@ -66,6 +66,7 @@ public class SearchPeoplesActivity extends BaseDrawerActivity implements SearchV
         MenuItem menuItem = menu.findItem(R.id.menu_toolbarSearch);
         SearchView searchView = (SearchView) menuItem.getActionView();
         searchView.setOnQueryTextListener(this);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         return true;
     }
 
@@ -127,7 +128,6 @@ public class SearchPeoplesActivity extends BaseDrawerActivity implements SearchV
         progressDialog.show();
         RetrofitClient retrofitClient = new RetrofitClient();
         UserService.RegisterInterface registerInterface = retrofitClient.getRetrofit().create(UserService.RegisterInterface.class);
-        Log.e("User ID ", User.Id +"aa ");
         Call<DemandesResponse> call = registerInterface.checkInvitationById(User.Id);
         call.enqueue(new Callback<DemandesResponse>() {
             @Override

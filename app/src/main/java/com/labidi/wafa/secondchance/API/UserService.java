@@ -72,8 +72,14 @@ public interface UserService {
         );
 
         @FormUrlEncoded
-        @POST("getDemandesById.php")
+        @POST("checkDemande.php")
         Call<DemandesResponse> checkInvitationById(
+                @Field("idUser") int idReciever
+        );
+
+        @FormUrlEncoded
+        @POST("getFriendsListById.php")
+        Call<DemandesResponse> getFriendList(
                 @Field("idUser") int idReciever
         );
     }

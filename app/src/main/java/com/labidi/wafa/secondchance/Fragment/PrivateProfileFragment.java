@@ -127,7 +127,7 @@ public class PrivateProfileFragment extends Fragment implements View.OnClickList
             @Override
             public void onResponse(Call<PostsResponse> call, Response<PostsResponse> response) {
 
-                if (response.isSuccessful()) {
+                if (response.isSuccessful()&& response.body().getPost() != null ) {
                     for (Post p : response.body().getPost()
                             ) {
                         p.setImage(RetrofitClient.BASE_URL + p.getImage());

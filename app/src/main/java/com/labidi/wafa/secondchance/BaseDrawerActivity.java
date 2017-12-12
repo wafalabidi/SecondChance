@@ -86,7 +86,6 @@ public class BaseDrawerActivity extends BaseActivity implements NavigationView.O
 
     public void onGlobalMenuHeaderClick(final View v) {
         drawerLayout.closeDrawer(Gravity.LEFT);
-        Toast.makeText(this, "Aaaaa", Toast.LENGTH_SHORT).show();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -109,7 +108,8 @@ public class BaseDrawerActivity extends BaseActivity implements NavigationView.O
             Intent intent = new Intent(this, PendingFriendRequestActivity.class);
             startActivity(intent);
         } else if (item.getItemId() == R.id.menu_friends) {
-
+            Intent intent = new Intent(this , FriendsListActivity.class) ;
+            startActivity(intent);
         }
         return false;
     }
