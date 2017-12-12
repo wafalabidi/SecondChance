@@ -63,6 +63,7 @@ public class ResearchResultAdapter extends RecyclerView.Adapter<ResearchResultAd
     public void onBindViewHolder(Holder holder, int position) {
         User user = items.get(position);
         Picasso.with(context).load(user.getImg_profile()).into(holder.image);
+
         holder.text.setText(user.getFirstName() + " " + user.getLastName());
         if (checkFriend(user)) {
             holder.add.setEnabled(true);
