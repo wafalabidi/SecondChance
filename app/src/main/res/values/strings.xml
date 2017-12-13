@@ -47,8 +47,26 @@
     </string-array>
     <string name="user_profile_photo">http://igcdn-photos-f-a.akamaihd.net/hphotos-ak-xpa1/t51.2885-19/929118_455075441302693_1605108410_a.jpg</string>
     <string name="type_research_here">type research here</string>
+    <string name="EyesColours">Eyes color</string>
     <plurals name="likes_count">
         <item quantity="one">%d like</item>
         <item quantity="other">%d likes</item>
     </plurals>
+    <string-array name="Eyes">
+        <item>Blue</item>
+        <item>Vert</item>
+        <item>Marron</item>
+        <item>Jaune</item>
+    </string-array>
+    <string-array name="SkinColour">
+        <item>Black</item>
+        <item>White</item>
+        <item>Yellow</item>
+        <item>Brown</item>
+    </string-array>
+    <string-array name="bodyShape">
+        <item>Athletic </item>
+        <item>Chubby </item>
+        <item>Slim </item>
+    </string-array>
 </resources>

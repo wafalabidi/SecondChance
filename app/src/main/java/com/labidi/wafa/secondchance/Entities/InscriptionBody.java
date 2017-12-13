@@ -8,19 +8,19 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class InscriptionBody {
-    @SerializedName("firstname")
+    @SerializedName("FirstName")
     @Expose
     String firstName ;
-    @SerializedName("lastname")
+    @SerializedName("LastName")
     @Expose
     String lastName ;
-    @SerializedName("mail")
+    @SerializedName("Mail")
     @Expose
     String mail ;
-    @SerializedName("password")
+    @SerializedName("BirthDate")
     @Expose
     String password ;
-    @SerializedName("birthdate")
+    @SerializedName("Password")
     @Expose
     String birthdate ;
 

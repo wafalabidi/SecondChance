@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Extra Infromation"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="30dp"
+        android:typeface="serif" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="20dp"
+        android:alpha=".8"
+        android:text="Alchool consomation"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <RadioButton
+            android:id="@+id/alchoolOften"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="often"
+            android:textSize="15dp" />
+
+        <RadioButton
+            android:id="@+id/alchoolOccasionaly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="occasionally"
+            android:textSize="15sp" />
+
+        <RadioButton
+            android:id="@+id/alchoolEveryDay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="everyday"
+            android:textSize="15sp" />
+
+        <RadioButton
+            android:id="@+id/alchoolNever"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="never"
+            android:textSize="15sp" />
+
+    </RadioGroup>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="20dp"
+        android:alpha=".8"
+        android:text="drug Consomation"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <RadioButton
+            android:id="@+id/drugOften"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Often"
+            android:textSize="15dp" />
+
+        <RadioButton
+            android:id="@+id/drugOccasionaly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Occasionally"
+            android:textSize="15sp" />
+
+        <RadioButton
+            android:id="@+id/druglEveryDay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Everyday"
+            android:textSize="15sp" />
+
+        <RadioButton
+            android:id="@+id/drugNever"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Never"
+            android:textSize="15sp" />
+
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="20dp"
+        android:alpha=".8"
+        android:text="Tobaco Consomation"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <RadioButton
+            android:id="@+id/tobacoOften"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Often"
+            android:textSize="15dp" />
+
+        <RadioButton
+            android:id="@+id/tobacoOccasionaly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Occasionally"
+            android:textSize="15sp" />
+
+        <RadioButton
+            android:id="@+id/tobacoEveryDay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Everyday"
+            android:textSize="15sp" />
+
+        <RadioButton
+            android:id="@+id/tobacoNever"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Never"
+            android:textSize="15sp" />
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/bFinish"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="submit" />
+
+</LinearLayout>

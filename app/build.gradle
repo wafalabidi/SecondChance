@@ -58,6 +58,7 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.flaviofaria:kenburnsview:1.0.7'
     compile 'com.github.clans:fab:1.6.4'
+    compile 'com.eftimoff:android-viewpager-transformers:1.0.1@aar'
 
     compile project(':diagonallayout')
     compile('com.devbrackets.android:exomedia:3.0.5@aar') {

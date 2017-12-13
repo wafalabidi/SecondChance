@@ -19,6 +19,7 @@ import com.labidi.wafa.secondchance.API.RetrofitClient;
 import com.labidi.wafa.secondchance.API.UserService;
 import com.labidi.wafa.secondchance.Entities.ConfirmationResponse;
 import com.labidi.wafa.secondchance.Entities.InscriptionBody;
+import com.labidi.wafa.secondchance.FirstLoginActivity;
 import com.labidi.wafa.secondchance.R;
 import com.labidi.wafa.secondchance.TestActivity;
 import com.labidi.wafa.secondchance.Tools.MyTimeUtils;
@@ -105,7 +106,7 @@ public class SignUpFragment extends Fragment {
                         @Override
                         public void onResponse(Call<ConfirmationResponse> call, Response<ConfirmationResponse> response) {
                             if (response.isSuccessful()) {
-                                Intent intent = new Intent(getActivity() , TestActivity.class);
+                                Intent intent = new Intent(getActivity() , FirstLoginActivity.class);
                                 Bundle bundle = new Bundle();
                                 bundle.putString("firstName",user.getFirstName());
                                 bundle.putString("lastName",user.getLastName());

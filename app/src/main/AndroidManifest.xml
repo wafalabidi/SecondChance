@@ -3,6 +3,7 @@
     package="com.labidi.wafa.secondchance">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
@@ -10,7 +11,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="18"></uses-permission>
+        android:maxSdkVersion="18" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -54,10 +55,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/path">
-
-            </meta-data>
-
+                android:resource="@xml/path"></meta-data>
         </provider>
 
         <activity
@@ -74,6 +72,8 @@
             android:name=".Utils.FriendsWatcherService"
             android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <activity android:name=".FirstLoginActivity"></activity>
     </application>
 
 </manifest>
