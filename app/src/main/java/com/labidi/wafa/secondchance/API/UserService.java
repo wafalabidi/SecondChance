@@ -120,5 +120,15 @@ public interface UserService {
 
 
     }
+    public interface couverturepic {
+        @FormUrlEncoded
+        @POST("couverturepic.php")
+        Call<ResponseBody> couverturepic(@Field("image") String image,
+                                         @Field("idUser") int idUser,
+                                         @Field("title") String imageTitle
+        );
+
+
+    }
 
 }

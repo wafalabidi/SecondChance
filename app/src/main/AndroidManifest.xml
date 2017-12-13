@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.labidi.wafa.secondchance">
+    package="com.labidi.wafa.secondchance"
+    >
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -60,7 +61,12 @@
 
         <activity
             android:name=".UserProfileActivity"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" >
+                </action>
+            </intent-filter></activity>
         <activity
             android:name=".PendingFriendRequestActivity"
             android:parentActivityName=".MainActivity" />

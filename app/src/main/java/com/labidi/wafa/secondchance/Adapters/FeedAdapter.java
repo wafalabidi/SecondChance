@@ -1,12 +1,15 @@
 package com.labidi.wafa.secondchance.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -14,6 +17,7 @@ import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.labidi.wafa.secondchance.API.RetrofitClient;
 import com.labidi.wafa.secondchance.Entities.Post;
 import com.labidi.wafa.secondchance.Entities.User;
 import com.labidi.wafa.secondchance.MainActivity;
@@ -27,6 +31,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Wafa on 09/12/2017.
@@ -200,8 +205,17 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView ivUserProfile;
         @BindView(R.id.vImageRoot)
         FrameLayout vImageRoot;
-
+        @BindView(R.id.userProfilePic)
+        CircleImageView userProfilpic;
         FeedItem feedItem;
+        User currentUser ;
+        public User getCurrentUser() {
+            return currentUser;
+        }
+
+        public void setCurrentUser(User currentUser) {
+            this.currentUser = currentUser;
+        }
 
         public CellFeedViewHolder(View view) {
             super(view);
@@ -212,7 +226,15 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             this.feedItem = feedItem;
             int adapterPosition = getAdapterPosition();
             Picasso.with(FeedAdapter.this.context).load(post.getImage()).into(ivFeedCenter);
-
+            ivUserProfile.setText(post.getFirstName());
+            if(post.getImg_profile()!=""){
+                Picasso.with(context).load(RetrofitClient.BASE_URL+post.getImg_profile()).into(userProfilpic);
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                (  (Activity) context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                        WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            }
+            //ivUserProfile.setText(currentUser.getFirstName());
             // ivFeedCenter.setImageResource(adapterPosition % 2 == 0 ? R.drawable.img_feed_center_1 : R.drawable.img_feed_center_2);
             btnLike.setImageResource(R.drawable.ic_heart_red);// TODO Dynamize
             //  btnLike.setImageResource(feedItem.isLiked ? R.drawable.ic_heart_red : R.drawable.ic_heart_outline_grey);
