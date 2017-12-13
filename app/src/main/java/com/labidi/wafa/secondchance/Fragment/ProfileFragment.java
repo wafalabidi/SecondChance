@@ -71,6 +71,7 @@ import static com.labidi.wafa.secondchance.Fragment.HomeFragment.REQUEST_IMAGE_C
 
 public class ProfileFragment extends Fragment implements View.OnClickListener , PopupMenu.OnMenuItemClickListener {
     private static final int REQUEST_PHOTO = 2;
+    private static final int REQUEST_PHOTO1 =3;
     // tvNom .setText( User.name);
     TextView tv_user_firstname;
     TextView tv_work;
@@ -79,7 +80,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener , 
     Bitmap selectedImage;
     List<Post> posts;
     private RecyclerView recyclerView;
-
+    KenBurnsView couverture_pic;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -97,7 +98,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener , 
         tv_user_firstname.setText(User.FirstName);
         tv_work.setText(User.Work);
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
-
+        couverture_pic = (KenBurnsView) view.findViewById(R.id.couverture_pic);
+        couverture_pic.setOnClickListener(this);
+        couverture_pic.setImageResource(R.drawable.unknown);
+        if(User.imgcouverture!=""){
+            Picasso.with(getActivity()).load(RetrofitClient.BASE_URL+User.imgcouverture).into(couverture_pic);       }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
         cim_img_profile.setOnClickListener(this);
         if(User.imgprofile!=""){
             Picasso.with(getActivity()).load(User.imgprofile).into(cim_img_profile);       }
@@ -122,14 +131,19 @@ public class ProfileFragment extends Fragment implements View.OnClickListener , 
             showPopup(v);
 
         }
+        if(v.getId() == R.id.couverture_pic){
+            dispatchTakePictureIntent(REQUEST_PHOTO1);
+
+        }
+
     }
 
 
-    private void openGallery() {
+    private void openGallery(int request) {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, REQUEST_PHOTO);
+        startActivityForResult(intent, request);
 
     }
 
@@ -148,19 +162,30 @@ public class ProfileFragment extends Fragment implements View.OnClickListener , 
             Log.e("Image" , mCurrentPhotoPath) ;
             selectedImage = BitmapFactory.decodeFile(mCurrentPhotoPath);
             cim_img_profile.setImageBitmap(selectedImage);
-
             //galleryAddPic();
             //setPic();
         }
-        //Log.e("Image" , mCurrentPhotoPath) ;
-        if(selectedImage != null)
+         if (resultCode == RESULT_OK && requestCode == REQUEST_PHOTO1 && data != null) {
+            Uri path = data.getData();
+            try {
+                selectedImage = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), path);
+                couverture_pic.setImageBitmap(selectedImage);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }//Log.e("Image" , mCurrentPhotoPath) ;
+        if(selectedImage != null && requestCode == REQUEST_PHOTO)
             uploadPicture();
+        else
+            uploadPictureCouverture();
+
     }
 
     private void setPic() {
 
         Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
         cim_img_profile.setImageBitmap(bitmap);
+
     }
 
 
@@ -174,13 +199,48 @@ public class ProfileFragment extends Fragment implements View.OnClickListener , 
 
         RetrofitClient retrofitClient = new RetrofitClient();
         UserService.profilepic service = retrofitClient.getRetrofit().create(UserService.profilepic.class);
+        //UserService.
         Call<ResponseBody> call = service.profilepic( image,User.Id,title);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     progressDialog.dismiss();
-                    Toast.makeText(getActivity(), "ok", Toast.LENGTH_SHORT).show();
+                    User.imgprofile = RetrofitClient.BASE_URL+"Images/"+title+".jpg";
+                    Log.e("url",User.imgprofile);
+                } else {
+                    Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                if (t != null){
+                    Log.e("upload Errors" , t.getMessage());
+                }
+            }
+        });
+
+    }
+    private void uploadPictureCouverture() {
+        ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setTitle("Processing ... ");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        String image = convertImageToString(selectedImage) ;
+        String title = "Couverture_"+User.FirstName + User.LastName + System.currentTimeMillis();
+
+        RetrofitClient retrofitClient = new RetrofitClient();
+        UserService.couverturepic service = retrofitClient.getRetrofit().create(UserService.couverturepic.class);
+        //UserService.
+        Call<ResponseBody> call = service.couverturepic( image,User.Id,title);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    progressDialog.dismiss();
+                    User.imgcouverture = RetrofitClient.BASE_URL+"_"+"Images/"+title+".jpg";
+                    Log.e("url",User.imgcouverture);
                 } else {
                     Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
                 }
@@ -220,7 +280,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener , 
         return image;
     }
 
-    private void dispatchTakePictureIntent() {
+    private void dispatchTakePictureIntent(int request) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
             File photoFile = null;
@@ -254,6 +314,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener , 
         Uri contentUri = Uri.fromFile(f);
         mediaScanIntent.setData(contentUri);
         cim_img_profile.setImageURI(Uri.parse(mCurrentPhotoPath));
+        couverture_pic.setImageURI(Uri.parse(mCurrentPhotoPath));
         getActivity().sendBroadcast(mediaScanIntent);
 
     }
@@ -261,10 +322,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener , 
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.camera:
-                dispatchTakePictureIntent();
+                openGallery(REQUEST_PHOTO1);
                 return true ;
             case R.id.gallerie:
-                openGallery();
+                openGallery(REQUEST_PHOTO);
 
                 return true ;
             default:
@@ -300,13 +361,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener , 
                 } else {
                     Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
                 }
-                Log.e("Responsoe", response.message());
+                Log.e("Response", response.message());
 
             }
 
             @Override
             public void onFailure(Call<PostsResponse> call, Throwable t) {
-                Log.e("Responsoe", t.getMessage());
+                Log.e("Response", t.getMessage());
 
             }
         });

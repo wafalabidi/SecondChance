@@ -27,6 +27,7 @@ public class User {
     public static int Id;
     public static String kids;
     public static String imgprofile;
+    public static String imgcouverture;
     @SerializedName("FirstName")
     @Expose
     String firstName;
@@ -90,6 +91,10 @@ public class User {
     @SerializedName("Img_profile")
     @Expose
     String img_profile;
+
+    @SerializedName("Img_couverture")
+    @Expose
+    String img_couverture;
 
 
 
@@ -188,6 +193,14 @@ public class User {
 
     public void setHobbies(String hobbies) {
         this.hobbies = hobbies;
+    }
+
+    public String getImg_couverture() {
+        return img_couverture;
+    }
+
+    public void setImg_couverture(String img_couverture) {
+        this.img_couverture = img_couverture;
     }
 
     public int getId() {

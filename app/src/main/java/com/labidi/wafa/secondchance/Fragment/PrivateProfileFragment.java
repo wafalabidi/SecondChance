@@ -95,6 +95,7 @@ public class PrivateProfileFragment extends Fragment implements View.OnClickList
         cim_img_profile.setOnClickListener(this);
         tv_user_firstname.setText(currentUser.getFirstName());
         tv_work.setText(currentUser.getLastName());
+
         if(User.imgprofile!=""){
             Picasso.with(getActivity()).load(currentUser.getImg_profile()).into(cim_img_profile);       }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
