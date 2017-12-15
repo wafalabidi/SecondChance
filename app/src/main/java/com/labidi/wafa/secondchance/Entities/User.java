@@ -92,8 +92,8 @@ public class User {
     @Expose
     String img_profile;
 
-    @SerializedName("Img_couverture")
-    @Expose
+    //@SerializedName("Img_couverture")
+    //@Expose
     String img_couverture;
 
 

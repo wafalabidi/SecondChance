@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.labidi.wafa.secondchance.API.RetrofitClient;
 import com.labidi.wafa.secondchance.API.UserService;
 import com.labidi.wafa.secondchance.Entities.InscriptionBody;
+import com.labidi.wafa.secondchance.Entities.LoginBody;
 import com.labidi.wafa.secondchance.Entities.Response.LoginResponse;
 import com.labidi.wafa.secondchance.Entities.User;
 import com.labidi.wafa.secondchance.HomeActivity;
@@ -72,7 +73,7 @@ public class LoginFragment extends Fragment {
                     final ProgressDialog progressDialog = new ProgressDialog(getActivity());
                     progressDialog.setTitle("Processing ...");
                     progressDialog.show();
-                    InscriptionBody user = new InscriptionBody();
+                    LoginBody user = new LoginBody();
                     user.setMail(email_edittext.getText().toString());
                     user.setPassword(password_edittext.getText().toString());
                     RetrofitClient retrofitClient = new RetrofitClient();
@@ -107,6 +108,9 @@ public class LoginFragment extends Fragment {
                         }
 
                         public void onFailure(Call<LoginResponse> call, Throwable t) {
+                            Toast.makeText(getActivity(),
+                                    t.getMessage(), Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
                         }
                     });
 

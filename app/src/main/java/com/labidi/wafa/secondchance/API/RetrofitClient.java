@@ -15,8 +15,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient extends AppCompatActivity {
 
     //  private static final String BASE_URL ="http://172.16.153.116:8888/DivroceBook/";public static final String BASE_URL ="http://172.19.6.94:8888/DivroceBook/";
-    //public static final String BASE_URL ="http://10.0.2.2:8888/DivroceBook/";
-    public static final String BASE_URL = "http://172.16.209.160:80/DivroceBook/";
+    public static final String BASE_URL ="http://10.0.2.2:8888/DivroceBook/";
+    //public static final String BASE_URL = "http://172.16.209.160:80/DivroceBook/";
     //public static final String BASE_URL ="http://192.168.1.3:80/DivroceBook/";
     protected Retrofit retrofit;
 

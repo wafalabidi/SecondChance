@@ -2,6 +2,7 @@ package com.labidi.wafa.secondchance.API;
 
 import com.labidi.wafa.secondchance.Entities.ConfirmationResponse;
 import com.labidi.wafa.secondchance.Entities.InscriptionBody;
+import com.labidi.wafa.secondchance.Entities.LoginBody;
 import com.labidi.wafa.secondchance.Entities.Response.DemandesResponse;
 import com.labidi.wafa.secondchance.Entities.Response.LoginResponse;
 import com.labidi.wafa.secondchance.Entities.Response.PostsResponse;
@@ -86,7 +87,7 @@ public interface UserService {
 
     public interface LoginInterface {
         @POST("logIn.php")
-        Call<LoginResponse> userLogin(@Body InscriptionBody InscriptionBody);
+        Call<LoginResponse> userLogin(@Body LoginBody InscriptionBody);
     }
 
     public interface updateInfoInterface {
