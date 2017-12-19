@@ -67,26 +67,13 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         feedAdapter = new FeedAdapter(this);
-        getPosts();
         if (savedInstanceState == null) {
             pendingIntroAnimation = true;
         } else {
             feedAdapter.updateItems(false);
         }
-        lunchService();
     }
-    public void lunchService (){
 
-        ComponentName componentName = new ComponentName(this, FriendsWatcherService.class);
-        JobInfo.Builder builder = new JobInfo.Builder(101, componentName);
-        // builder.setMinimumLatency(1000);
-        builder.setPeriodic(15*60*1000);
-        builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_NONE);
-        builder.setPersisted(true);
-        jobInfo = builder.build();
-        JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
-        scheduler.schedule(jobInfo);
-    }
     private void setupFeed() {
     }
 
@@ -142,9 +129,11 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         startContentAnimation();
+
                     }
                 })
                 .start();
+
     }
 
     private void startContentAnimation() {
@@ -154,7 +143,12 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
                 .setStartDelay(300)
                 .setDuration(ANIM_DURATION_FAB)
                 .start();
+
         feedAdapter.updateItems(true);
+        getPosts();
+
+
+
     }
 
     @Override
@@ -162,7 +156,7 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
         //final Intent intent = new Intent(this, CommentsActivity.class);
         int[] startingLocation = new int[2];
         v.getLocationOnScreen(startingLocation);
-       // intent.putExtra(CommentsActivity.ARG_DRAWING_START_LOCATION, startingLocation[1]);
+        // intent.putExtra(CommentsActivity.ARG_DRAWING_START_LOCATION, startingLocation[1]);
         //startActivity(intent);
         overridePendingTransition(0, 0);
     }

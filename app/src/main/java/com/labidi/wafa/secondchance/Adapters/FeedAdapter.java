@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Build;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.labidi.wafa.secondchance.API.RetrofitClient;
 import com.labidi.wafa.secondchance.Entities.Post;

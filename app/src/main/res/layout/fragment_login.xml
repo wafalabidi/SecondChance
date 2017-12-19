@@ -52,7 +52,7 @@
                 android:hint="@string/email"
                 android:inputType="textEmailAddress"
                 android:singleLine="true"
-                android:text="fahdoun@gmx.fr"
+                android:text="wafe"
                 android:textColor="@color/white"
                 android:textColorHint="@color/light_text"
                 android:textSize="@dimen/text_size_medium" />
@@ -93,7 +93,7 @@
                 android:hint="@string/password"
                 android:inputType="textPassword"
                 android:singleLine="true"
-                android:text="wa"
+                android:text="wafe"
                 android:textColor="@color/white"
                 android:textColorHint="@color/light_text"
                 android:textSize="@dimen/text_size_medium" />

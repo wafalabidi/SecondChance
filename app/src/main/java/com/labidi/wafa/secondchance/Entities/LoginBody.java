@@ -10,9 +10,9 @@ import com.google.gson.annotations.SerializedName;
 public class LoginBody {
 
     @Expose
-    @SerializedName("Mail")
+    @SerializedName("mail")
     String mail;
-    @SerializedName("Password")
+    @SerializedName("password")
     @Expose
     String password;
 

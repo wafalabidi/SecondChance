@@ -21,7 +21,6 @@ import com.labidi.wafa.secondchance.Entities.ConfirmationResponse;
 import com.labidi.wafa.secondchance.Entities.InscriptionBody;
 import com.labidi.wafa.secondchance.FirstLoginActivity;
 import com.labidi.wafa.secondchance.R;
-import com.labidi.wafa.secondchance.TestActivity;
 import com.labidi.wafa.secondchance.Tools.MyTimeUtils;
 import com.labidi.wafa.secondchance.customfonts.MyEditText;
 import com.labidi.wafa.secondchance.customfonts.MyTextView;

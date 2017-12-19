@@ -165,7 +165,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener , 
             //galleryAddPic();
             //setPic();
         }
-         if (resultCode == RESULT_OK && requestCode == REQUEST_PHOTO1 && data != null) {
+        if (resultCode == RESULT_OK && requestCode == REQUEST_PHOTO1 && data != null) {
             Uri path = data.getData();
             try {
                 selectedImage = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), path);
