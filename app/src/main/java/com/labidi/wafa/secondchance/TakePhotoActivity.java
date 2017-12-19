@@ -73,7 +73,6 @@ public class TakePhotoActivity extends BaseActivity implements RevealBackgroundV
     private static final int STATE_TAKE_PHOTO = 0;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int  STATE_SETUP_PHOTO =1;
-    RvHomeAdapter rvHomeAdapter;
 
     @BindView(R.id.vRevealBackground)
     RevealBackgroundView vRevealBackground;
@@ -177,6 +176,7 @@ public class TakePhotoActivity extends BaseActivity implements RevealBackgroundV
     public void onTakePhotoClick() {
         btnTakePhoto.setEnabled(false);
         cameraView.takePicture(true, true);
+
         animateShutter();
     }
 
@@ -313,37 +313,6 @@ public class TakePhotoActivity extends BaseActivity implements RevealBackgroundV
             ivTakenPhoto.setVisibility(View.VISIBLE);
         }
     }
-    private void getPosts() {
-
-        RetrofitClient retrofitClient = new RetrofitClient();
-        UserService.insertPost service = retrofitClient.getRetrofit().create(UserService.insertPost.class);
-        Call<PostsResponse> call = service.getPost(User.Id);// TODO change user ID
-        call.enqueue(new Callback<PostsResponse>() {
-            @Override
-            public void onResponse(Call<PostsResponse> call, Response<PostsResponse> response) {
-
-                if (response.isSuccessful()) {
-                    for (Post p : response.body().getPost()
-                            ) {
-                        p.setImage(RetrofitClient.BASE_URL + p.getImage());
-                    }
-
-                    rvHomeAdapter.setItems(response.body().getPost());
-                    rvHomeAdapter.notifyDataSetChanged();
-                } else {
-                    Toast.makeText(TakePhotoActivity.this, response.message(), Toast.LENGTH_SHORT).show();
-                }
-                Log.e("Responsoe", response.message());
-
-            }
-
-            @Override
-            public void onFailure(Call<PostsResponse> call, Throwable t) {
-                Log.e("Responsoe", t.getMessage());
-
-            }
-        });
-    }
 
     private File createImageFile() throws IOException {
         // Create an image file name
@@ -361,36 +330,6 @@ public class TakePhotoActivity extends BaseActivity implements RevealBackgroundV
         return image;
     }
 
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(this.getPackageManager()) != null) {
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException ex) {
-                // Error occurred while creating the File
-
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(TakePhotoActivity.this,
-                        "com.labidi.wafa.secondchance",
-                        photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-            }
-        }
-    }
-
-    private void galleryAddPic() {
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        File f = new File(mCurrentPhotoPath);
-        Uri contentUri = Uri.fromFile(f);
-        mediaScanIntent.setData(contentUri);
-        //ivNewPost.setImageURI(Uri.parse(mCurrentPhotoPath));
-        //getActivity().sendBroadcast(mediaScanIntent);
-
-    }
 
     private void askForPermission(String permission, Integer requestCode) {
         if (ContextCompat.checkSelfPermission(TakePhotoActivity.this, permission) != PackageManager.PERMISSION_GRANTED) {

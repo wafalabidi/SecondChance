@@ -30,8 +30,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <provider
-            android:authorities="com.labidi.wafa.secondchance.Utils.SearchQueryProvider"
-            android:name=".Utils.SearchQueryProvider"/>
+            android:name=".Utils.SearchQueryProvider"
+            android:authorities="com.labidi.wafa.secondchance.Utils.SearchQueryProvider" />
+
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="sensorPortrait">
@@ -53,6 +54,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
@@ -65,7 +67,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/path"></meta-data>
+                android:resource="@xml/path" />
         </provider>
 
         <activity
@@ -73,7 +75,7 @@
             android:exported="true"
             android:parentActivityName=".MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"></action>
+                <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
@@ -88,8 +90,11 @@
             android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
-        <activity android:name=".FirstLoginActivity"></activity>
-        <activity android:name=".PublishActivity"></activity>
+        <activity android:name=".FirstLoginActivity" />
+        <activity android:name=".PublishActivity" />
+        <activity android:name=".CommentActivity"
+            android:parentActivityName=".MainActivity"
+            android:theme="@android:style/Theme.Material.Light.Dialog.NoActionBar"/>
     </application>
 
 </manifest>

@@ -2,6 +2,7 @@ package com.labidi.wafa.secondchance.Adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,7 @@ import android.widget.TextSwitcher;
 import android.widget.TextView;
 
 import com.labidi.wafa.secondchance.API.RetrofitClient;
+import com.labidi.wafa.secondchance.CommentActivity;
 import com.labidi.wafa.secondchance.Entities.Post;
 import com.labidi.wafa.secondchance.Entities.User;
 import com.labidi.wafa.secondchance.MainActivity;
@@ -118,6 +120,10 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 Post post = items.get(cellFeedViewHolder.getAdapterPosition());
                 onFeedItemClickListener.onProfileClick(view , post.getIdUser());
             }
+        });
+        cellFeedViewHolder.btnComments.setOnClickListener(view1 -> {
+            Intent intent = new Intent(context , CommentActivity.class);
+            context.startActivity(intent);
         });
     }
 

@@ -11,10 +11,13 @@ import android.view.MenuItem;
 import android.view.ViewTreeObserver;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.OnCheckedChanged;
@@ -49,7 +52,7 @@ public class PublishActivity extends BaseActivity {
         setContentView(R.layout.activity_publish);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_grey600_24dp);
         photoSize = getResources().getDimensionPixelSize(R.dimen.publish_photo_thumbnail_size);
-
+        Picasso.with(this).load((Uri) getIntent().getParcelableExtra(ARG_TAKEN_PHOTO_URI)).into(ivPhoto);
         if (savedInstanceState == null) {
             photoUri = getIntent().getParcelableExtra(ARG_TAKEN_PHOTO_URI);
         } else {

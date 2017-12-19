@@ -6,6 +6,7 @@
     android:clickable="true">
 
     <LinearLayout
+        android:background="@drawable/gradient_nav"
         android:id="@+id/vGlobalMenuHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -17,6 +18,7 @@
             android:layout_margin="12dp" />
 
         <TextView
+            android:id="@+id/tvNameDrawer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

@@ -5,14 +5,17 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.labidi.wafa.secondchance.Entities.User;
 import com.labidi.wafa.secondchance.Fragment.ProfileFragment;
 import com.labidi.wafa.secondchance.Utils.CircleTransformation;
 import com.squareup.picasso.Picasso;
@@ -66,8 +69,18 @@ public class BaseDrawerActivity extends BaseActivity implements NavigationView.O
     private void setupHeader() {
         vNavigation.setNavigationItemSelectedListener(this);
         View headerView = vNavigation.getHeaderView(0);
+        TextView tvName = headerView.findViewById(R.id.tvNameDrawer);
+        if (!TextUtils.isEmpty(User.FirstName)) {
+            String name = User.FirstName + "  " + User.LastName;
+            tvName.setText(name);
+        }
 
         ivMenuUserProfilePhoto = (ImageView) headerView.findViewById(R.id.ivMenuUserProfilePhoto);
+        if (!TextUtils.isEmpty(User.imgprofile)) {
+            Picasso.with(this).load(User.imgprofile).into(ivMenuUserProfilePhoto);
+        }else {
+
+        }
         headerView.findViewById(R.id.vGlobalMenuHeader).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,7 +121,7 @@ public class BaseDrawerActivity extends BaseActivity implements NavigationView.O
             Intent intent = new Intent(this, PendingFriendRequestActivity.class);
             startActivity(intent);
         } else if (item.getItemId() == R.id.menu_friends) {
-            Intent intent = new Intent(this , FriendsListActivity.class) ;
+            Intent intent = new Intent(this, FriendsListActivity.class);
             startActivity(intent);
         }
         return false;
