@@ -6,7 +6,7 @@
         android:icon="@drawable/ic_search"
         android:title="search"
         app:actionViewClass="android.support.v7.widget.SearchView"
-        app:showAsAction="always|collapseActionView"
+        app:showAsAction="ifRoom|withText"
         android:contentDescription="@string/type_research_here"
         />
 

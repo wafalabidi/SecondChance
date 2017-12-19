@@ -69,7 +69,7 @@ public class LoginFragment extends Fragment {
                     ((MyEditText) getView().findViewById(R.id.password_edittext)).setError(getString(R.string.empty));
                     ok = false;
                 }
-                if (ok){
+                if (ok) {
                     final ProgressDialog progressDialog = new ProgressDialog(getActivity());
                     progressDialog.setTitle("Processing ...");
                     progressDialog.show();
@@ -81,29 +81,34 @@ public class LoginFragment extends Fragment {
                     Call<LoginResponse> call = loginInterface.userLogin(user);
                     call.enqueue(new retrofit2.Callback<LoginResponse>() {
                         public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                            User user = response.body().getUser();
-                            user.FirstName = user.getFirstName();
-                            User.LastName = user.getLastName();
-                            User.Password = user.getPassword();
-                            User.Mail = user.getMail();
-                            User.BirthDate = user.getBirthDate();
-                            user.Eyes = user.getEyes();
-                            User.Size = user.getSize();
-                            User.Weight = user.getWeight();
-                            User.Shape = user.getShape();
-                            User.SkinColour = user.getSkinColour();
-                            User.Tobaco = user.getTobaco();
-                            User.Drug = user.getDrug();
-                            User.Work = user.getWork();
-                            User.Studies = user.getStudies();
-                            User.Alchool = user.getAlchool();
-                            User.Hobbies = user.getHobbies();
-                            User.Id = user.getId();
-                            User.kids = user.getChild();
-                            User.imgprofile = RetrofitClient.BASE_URL+user.getImg_profile();
-                            progressDialog.dismiss();
-                            Intent intent = new Intent(getActivity(), MainActivity.class);
-                           startActivity(intent);
+                            if (response.body() != null) {
+                                User user = response.body().getUser();
+                                user.FirstName = user.getFirstName();
+                                User.LastName = user.getLastName();
+                                User.Password = user.getPassword();
+                                User.Mail = user.getMail();
+                                User.BirthDate = user.getBirthDate();
+                                user.Eyes = user.getEyes();
+                                User.Size = user.getSize();
+                                User.Weight = user.getWeight();
+                                User.Shape = user.getShape();
+                                User.SkinColour = user.getSkinColour();
+                                User.Tobaco = user.getTobaco();
+                                User.Drug = user.getDrug();
+                                User.Work = user.getWork();
+                                User.Studies = user.getStudies();
+                                User.Alchool = user.getAlchool();
+                                User.Hobbies = user.getHobbies();
+                                User.Id = user.getId();
+                                User.kids = user.getChild();
+                                User.imgprofile = RetrofitClient.BASE_URL + user.getImg_profile();
+                                progressDialog.dismiss();
+                                Intent intent = new Intent(getActivity(), MainActivity.class);
+                                startActivity(intent);
+                            }else {
+                                progressDialog.dismiss();
+                                Toast.makeText(getActivity(), "Invalid creditential", Toast.LENGTH_SHORT).show();
+                            }
 
                         }
 

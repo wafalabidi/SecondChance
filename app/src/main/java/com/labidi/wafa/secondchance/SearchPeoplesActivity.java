@@ -1,7 +1,12 @@
 package com.labidi.wafa.secondchance;
 
 import android.app.ProgressDialog;
+import android.app.SearchManager;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.SearchRecentSuggestions;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,6 +29,7 @@ import com.labidi.wafa.secondchance.Entities.Demande;
 import com.labidi.wafa.secondchance.Entities.Response.DemandesResponse;
 import com.labidi.wafa.secondchance.Entities.Response.SearchResponse;
 import com.labidi.wafa.secondchance.Entities.User;
+import com.labidi.wafa.secondchance.Utils.SearchQueryProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +46,7 @@ import retrofit2.Response;
 
 public class SearchPeoplesActivity extends BaseDrawerActivity implements SearchView.OnQueryTextListener {
     List<Demande> friendList;
-
+    SearchView searchView;
     private ResearchResultAdapter adapter;
     @BindView(R.id.rvSearchResult)
     RecyclerView rvSearchResult;
@@ -58,16 +64,43 @@ public class SearchPeoplesActivity extends BaseDrawerActivity implements SearchV
         rvSearchResult.setLayoutManager(layoutManager);
         checkInvitation();
 
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search_item_menu, menu);
         MenuItem menuItem = menu.findItem(R.id.menu_toolbarSearch);
-        SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView = (SearchView) menuItem.getActionView();
         searchView.setOnQueryTextListener(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        searchView.setIconifiedByDefault(false);
+        searchView.requestFocus();
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        ComponentName componentName = new ComponentName(this, SearchPeoplesActivity.class);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName));
         return true;
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+
+        handleIntent(intent);
+
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
+                    SearchQueryProvider.authority, SearchQueryProvider.MODE);
+            suggestions.saveRecentQuery(query, null);
+        }
+
+    }
+
+    private void handleIntent(Intent intent) {
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            searchView.setQuery(query, true);
+        }
     }
 
     @Override
@@ -82,6 +115,11 @@ public class SearchPeoplesActivity extends BaseDrawerActivity implements SearchV
     }
 
     public void Search(String query) {
+
+        SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
+                SearchQueryProvider.authority, SearchQueryProvider.MODE);
+        suggestions.saveRecentQuery(query, null);
+
         ProgressBar progressBar = new ProgressBar(this, null, android.R.attr.progressBarStyleLarge);
         ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100);
         //params.addRule(RelativeLayout.CENTER_IN_PARENT);
@@ -135,9 +173,9 @@ public class SearchPeoplesActivity extends BaseDrawerActivity implements SearchV
                 progressDialog.dismiss();
                 if (response.body().getDemandes() != null) {
                     friendList = response.body().getDemandes();
-                    for (Demande d: friendList
-                         ) {
-                        Log.e("Demande" , d.toString());
+                    for (Demande d : friendList
+                            ) {
+                        Log.e("Demande", d.toString());
                     }
                 }
             }

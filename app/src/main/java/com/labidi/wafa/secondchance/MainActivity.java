@@ -2,12 +2,14 @@ package com.labidi.wafa.secondchance;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.ProgressDialog;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,22 +17,35 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.OvershootInterpolator;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.labidi.wafa.secondchance.API.RetrofitClient;
 import com.labidi.wafa.secondchance.API.UserService;
 import com.labidi.wafa.secondchance.Adapters.FeedAdapter;
 import com.labidi.wafa.secondchance.Adapters.FeedItemAnimator;
+import com.labidi.wafa.secondchance.Adapters.ResearchResultAdapter;
+import com.labidi.wafa.secondchance.Entities.Demande;
 import com.labidi.wafa.secondchance.Entities.Post;
+import com.labidi.wafa.secondchance.Entities.Response.DemandesResponse;
 import com.labidi.wafa.secondchance.Entities.Response.PostsResponse;
+import com.labidi.wafa.secondchance.Entities.Response.SearchResponse;
 import com.labidi.wafa.secondchance.Entities.User;
 import com.labidi.wafa.secondchance.Utils.FriendsWatcherService;
 import com.labidi.wafa.secondchance.view.FeedContextMenu;
 import com.labidi.wafa.secondchance.view.FeedContextMenuManager;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -49,6 +64,7 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
 
     private static final int ANIM_DURATION_TOOLBAR = 300;
     private static final int ANIM_DURATION_FAB = 400;
+    List<Demande> friendList;
 
     @BindView(R.id.rvFeed)
     RecyclerView rvFeed;
@@ -56,7 +72,6 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
     FloatingActionButton fabCreate;
     @BindView(R.id.content)
     CoordinatorLayout clContent;
-
     private FeedAdapter feedAdapter;
 
     private boolean pendingIntroAnimation;
@@ -92,7 +107,7 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
                 rvFeed.smoothScrollToPosition(0);
                 feedAdapter.showLoadingView();
             }
-        }, 500);
+        }, 10000);
     }
 
     @Override
@@ -148,7 +163,6 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
         getPosts();
 
 
-
     }
 
     @Override
@@ -167,11 +181,11 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
     }
 
     @Override
-    public void onProfileClick(View v,int iduser) {
+    public void onProfileClick(View v, int iduser) {
         int[] startingLocation = new int[2];
         v.getLocationOnScreen(startingLocation);
         startingLocation[0] += v.getWidth() / 2;
-        UserProfileActivity.startUserProfileFromLocation(startingLocation, this,iduser);
+        UserProfileActivity.startUserProfileFromLocation(startingLocation, this, iduser);
         overridePendingTransition(0, 0);
     }
 
@@ -207,6 +221,7 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
     public void showLikedSnackbar() {
         Snackbar.make(clContent, "Liked!", Snackbar.LENGTH_SHORT).show();
     }
+
     private void getPosts() {
 
         RetrofitClient retrofitClient = new RetrofitClient();
@@ -216,7 +231,7 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
             @Override
             public void onResponse(Call<PostsResponse> call, Response<PostsResponse> response) {
 
-                if (response.isSuccessful()&& response.body().getPost() != null) {
+                if (response.isSuccessful() && response.body().getPost() != null) {
                     for (Post p : response.body().getPost()
                             ) {
                         p.setImage(RetrofitClient.BASE_URL + p.getImage());
@@ -232,6 +247,7 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
                         protected int getExtraLayoutSpace(RecyclerView.State state) {
                             return 300;
                         }
+
                         @Override
                         public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
                             try {
@@ -262,6 +278,11 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
 
             }
         });
+    }
+
+    public void ResearchClicked(View view) {
+        Intent intent = new Intent(this, SearchPeoplesActivity.class);
+        startActivity(intent);
     }
 
 }

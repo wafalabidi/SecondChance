@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.labidi.wafa.secondchance"
-    >
+    package="com.labidi.wafa.secondchance">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -30,6 +29,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <provider
+            android:authorities="com.labidi.wafa.secondchance.Utils.SearchQueryProvider"
+            android:name=".Utils.SearchQueryProvider"/>
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="sensorPortrait">
@@ -46,7 +48,15 @@
         <activity android:name=".MainActivity" />
         <activity
             android:name=".SearchPeoplesActivity"
-            android:parentActivityName=".MainActivity" />
+            android:launchMode="singleTop"
+            android:parentActivityName=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -60,12 +70,12 @@
 
         <activity
             android:name=".UserProfileActivity"
-            android:parentActivityName=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:parentActivityName=".MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" >
-                </action>
-            </intent-filter></activity>
+                <action android:name="android.intent.action.MAIN"></action>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".PendingFriendRequestActivity"
             android:parentActivityName=".MainActivity" />
@@ -79,7 +89,7 @@
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <activity android:name=".FirstLoginActivity"></activity>
-        <activity android:name=".PublishActivity">  </activity>
+        <activity android:name=".PublishActivity"></activity>
     </application>
 
 </manifest>

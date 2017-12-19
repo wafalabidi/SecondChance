@@ -37,8 +37,6 @@ public class FriendsWatcherService extends JobService {
     public boolean onStartJob(JobParameters jobParameters) {
         prepareNotification();
         checkPost(jobParameters);
-
-
         return false;
     }
 
