@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.labidi.wafa.secondchance.API.RetrofitClient;
 import com.labidi.wafa.secondchance.CommentActivity;
@@ -123,7 +124,12 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         });
         cellFeedViewHolder.btnComments.setOnClickListener(view1 -> {
             Intent intent = new Intent(context , CommentActivity.class);
-            context.startActivity(intent);
+            if (items.get(cellFeedViewHolder.getAdapterPosition()).getidPost() != 0) {
+                intent.putExtra("idPost", items.get(cellFeedViewHolder.getAdapterPosition()).getidPost());
+                context.startActivity(intent);
+            }
+            else
+                Toast.makeText(context, "Eroor", Toast.LENGTH_SHORT).show();
         });
     }
 

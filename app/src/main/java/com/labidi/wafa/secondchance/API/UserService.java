@@ -1,26 +1,23 @@
 package com.labidi.wafa.secondchance.API;
 
+import com.labidi.wafa.secondchance.Entities.Commentaire;
 import com.labidi.wafa.secondchance.Entities.ConfirmationResponse;
 import com.labidi.wafa.secondchance.Entities.InscriptionBody;
 import com.labidi.wafa.secondchance.Entities.LoginBody;
+import com.labidi.wafa.secondchance.Entities.Response.CommentaireResponse;
 import com.labidi.wafa.secondchance.Entities.Response.DemandesResponse;
 import com.labidi.wafa.secondchance.Entities.Response.LoginResponse;
 import com.labidi.wafa.secondchance.Entities.Response.PostsResponse;
 import com.labidi.wafa.secondchance.Entities.Response.SearchResponse;
 import com.labidi.wafa.secondchance.Entities.User;
 
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 /**
@@ -130,6 +127,13 @@ public interface UserService {
         );
 
 
+    }
+    interface Commentaire {
+        @FormUrlEncoded
+        @POST("getCommentaire.php")
+        Call<CommentaireResponse> getCommentaire (@Field("idPost") int idPost);
+        @POST("insertCommentaire.php")
+        Call<ConfirmationResponse>comment(@Body com.labidi.wafa.secondchance.Entities.Commentaire commentaire);
     }
 
 }

@@ -14,9 +14,31 @@ public class Commentaire extends User {
     @Expose
     @SerializedName("IdPost")
     int idPost;
+    @Expose
+    @SerializedName("IdCom")
+    int idCom ;
+    @Expose
+    @SerializedName("IdUser")
+    int idUser ;
+
+    public int getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
+    }
 
     public Commentaire() {
 
+    }
+
+    public int getIdCom() {
+        return idCom;
+    }
+
+    public void setIdCom(int idCom) {
+        this.idCom = idCom;
     }
 
     public int getIdPost() {
