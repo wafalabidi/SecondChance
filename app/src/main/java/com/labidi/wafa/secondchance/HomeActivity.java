@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.support.transition.TransitionManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -79,7 +80,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         fabCamera = findViewById(R.id.menu_camera);
         fabGallery = findViewById(R.id.menu_gallery);
 
-
+        TransitionManager.beginDelayedTransition(getContentScene().getSceneRoot());
     }
 
     @OnClick(R.id.menu_camera)

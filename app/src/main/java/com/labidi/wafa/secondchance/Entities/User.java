@@ -97,60 +97,77 @@ public class User {
     String img_couverture;
 
 
-
-    public User(){
+    public User() {
     }
+
     public String getBirthDate() {
         return birthDate;
     }
+
     public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
     }
+
     public String getEyes() {
         return eyes;
     }
+
     public void setEyes(String eyes) {
         this.eyes = eyes;
     }
+
     public String getSize() {
         return size;
     }
+
     public void setSize(String size) {
         this.size = size;
     }
+
     public String getWeight() {
         return weight;
     }
+
     public void setWeight(String weight) {
         this.weight = weight;
     }
+
     public String getShape() {
         return shape;
     }
+
     public void setShape(String shape) {
         this.shape = shape;
     }
+
     public String getSkinColour() {
         return skinColour;
     }
+
     public void setSkinColour(String skinColour) {
         this.skinColour = skinColour;
     }
+
     public String getAlchool() {
         return alchool;
     }
+
     public void setAlchool(String alchool) {
         this.alchool = alchool;
     }
+
     public String getTobaco() {
         return tobaco;
     }
+
     public void setTobaco(String tobaco) {
         this.tobaco = tobaco;
     }
+
     public String getDrug() {
         return drug;
     }
+
     public void setDrug(String drug) {
         this.drug = drug;
     }
@@ -270,5 +287,35 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public static boolean isSet() {
+        if (User.Id != 0 && User.FirstName != "") {
+            return false;
+        }
+        return false;
+    }
+
+    public static void Disconect() {
+        FirstName = "";
+        LastName = "";
+        Password = "";
+        Mail = "";
+        BirthDate = "";
+        Eyes = "";
+        Size = "";
+        Weight = "";
+        Shape = "";
+        SkinColour = "";
+        Tobaco = "";
+        Drug = "";
+        Work = "";
+        Studies = "";
+        Alchool = "";
+        Hobbies = "";
+        Id = 0;
+        kids = "";
+        imgprofile = "";
+        imgcouverture = "";
     }
 }

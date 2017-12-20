@@ -76,8 +76,12 @@ public class BaseDrawerActivity extends BaseActivity implements NavigationView.O
         }
 
         ivMenuUserProfilePhoto = (ImageView) headerView.findViewById(R.id.ivMenuUserProfilePhoto);
+        ivMenuUserProfilePhoto.setOnClickListener(v->{
+            //TODO ici ouvrir le profil de la perosonne conécté
+        });
         if (!TextUtils.isEmpty(User.imgprofile)) {
             Picasso.with(this).load(User.imgprofile).into(ivMenuUserProfilePhoto);
+
         }else {
 
         }

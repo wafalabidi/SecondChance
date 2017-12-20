@@ -39,6 +39,8 @@ public class LoginActivity extends BaseActivity {
         animationDrawable = (AnimationDrawable) relativeLayout.getBackground();
         animationDrawable.setEnterFadeDuration(1000);
         animationDrawable.setExitFadeDuration(2000);
+
+
     }
     @Override
     protected void onResume() {

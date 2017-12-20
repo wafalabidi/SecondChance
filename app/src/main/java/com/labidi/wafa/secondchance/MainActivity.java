@@ -285,4 +285,9 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
         startActivity(intent);
     }
 
+    @Override
+    public void onBackPressed() {
+
+    }
+
 }
