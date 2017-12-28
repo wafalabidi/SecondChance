@@ -6,14 +6,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.widget.FrameLayout;
 
 import com.labidi.wafa.secondchance.API.RetrofitClient;
 import com.labidi.wafa.secondchance.API.UserService;
+import com.labidi.wafa.secondchance.Entities.Demande;
 import com.labidi.wafa.secondchance.Entities.Response.LoginResponse;
 import com.labidi.wafa.secondchance.Entities.User;
+import com.labidi.wafa.secondchance.Fragment.PictureListFragment;
 import com.labidi.wafa.secondchance.Fragment.PrivateProfileFragment;
 import com.labidi.wafa.secondchance.Fragment.ProfileFragment;
 
@@ -30,8 +33,7 @@ import static com.labidi.wafa.secondchance.TakePhotoActivity.ARG_REVEAL_START_LO
  */
 
 public class UserProfileActivity extends BaseDrawerActivity {
-    @BindView(R.id.fl)
-    FrameLayout frameLayout;
+
 
 
     public static void startUserProfileFromLocation(int[] startingLocation, Activity startingActivity,int idUser) {
@@ -50,10 +52,18 @@ public class UserProfileActivity extends BaseDrawerActivity {
         ButterKnife.bind(this);
         int idUser = getIntent().getIntExtra("idUser", 0);
         if (idUser == 0 || idUser == User.Id) {
-            commitFragment(new ProfileFragment());
+            new ProfileFragment();
         } else {
             getUser(idUser);
         }
+        ProfileFragment profileFragment = new ProfileFragment();
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction().replace(R.id.UserProfileLayout, profileFragment,profileFragment.getTag())
+                .commit();
+            PictureListFragment pictureListFragment= new PictureListFragment();
+            manager.beginTransaction().replace(R.id.PostLayout, pictureListFragment,pictureListFragment.getTag())
+                    .commit();
+
 
     }
 
@@ -78,7 +88,6 @@ public class UserProfileActivity extends BaseDrawerActivity {
                     User user = response.body().getUser();
                     PrivateProfileFragment privateProfileFragment = new PrivateProfileFragment();
                     privateProfileFragment.setCurrentUser(user);
-                    commitFragment(privateProfileFragment);
                     progressDialog.dismiss();
                 }
             }
@@ -90,10 +99,5 @@ public class UserProfileActivity extends BaseDrawerActivity {
         });
     }
 
-    public void commitFragment(Fragment f) {
 
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.replace(R.id.fl, f).commit();
-    }
 }

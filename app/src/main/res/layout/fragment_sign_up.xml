@@ -49,7 +49,9 @@
         <RelativeLayout
             android:id="@+id/first_name_layout"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="50dp"
+
+            tools:ignore="DuplicateIds">
 
             <ImageView
                 android:id="@+id/user_icon"
@@ -229,6 +231,69 @@
                 android:layout_height="1dp"
                 android:layout_alignParentBottom="true"
                 android:background="@color/divider" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/gender_layout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <RadioGroup
+                android:id="@+id/rd"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="20dp"
+                         />
+
+                    <android.support.v7.widget.AppCompatRadioButton
+                        android:id="@+id/br_women"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="40dp"
+                        android:onClick="onRadioButtonClicked"
+                        android:shadowColor="@color/white"
+                        android:textColor="@color/white"
+                        android:text="@string/female" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_marginLeft="100dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="20dp"
+                        android:id="@+id/imageView3" />
+
+                    <android.support.v7.widget.AppCompatRadioButton
+                        android:id="@+id/br_man"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_alignParentTop="true"
+                        android:layout_alignStart="@+id/imageView3"
+                        android:onClick="onRadioButtonClicked"
+                        android:text="@string/male"
+                        android:textColor="@color/white"/>
+                </RelativeLayout>
+
+            </RadioGroup>
+
+
         </RelativeLayout>
     </LinearLayout>
 

@@ -14,18 +14,13 @@ public class User {
     public static String Mail;
     public static String BirthDate;
     public static String Eyes;
-    public static String Size;
-    public static String Weight;
     public static String Shape;
     public static String SkinColour;
-    public static String Tobaco;
-    public static String Drug;
+    public static String gender;
     public static String Work;
     public static String Studies;
-    public static String Alchool;
     public static String Hobbies;
     public static int Id;
-    public static String kids;
     public static String imgprofile;
     public static String imgcouverture;
     @SerializedName("FirstName")
@@ -55,27 +50,15 @@ public class User {
     @SerializedName("Eyes")
     @Expose
     String eyes;
-    @SerializedName("Size")
-    @Expose
-    String size;
-    @SerializedName("Weight")
-    @Expose
-    String weight;
+
+
     @SerializedName("Shape")
     @Expose
     String shape;
     @SerializedName("SkinColour")
     @Expose
     String skinColour;
-    @SerializedName("Alchool")
-    @Expose
-    String alchool;
-    @SerializedName("Tobaco")
-    @Expose
-    String tobaco;
-    @SerializedName("Drug")
-    @Expose
-    String drug;
+
     @SerializedName("Work")
     @Expose
     String work;
@@ -92,8 +75,8 @@ public class User {
     @Expose
     String img_profile;
 
-    //@SerializedName("Img_couverture")
-    //@Expose
+    @SerializedName("Img_couverture")
+    @Expose
     String img_couverture;
 
 
@@ -116,21 +99,7 @@ public class User {
         this.eyes = eyes;
     }
 
-    public String getSize() {
-        return size;
-    }
 
-    public void setSize(String size) {
-        this.size = size;
-    }
-
-    public String getWeight() {
-        return weight;
-    }
-
-    public void setWeight(String weight) {
-        this.weight = weight;
-    }
 
     public String getShape() {
         return shape;
@@ -148,29 +117,6 @@ public class User {
         this.skinColour = skinColour;
     }
 
-    public String getAlchool() {
-        return alchool;
-    }
-
-    public void setAlchool(String alchool) {
-        this.alchool = alchool;
-    }
-
-    public String getTobaco() {
-        return tobaco;
-    }
-
-    public void setTobaco(String tobaco) {
-        this.tobaco = tobaco;
-    }
-
-    public String getDrug() {
-        return drug;
-    }
-
-    public void setDrug(String drug) {
-        this.drug = drug;
-    }
 
     public String getImg_profile() {
         return img_profile;
@@ -243,13 +189,8 @@ public class User {
                 ", id=" + id +
                 ", birthDate='" + birthDate + '\'' +
                 ", eyes='" + eyes + '\'' +
-                ", size='" + size + '\'' +
-                ", weight='" + weight + '\'' +
                 ", shape='" + shape + '\'' +
                 ", skinColour='" + skinColour + '\'' +
-                ", alchool='" + alchool + '\'' +
-                ", tobaco='" + tobaco + '\'' +
-                ", drug='" + drug + '\'' +
                 ", work='" + work + '\'' +
                 ", studies='" + studies + '\'' +
                 ", child='" + child + '\'' +
@@ -303,18 +244,12 @@ public class User {
         Mail = "";
         BirthDate = "";
         Eyes = "";
-        Size = "";
-        Weight = "";
         Shape = "";
         SkinColour = "";
-        Tobaco = "";
-        Drug = "";
         Work = "";
         Studies = "";
-        Alchool = "";
         Hobbies = "";
         Id = 0;
-        kids = "";
         imgprofile = "";
         imgcouverture = "";
     }

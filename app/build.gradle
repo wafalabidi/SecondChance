@@ -15,6 +15,8 @@ android {
     repositories {
         maven { url 'https://github.com/500px/greedo-layout-for-android/raw/master/releases/' }
         maven { url "https://s3.amazonaws.com/repo.commonsware.com" }
+        maven { url "https://jitpack.io" }
+
 
 
     }
@@ -73,5 +75,13 @@ dependencies {
     compile 'com.commonsware.cwac:camera:0.7.0'
     compile 'com.android.support:palette-v7:26.1.0'
     compile 'com.github.techfreak:wizardpager:1.0.0'
+    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
+
+    compile "agency.tango.android:material-intro-screen:0.0.5"
+    compile 'com.github.ceryle:RadioRealButton:v2.1.1'
+    compile 'com.github.mukeshsolanki:country-picker-android:1.2.0'
+    compile 'com.hbb20:ccp:2.1.1'
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+
 
 }

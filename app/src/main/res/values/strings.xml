@@ -21,6 +21,10 @@
     <string name="reset_password_button_clicked">Reset Password button clicked</string>
     <string name="empty_username">Empty</string>
     <string name="empty">Empty</string>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
+    <string name="photo">PHOTO</string>
+
     <string-array name="user_photos">
         <item>http://scontent-a-fra.cdninstagram.com/hphotos-xpf1/t51.2885-15/s306x306/e15/10665483_429615813855717_1490926670_n.jpg</item>
         <item>http://scontent-b-fra.cdninstagram.com/hphotos-xaf1/t51.2885-15/s306x306/e15/10891026_694434897342602_1094773634_n.jpg</item>
@@ -69,4 +73,9 @@
         <item>Chubby </item>
         <item>Slim </item>
     </string-array>
+    <string name="facebook_app_id">150711968906309</string>
+    <string name="fb_login_protocol_scheme">fb150711968906309</string>
+    <string name="error_message">Please accept terms and conditions first.</string>
+
+
 </resources>

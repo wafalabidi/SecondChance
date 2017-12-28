@@ -72,14 +72,11 @@ import static com.labidi.wafa.secondchance.Fragment.HomeFragment.REQUEST_IMAGE_C
 public class ProfileFragment extends Fragment implements View.OnClickListener , PopupMenu.OnMenuItemClickListener {
     private static final int REQUEST_PHOTO = 2;
     private static final int REQUEST_PHOTO1 =3;
-    // tvNom .setText( User.name);
     TextView tv_user_firstname;
     TextView tv_work;
     CircleImageView cim_img_profile;
     private String mCurrentPhotoPath;
     Bitmap selectedImage;
-    List<Post> posts;
-    private RecyclerView recyclerView;
     KenBurnsView couverture_pic;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -97,33 +94,30 @@ public class ProfileFragment extends Fragment implements View.OnClickListener , 
         cim_img_profile = (CircleImageView)getView().findViewById(R.id.avatar);
         tv_user_firstname.setText(User.FirstName);
         tv_work.setText(User.Work);
-        recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
-        couverture_pic = (KenBurnsView) view.findViewById(R.id.couverture_pic);
-        couverture_pic.setOnClickListener(this);
-        couverture_pic.setImageResource(R.drawable.unknown);
-        if(User.imgcouverture!=""){
-            Picasso.with(getActivity()).load(RetrofitClient.BASE_URL+User.imgcouverture).into(couverture_pic);       }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
+        couverture_pic=(KenBurnsView)getView().findViewById(R.id.couverture_pic);
         cim_img_profile.setOnClickListener(this);
+        couverture_pic.setOnClickListener(this);
         if(User.imgprofile!=""){
             Picasso.with(getActivity()).load(User.imgprofile).into(cim_img_profile);       }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
+        if(User.imgcouverture!=""){
+            Picasso.with(getActivity()).load(User.imgcouverture).into(couverture_pic);       }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
+        tv_user_firstname.setText(User.FirstName);
+        tv_work.setText(User.LastName);
 
-        //Grid profile
 
 
-        int spacing = MeasUtils.dpToPx(4, getActivity());
-        recyclerView.addItemDecoration(new GreedoSpacingItemDecoration(spacing));
-        getPosts();
 
 
     }
+
 
     @Override
     public void onClick(View v) {
@@ -132,8 +126,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener , 
 
         }
         if(v.getId() == R.id.couverture_pic){
-            dispatchTakePictureIntent(REQUEST_PHOTO1);
-
+            showPopup(v);
         }
 
     }
@@ -185,6 +178,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener , 
 
         Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath);
         cim_img_profile.setImageBitmap(bitmap);
+        couverture_pic.setImageBitmap(bitmap);
+
 
     }
 
@@ -332,45 +327,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener , 
                 return false;
         }
     }
-    private void getPosts() {
 
-        RetrofitClient retrofitClient = new RetrofitClient();
-        UserService.insertPost service = retrofitClient.getRetrofit().create(UserService.insertPost.class);
-        Call<PostsResponse> call = service.getPost(User.Id);// TODO change user ID
-        call.enqueue(new Callback<PostsResponse>() {
-            @Override
-            public void onResponse(Call<PostsResponse> call, Response<PostsResponse> response) {
-
-                if (response.isSuccessful()) {
-                    for (Post p : response.body().getPost()
-                            ) {
-                        p.setImage(RetrofitClient.BASE_URL + p.getImage());
-                        Log.e("farhat",p.toString());
-
-                    }
-                    posts= response.body().getPost();
-                    PhotosAdapter photosAdapter = new PhotosAdapter(getActivity(),posts);
-                    recyclerView.setAdapter(photosAdapter);
-
-                    final GreedoLayoutManager layoutManager = new GreedoLayoutManager(photosAdapter);
-                    layoutManager.setMaxRowHeight(MeasUtils.dpToPx(150, getActivity()));
-
-                    recyclerView.setLayoutManager(layoutManager);
-                    photosAdapter.notifyDataSetChanged();
-
-                } else {
-                    Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
-                }
-                Log.e("Response", response.message());
-
-            }
-
-            @Override
-            public void onFailure(Call<PostsResponse> call, Throwable t) {
-                Log.e("Response", t.getMessage());
-
-            }
-        });
-    }
 
 }

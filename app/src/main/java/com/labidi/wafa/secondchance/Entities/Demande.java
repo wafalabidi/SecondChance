@@ -7,12 +7,16 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class Demande extends User {
+    public static int friend;
+
+
     @SerializedName("idUser")
     int idUser;
     @SerializedName("idUser2")
     int idUser2;
     @SerializedName("state")
     int state;
+
 
     @Override
     public String toString() {

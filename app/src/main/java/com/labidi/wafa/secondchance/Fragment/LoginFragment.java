@@ -4,8 +4,10 @@ package com.labidi.wafa.secondchance.Fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,21 +15,38 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.labidi.wafa.secondchance.API.RetrofitClient;
 import com.labidi.wafa.secondchance.API.UserService;
+import com.labidi.wafa.secondchance.Entities.ConfirmationResponse;
 import com.labidi.wafa.secondchance.Entities.InscriptionBody;
 import com.labidi.wafa.secondchance.Entities.LoginBody;
 import com.labidi.wafa.secondchance.Entities.Response.LoginResponse;
 import com.labidi.wafa.secondchance.Entities.User;
+import com.labidi.wafa.secondchance.FirstLoginActivity;
 import com.labidi.wafa.secondchance.HomeActivity;
 import com.labidi.wafa.secondchance.MainActivity;
 import com.labidi.wafa.secondchance.R;
 import com.labidi.wafa.secondchance.customfonts.MyEditText;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,7 +56,8 @@ public class LoginFragment extends Fragment {
 
     EditText email_edittext;
     EditText password_edittext;
-
+    LoginButton facebook_login;
+    CallbackManager callbackManager;
     public LoginFragment() {
         // Required empty public constructor
     }
@@ -56,7 +76,37 @@ public class LoginFragment extends Fragment {
         //Cast
         email_edittext = (EditText) getView().findViewById(R.id.email_edittext);
         password_edittext = (EditText) getView().findViewById(R.id.password_edittext);
+        facebook_login= (LoginButton) getView().findViewById(R.id.facebook_login);
+        facebook_login.setReadPermissions("email");
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        callbackManager = CallbackManager.Factory.create();
+        facebook_login.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+               String userId= loginResult.getAccessToken().getUserId();
+                GraphRequest  graphRequest = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(JSONObject object, GraphResponse response) {
+                        displayUserInfo(object);
+                    }
+                });
+                        Bundle parameters = new Bundle();
+                        parameters.putString("fields","firts_name,last_name,email,id");
+                        graphRequest.setParameters(parameters);
+                        graphRequest.executeAsync();
+            }
 
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Log.e("hello","ljl");
+
+            }
+        });
         getView().findViewById(R.id.login_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,18 +139,12 @@ public class LoginFragment extends Fragment {
                                 User.Mail = user.getMail();
                                 User.BirthDate = user.getBirthDate();
                                 user.Eyes = user.getEyes();
-                                User.Size = user.getSize();
-                                User.Weight = user.getWeight();
                                 User.Shape = user.getShape();
                                 User.SkinColour = user.getSkinColour();
-                                User.Tobaco = user.getTobaco();
-                                User.Drug = user.getDrug();
                                 User.Work = user.getWork();
                                 User.Studies = user.getStudies();
-                                User.Alchool = user.getAlchool();
                                 User.Hobbies = user.getHobbies();
                                 User.Id = user.getId();
-                                User.kids = user.getChild();
                                 User.imgprofile = RetrofitClient.BASE_URL + user.getImg_profile();
                                 progressDialog.dismiss();
                                 Intent intent = new Intent(getActivity(), MainActivity.class);
@@ -126,4 +170,60 @@ public class LoginFragment extends Fragment {
         });
 
     }
+
+
+    public void displayUserInfo(JSONObject object){
+        String first_name, last_name , email ,id;
+        try {
+            first_name = object.getString("first_name");
+            last_name = object.getString("last_name");
+            email = object.getString("email");
+            id = object.getString("id");
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final InscriptionBody user = new InscriptionBody();
+        //user.setFirstName(first_name.getText().toString());
+        RetrofitClient retrofitClient = new RetrofitClient();
+        UserService.RegisterInterface registerInterface = retrofitClient.getRetrofit().create(UserService.RegisterInterface.class);
+        Call<ConfirmationResponse> call = registerInterface.studentLogin(user);
+        call.enqueue(new Callback<ConfirmationResponse>() {
+            @Override
+            public void onResponse(Call<ConfirmationResponse> call, Response<ConfirmationResponse> response) {
+                if (response.isSuccessful()) {
+                    Intent intent = new Intent(getActivity() , MainActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("firstName",user.getFirstName());
+                    bundle.putString("lastName",user.getLastName());
+                    bundle.putString("mail", user.getMail());
+                    bundle.putString("password", user.getPassword());
+                    bundle.putString("birthdate",user.getBirthdate());
+                    intent.putExtras(bundle);
+
+
+                    startActivity(intent);
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ConfirmationResponse> call, Throwable t) {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+                dialog.setMessage("failed to register");
+                dialog.create().show();
+
+            }
+        });
+
+
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
 }

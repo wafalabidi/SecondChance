@@ -26,7 +26,7 @@ import retrofit2.http.Query;
 
 public interface UserService {
     public interface RegisterInterface {
-        @POST("registerUser.php")
+        @POST("test.php")
         Call<ConfirmationResponse> studentLogin(@Body InscriptionBody inscriptionBody);
 
         @FormUrlEncoded
@@ -106,6 +106,9 @@ public interface UserService {
 
         @GET("getAllPost.php")
         Call<PostsResponse> getAllPost(@Query("idUser") int idUser);
+
+        @GET("getOnPost.php")
+        Call<PostsResponse> getOnPost(@Query("idUser") int idUser);
     }
 
     public interface profilepic {
@@ -128,6 +131,7 @@ public interface UserService {
 
 
     }
+
     interface Commentaire {
         @FormUrlEncoded
         @POST("getCommentaire.php")
