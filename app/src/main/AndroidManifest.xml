@@ -85,7 +85,6 @@
         <activity
             android:name=".FriendsListActivity"
             android:parentActivityName=".MainActivity" />
-
         <service
             android:name=".Utils.FriendsWatcherService"
             android:exported="true"
@@ -93,7 +92,11 @@
 
         <activity android:name=".FirstLoginActivity"
            />
+        <activity android:name=".DialogListActivity"
+            android:parentActivityName=".DialogsActivity">
 
+        </activity>
+        <activity android:name=".DialogsActivity"></activity>
         <activity android:name=".PublishActivity" />
         <activity android:name=".CommentActivity"
             android:parentActivityName=".MainActivity"

@@ -1,5 +1,7 @@
 package com.labidi.wafa.secondchance.Fragment;
 
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -7,13 +9,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.labidi.wafa.secondchance.Entities.Post;
+import com.labidi.wafa.secondchance.Entities.User;
 import com.labidi.wafa.secondchance.R;
 import com.labidi.wafa.secondchance.Utils.SquareImageView;
 import com.labidi.wafa.secondchance.Utils.UniversalImageLoader;
+import com.squareup.picasso.Picasso;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Created by macbook on 26/12/2017.
@@ -22,13 +30,14 @@ import com.labidi.wafa.secondchance.Utils.UniversalImageLoader;
 public class ViewPostFragment extends Fragment {
     private static final String TAG = "ViewPostFragment";
 
+
     public ViewPostFragment(){
         super();
         setArguments(new Bundle());
     }
 
 
-
+    String imageUrl;
     //widgets
     private SquareImageView mPostImage;
     //private BottomNavigationViewEx bottomNavigationView;
@@ -56,6 +65,15 @@ public class ViewPostFragment extends Fragment {
         mHeartRed = (ImageView) view.findViewById(R.id.image_heart_red);
         mHeartWhite = (ImageView) view.findViewById(R.id.image_heart);
         mProfileImage = (ImageView) view.findViewById(R.id.profile_photo);
+        Bundle bundle=getArguments();
+        mPostImage.setImageURI(Uri.parse((String.valueOf(bundle.getString("email")))));
+        Toast.makeText(getApplicationContext(), imageUrl + " is clicked!", Toast.LENGTH_SHORT).show();
+        if(imageUrl!=""){
+            Picasso.with(getActivity()).load(imageUrl).into(mPostImage);       }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
 
         try{
             mPhoto = getPhotoFromBundle();

@@ -1,49 +1,47 @@
 package com.labidi.wafa.secondchance.Fragment;
 
-import android.app.FragmentContainer;
 import android.content.Context;
-import android.os.Build;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.GridView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fivehundredpx.greedolayout.GreedoLayoutManager;
 import com.fivehundredpx.greedolayout.GreedoSpacingItemDecoration;
-import com.flaviofaria.kenburnsview.KenBurnsView;
 import com.labidi.wafa.secondchance.API.RetrofitClient;
 import com.labidi.wafa.secondchance.API.UserService;
 import com.labidi.wafa.secondchance.Adapters.PhotosAdapter;
 import com.labidi.wafa.secondchance.Entities.Post;
 import com.labidi.wafa.secondchance.Entities.Response.PostsResponse;
 import com.labidi.wafa.secondchance.Entities.User;
+import com.labidi.wafa.secondchance.MainActivity;
 import com.labidi.wafa.secondchance.MeasUtils;
-import com.labidi.wafa.secondchance.OnItemClickListener;
 import com.labidi.wafa.secondchance.R;
-import com.squareup.picasso.Picasso;
+import com.labidi.wafa.secondchance.RecyclerViewClickListener;
+import com.labidi.wafa.secondchance.RecyclerViewTouchListener;
 
 import java.util.List;
 
-import agency.tango.materialintroscreen.animations.wrappers.NextButtonTranslationWrapper;
-import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Created by macbook on 24/12/2017.
  */
 
 public class PictureListFragment extends Fragment {
+
 
     List<Post> posts;
     private RecyclerView recyclerView;
@@ -61,8 +59,28 @@ public class PictureListFragment extends Fragment {
         //Grid profile
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler_view);
         recyclerView .setHasFixedSize(true);
-        int spacing = MeasUtils.dpToPx(5, getActivity());
+        int spacing = MeasUtils.dpToPx(2, getActivity());
         recyclerView.addItemDecoration(new GreedoSpacingItemDecoration(spacing));
+        recyclerView.addOnItemTouchListener(new RecyclerViewTouchListener(getApplicationContext(), recyclerView, new RecyclerViewClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                String stringUri = Post.img;
+
+                ViewPostFragment newFragment = new ViewPostFragment();
+                newFragment.imageUrl  =posts.get(position).getImage();
+
+
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.add(R.id.container, newFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+            }
+        }));
+
         //adaper = new PhotosAdapter(getActivity(),posts, new OnItemClickListener());
         getPosts();
 

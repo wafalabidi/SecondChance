@@ -110,6 +110,25 @@ public interface UserService {
         @GET("getOnPost.php")
         Call<PostsResponse> getOnPost(@Query("idUser") int idUser);
     }
+    public interface insertThreqd {
+
+        @FormUrlEncoded
+        @POST("addThread.php")
+        Call<ResponseBody> insertThread(@Field("description") String description,
+                                      @Field("image") String image,
+                                      @Field("idUser") int idUser,
+                                      @Field("title") String imageTitle
+        );
+
+        @GET("getPost.php")
+        Call<PostsResponse> getPost(@Query("idUser") int idUser);
+
+        @GET("getAllPost.php")
+        Call<PostsResponse> getAllPost(@Query("idUser") int idUser);
+
+        @GET("getOnPost.php")
+        Call<PostsResponse> getOnPost(@Query("idUser") int idUser);
+    }
 
     public interface profilepic {
         @FormUrlEncoded

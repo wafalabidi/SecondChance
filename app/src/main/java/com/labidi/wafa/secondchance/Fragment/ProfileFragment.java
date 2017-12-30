@@ -97,14 +97,16 @@ public class ProfileFragment extends Fragment implements View.OnClickListener , 
         couverture_pic=(KenBurnsView)getView().findViewById(R.id.couverture_pic);
         cim_img_profile.setOnClickListener(this);
         couverture_pic.setOnClickListener(this);
+
         if(User.imgprofile!=""){
             Picasso.with(getActivity()).load(User.imgprofile).into(cim_img_profile);       }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
+
         if(User.imgcouverture!=""){
-            Picasso.with(getActivity()).load(User.imgcouverture).into(couverture_pic);       }
+            Picasso.with(getActivity()).load(User.imgcouverture).into(this.couverture_pic);       }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -148,6 +150,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener , 
             try {
                 selectedImage = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), path);
                 cim_img_profile.setImageBitmap(selectedImage);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }

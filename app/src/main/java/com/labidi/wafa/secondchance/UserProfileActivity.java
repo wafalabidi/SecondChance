@@ -19,6 +19,7 @@ import com.labidi.wafa.secondchance.Entities.User;
 import com.labidi.wafa.secondchance.Fragment.PictureListFragment;
 import com.labidi.wafa.secondchance.Fragment.PrivateProfileFragment;
 import com.labidi.wafa.secondchance.Fragment.ProfileFragment;
+import com.labidi.wafa.secondchance.Fragment.ViewPostFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,7 +64,6 @@ public class UserProfileActivity extends BaseDrawerActivity {
             PictureListFragment pictureListFragment= new PictureListFragment();
             manager.beginTransaction().replace(R.id.PostLayout, pictureListFragment,pictureListFragment.getTag())
                     .commit();
-
 
     }
 

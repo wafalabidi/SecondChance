@@ -25,6 +25,7 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.labidi.wafa.secondchance.API.RetrofitClient;
 import com.labidi.wafa.secondchance.API.UserService;
+import com.labidi.wafa.secondchance.DialogListActivity;
 import com.labidi.wafa.secondchance.Entities.ConfirmationResponse;
 import com.labidi.wafa.secondchance.Entities.InscriptionBody;
 import com.labidi.wafa.secondchance.Entities.LoginBody;
@@ -144,8 +145,10 @@ public class LoginFragment extends Fragment {
                                 User.Work = user.getWork();
                                 User.Studies = user.getStudies();
                                 User.Hobbies = user.getHobbies();
-                                User.Id = user.getId();
+                                User.Id = user.getId1();
                                 User.imgprofile = RetrofitClient.BASE_URL + user.getImg_profile();
+                                User.imgcouverture = RetrofitClient.BASE_URL + user.getImg_couverture();
+
                                 progressDialog.dismiss();
                                 Intent intent = new Intent(getActivity(), MainActivity.class);
                                 startActivity(intent);

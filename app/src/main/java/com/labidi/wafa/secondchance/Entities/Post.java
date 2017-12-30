@@ -13,6 +13,8 @@ import java.util.Base64;
  */
 
 public class Post extends User {
+    public static String img;
+
     @SerializedName("Image")
     @Expose
     private String image;

@@ -3,18 +3,14 @@ package com.labidi.wafa.secondchance.Adapters;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.fivehundredpx.greedolayout.GreedoLayoutSizeCalculator;
-import com.labidi.wafa.secondchance.API.RetrofitClient;
 import com.labidi.wafa.secondchance.Constants;
 import com.labidi.wafa.secondchance.Entities.Post;
-import com.labidi.wafa.secondchance.OnItemClickListener;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,7 +22,6 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.PhotoViewH
     private static final int IMAGE_COUNT = 500; // number of images adapter will show
     private final int[] mImageResIds = Constants.IMAGES;
     private final double[] mImageAspectRatios = new double[Constants.IMAGES.length];
-    private OnItemClickListener itemClickListener;
     List<Post>  posts ;
     private Context mContext;
 

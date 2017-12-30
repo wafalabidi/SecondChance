@@ -68,12 +68,12 @@ public class ResearchResultAdapter extends RecyclerView.Adapter<ResearchResultAd
         if (checkFriend(user)) {
             holder.add.setEnabled(true);
             holder.add.setOnClickListener(view -> {
-                sendInvitation(new Demande(User.Id, user.getId()), view);
+                sendInvitation(new Demande(User.Id, user.getId1()), view);
             });
         } else {
             holder.add.setImageDrawable(context.getDrawable(R.drawable.ic_profil));
             holder.add.setOnClickListener(view -> {
-                openProfil(view , user.getId());
+                openProfil(view , user.getId1());
             });
         }
 
@@ -90,9 +90,9 @@ public class ResearchResultAdapter extends RecyclerView.Adapter<ResearchResultAd
     private boolean checkFriend(User user) {
         Demande friendRequest1 = new Demande();
         friendRequest1.setIdUser(User.Id);
-        friendRequest1.setIdUser2(user.getId());
+        friendRequest1.setIdUser2(user.getId1());
         Demande friendRequest2 = new Demande();
-        friendRequest2.setIdUser(user.getId());
+        friendRequest2.setIdUser(user.getId1());
         friendRequest2.setIdUser2(User.Id);
         if (friendRequests != null) {
             if (friendRequests.contains(friendRequest1) || friendRequests.contains(friendRequest2)) {

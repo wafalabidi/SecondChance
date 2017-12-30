@@ -2,12 +2,13 @@ package com.labidi.wafa.secondchance.Entities;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.stfalcon.chatkit.commons.models.IUser;
 
 /**
  * Created by Wafa on 19/11/2017.
  */
 
-public class User {
+public class User implements IUser {
     public static String FirstName;
     public static String LastName;
     public static String Password;
@@ -81,6 +82,9 @@ public class User {
 
 
     public User() {
+    }
+
+    public User(String randomId, String randomName, String randomAvatar, boolean randomBoolean) {
     }
 
     public String getBirthDate() {
@@ -166,8 +170,22 @@ public class User {
         this.img_couverture = img_couverture;
     }
 
-    public int getId() {
+    public int getId1() {
         return id;
+    }
+
+    @Override
+    public String getName() {
+        return null;
+    }
+
+    @Override
+    public String getAvatar() {
+        return "https://thumb1.shutterstock.com/display_pic_with_logo/166387726/713065900/stock-vector-boo-sign-713065900.jpg";
+    }
+    @Override
+    public String getId() {
+        return null;
     }
 
     public void setId(int id) {

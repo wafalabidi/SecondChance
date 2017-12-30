@@ -29,11 +29,13 @@ import android.widget.Toast;
 import com.labidi.wafa.secondchance.API.RetrofitClient;
 import com.labidi.wafa.secondchance.API.UserService;
 import com.labidi.wafa.secondchance.Adapters.RvHomeAdapter;
+import com.labidi.wafa.secondchance.DialogListActivity;
 import com.labidi.wafa.secondchance.Entities.Post;
 import com.labidi.wafa.secondchance.Entities.Response.PostsResponse;
 import com.labidi.wafa.secondchance.Entities.User;
 import com.labidi.wafa.secondchance.HomeActivity;
 import com.labidi.wafa.secondchance.R;
+import com.labidi.wafa.secondchance.UserProfileActivity;
 
 import java.io.File;
 import java.io.IOException;
@@ -76,6 +78,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener  {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     String mCurrentPhotoPath;
     Button bCamera;
+    ImageView inbox;
 
     @Nullable
     @Override
@@ -116,6 +119,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener  {
         etPostSaying = (EditText) view.findViewById(R.id.etPostSaying);
         bShare = (Button) view.findViewById(R.id.bShare);
         bShare.setOnClickListener(this);
+        inbox.setOnClickListener(this);
         expandableLayout = view.findViewById(R.id.expandableLayout);
         tvPost = view.findViewById(R.id.tvPost);
         tvPost.setOnClickListener(this);
@@ -189,6 +193,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener  {
             }
         } else if (view.getId() == R.id.menu_camera) {
             dispatchTakePictureIntent();
+        }else if (view.getId() == R.id.inbox){
+            Intent intent = new Intent(getActivity(), UserProfileActivity.class);
+            startActivity(intent);
         }
     }
 
