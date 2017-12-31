@@ -25,12 +25,14 @@ import com.stfalcon.chatkit.dialogs.DialogsListAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Converter;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 import static retrofit2.Converter.*;
 
@@ -97,21 +99,24 @@ public class DialogListActivity extends DialogsActivity {
 
     private void getDiscussion() {
 
-        RetrofitClient retrofitClient = new RetrofitClient();
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(RetrofitClient.BASE_URL)
+                .client(client)
                 .addConverterFactory(createGsonConverter())
+                .addConverterFactory(ScalarsConverterFactory.create())
                 .build();
+
         UserService.getDiscussion service = retrofit.create(UserService.getDiscussion.class);
-        Call<DiscussionResponse> call = service.getDiscussion(String.valueOf(User.Id));// TODO change user ID
+        Call<DiscussionResponse> call = service.getDiscussion(User.Id);
         call.enqueue(new Callback<DiscussionResponse>() {
 
             @Override
             public void onResponse(Call<DiscussionResponse> call, Response<DiscussionResponse> response) {
-                response.body().getDiscussions();
-                Log.e("farhat => ",new Gson().toJson(response));
-
+                Log.e("luis", response.body().toString());
             }
 
             @Override

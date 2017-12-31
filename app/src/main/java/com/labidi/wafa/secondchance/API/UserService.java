@@ -161,14 +161,17 @@ public interface UserService {
         Call<ConfirmationResponse>comment(@Body com.labidi.wafa.secondchance.Entities.Commentaire commentaire);
     }
     public interface deletePost {
-
-        @DELETE("deletePost.php")
-        Call<PostsResponse> deletePost(@Query("idPost") int idPost);
-
+        @FormUrlEncoded
+        @POST("deletePost.php")
+        Call<PostsResponse> deletePost(
+                @Field("idPost") int idPost);
     }
 
     interface getDiscussion {
-        @GET("getThread.php")
-        Call<DiscussionResponse> getDiscussion(@Query(encoded=false, value = "idUser") String id);
+        @FormUrlEncoded
+        @POST("getThread.php")
+        Call<DiscussionResponse> getDiscussion(
+                @Field("idUser") int id
+        );
     }
 }

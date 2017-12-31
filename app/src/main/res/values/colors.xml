@@ -5,7 +5,9 @@
     <color name="colorAccent">#5e0231</color>
     <color name="purple_500">#A45678 </color>
     <color name="deep_purple_500">#6B4465 </color>
-    <color name="orange">#84e28865</color>
+    <color name="orange">#b56969
+    </color>
+    <color name="beige">#f1f1f1</color>
     <color name="pink1">#D73E68 </color>
     <color name="pink2">#FBC79A</color>
     <color name="white">#FFFF</color>

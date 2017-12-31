@@ -13,7 +13,6 @@ import com.labidi.wafa.secondchance.API.RetrofitClient;
 import com.labidi.wafa.secondchance.API.UserService;
 import com.labidi.wafa.secondchance.Entities.Response.DemandesResponse;
 import com.labidi.wafa.secondchance.Entities.User;
-import com.labidi.wafa.secondchance.HomeActivity;
 import com.labidi.wafa.secondchance.LoginActivity;
 import com.labidi.wafa.secondchance.MainActivity;
 import com.labidi.wafa.secondchance.PendingFriendRequestActivity;

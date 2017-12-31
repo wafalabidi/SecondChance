@@ -73,7 +73,9 @@ public class UserProfileActivity extends BaseDrawerActivity {
         startActivity(intent);
     }
 
+
     public void getUser(int idUser) {
+
         ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Fetching Data....");
         progressDialog.setCancelable(false);
@@ -88,6 +90,7 @@ public class UserProfileActivity extends BaseDrawerActivity {
                     User user = response.body().getUser();
                     PrivateProfileFragment privateProfileFragment = new PrivateProfileFragment();
                     privateProfileFragment.setCurrentUser(user);
+                    commitFragment(privateProfileFragment);
                     progressDialog.dismiss();
                 }
             }
@@ -99,5 +102,9 @@ public class UserProfileActivity extends BaseDrawerActivity {
         });
     }
 
-
+public  void commitFragment(Fragment f) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.replace(R.id.container,f);
+}
 }

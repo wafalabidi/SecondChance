@@ -47,7 +47,8 @@
             android:name=".TakePhotoActivity"
             android:theme="@style/AppTheme.TransparentActivity.FullScreen" />
         <activity android:name=".HomeActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity"
+            />
         <activity
             android:name=".SearchPeoplesActivity"
             android:launchMode="singleTop"

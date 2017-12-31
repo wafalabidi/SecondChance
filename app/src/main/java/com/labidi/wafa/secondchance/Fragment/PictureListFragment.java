@@ -50,7 +50,6 @@ public class PictureListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         return inflater.inflate(R.layout.fragment_picture_list, container, false);
     }
     @Override
@@ -64,12 +63,11 @@ public class PictureListFragment extends Fragment {
         recyclerView.addOnItemTouchListener(new RecyclerViewTouchListener(getApplicationContext(), recyclerView, new RecyclerViewClickListener() {
             @Override
             public void onClick(View view, int position) {
-                String stringUri = Post.img;
 
                 ViewPostFragment newFragment = new ViewPostFragment();
-                newFragment.imageUrl  =posts.get(position).getImage();
-
-
+                newFragment.imageUrl =posts.get(position).getImage();
+                newFragment.caption = posts.get(position).getSaying();
+                newFragment.post = posts.get(position);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.add(R.id.container, newFragment);
                 transaction.addToBackStack(null);

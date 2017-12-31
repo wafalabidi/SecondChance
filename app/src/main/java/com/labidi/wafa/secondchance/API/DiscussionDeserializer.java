@@ -8,6 +8,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.labidi.wafa.secondchance.Entities.Discussion;
 import com.labidi.wafa.secondchance.Entities.Messages;
+import com.labidi.wafa.secondchance.Entities.Response.DiscussionResponse;
 import com.labidi.wafa.secondchance.Entities.User;
 
 import org.json.JSONObject;
@@ -21,16 +22,16 @@ import java.util.Map;
  * Created by macbook on 30/12/2017.
  */
 
-public class DiscussionDeserializer implements JsonDeserializer<ArrayList<Discussion>> {
+public class DiscussionDeserializer implements JsonDeserializer<DiscussionResponse> {
 
 
     @Override
-    public ArrayList<Discussion> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    public DiscussionResponse deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         final JsonObject jsonObject = json.getAsJsonObject();
 
         // Read simple String values.
         ArrayList<Discussion> result = new ArrayList<Discussion>();
-        final JsonArray discussionsString = jsonObject.get("discussion").getAsJsonArray();
+        final JsonArray discussionsString = jsonObject.get("threads").getAsJsonArray();
 
         for(Object obj: discussionsString){
             if ( obj instanceof JsonObject ) {
@@ -50,6 +51,7 @@ public class DiscussionDeserializer implements JsonDeserializer<ArrayList<Discus
                 result.add(discussion);
             }
         }
-        return result;    }
+        return new DiscussionResponse(true, ",", result);
+    }
 
 }

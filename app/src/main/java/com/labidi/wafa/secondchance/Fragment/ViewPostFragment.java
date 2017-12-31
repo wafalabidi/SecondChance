@@ -44,8 +44,9 @@ public class ViewPostFragment extends Fragment implements View.OnClickListener {
         setArguments(new Bundle());
     }
 
-
+    String caption;
     String imageUrl;
+
     //widgets
     private SquareImageView mPostImage;
     //private BottomNavigationViewEx bottomNavigationView;
@@ -54,7 +55,7 @@ public class ViewPostFragment extends Fragment implements View.OnClickListener {
 
 
     //vars
-    Post mPhoto;
+    Post post;
     private int mActivityNumber = 0;
     private String photoUsername = "";
     private String profilePhotoUrl = "";
@@ -63,45 +64,24 @@ public class ViewPostFragment extends Fragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_view_post, container, false);
         mPostImage = (SquareImageView) view.findViewById(R.id.post_image);
         //bottomNavigationView = (BottomNavigationViewEx) view.findViewById(R.id.bottomNavViewBar);
         mCaption = (TextView) view.findViewById(R.id.image_caption);
         mUsername = (TextView) view.findViewById(R.id.username);
+        mUsername.setText(User.FirstName);
         mTimestamp = (TextView) view.findViewById(R.id.image_time_posted);
         mEllipses = (ImageView) view.findViewById(R.id.ivEllipses);
         mHeartRed = (ImageView) view.findViewById(R.id.image_heart_red);
         mHeartWhite = (ImageView) view.findViewById(R.id.image_heart);
         mProfileImage = (ImageView) view.findViewById(R.id.profile_photo);
-        mEllipses.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RetrofitClient retrofitClient = new RetrofitClient();
-                UserService.deletePost service = retrofitClient.getRetrofit().create(UserService.deletePost.class);
-                //UserService.
-                Call<PostsResponse> call = service.deletePost(Post.Id);
-                call.enqueue(new Callback<PostsResponse>() {
-                    @Override
-                    public void onResponse(Call<PostsResponse> call, Response<PostsResponse> response) {
-                        if (response.isSuccessful()) {
-
-                        } else {
-                            Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<PostsResponse> call, Throwable t) {
-                        if (t != null){
-                            Log.e("upload Errors" , t.getMessage());
-                        }
-                    }
-                });
-            }
-
-        });
+        mEllipses.setOnClickListener(this);
+        mProfileImage.setOnClickListener(this);
         Bundle bundle=getArguments();
-        mPostImage.setImageURI(Uri.parse((String.valueOf(bundle.getString("email")))));
+        Post post = new Post();
+        mCaption.setText(String.valueOf(bundle.getString("")));
+        mPostImage.setImageURI(Uri.parse((String.valueOf(bundle.getString("")))));
         Toast.makeText(getApplicationContext(), imageUrl + " is clicked!", Toast.LENGTH_SHORT).show();
         if(imageUrl!=""){
             Picasso.with(getActivity()).load(imageUrl).into(mPostImage);       }
@@ -109,14 +89,11 @@ public class ViewPostFragment extends Fragment implements View.OnClickListener {
             getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
-
-        try{
-            mPhoto = getPhotoFromBundle();
-            UniversalImageLoader.setImage(mPhoto.getImage(), mPostImage, null, "");
-            //mActivityNumber = getActivityNumFromBundle();
-
-        }catch (NullPointerException e){
-            Log.e(TAG, "onCreateView: NullPointerException: " + e.getMessage() );
+        if(User.imgprofile!=""){
+            Picasso.with(getActivity()).load(User.imgprofile).into(mProfileImage);       }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
 
         setupBottomNavigationView();
@@ -212,6 +189,33 @@ public class ViewPostFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        if(v.getId()==R.id.ivEllipses){
+           RetrofitClient retrofitClient = new RetrofitClient();
+            UserService.deletePost service = retrofitClient.getRetrofit().create(UserService.deletePost.class);
+            //UserService.
+            Call<PostsResponse> call = service.deletePost(post.getidPost());
+            call.enqueue(new Callback<PostsResponse>() {
+                @Override
+                public void onResponse(Call<PostsResponse> call, Response<PostsResponse> response) {
+                    if (response.isSuccessful()) {
+                        Log.e("psika","piska");
+
+
+                    } else {
+                        Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<PostsResponse> call, Throwable t) {
+                    if (t != null){
+                        Log.e("upload Errors" , t.getMessage());
+                    }
+                }
+            });
+            Toast.makeText(getApplicationContext(), imageUrl + " is clicked!", Toast.LENGTH_SHORT).show();
+
+        }
 
     }
 }
