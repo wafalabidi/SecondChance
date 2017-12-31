@@ -18,23 +18,16 @@ public class Discussion implements IDialog<Messages> {
     private ArrayList<User> users;
     private Messages lastMessage;
 
-    private int unreadCount;
-
     public Discussion(String id, String name, String photo,
-                      ArrayList<User> users, Messages lastMessage, int unreadCount) {
+                      ArrayList<User> users, Messages lastMessage) {
 
         this.id = id;
         this.dialogName = name;
         this.dialogPhoto = photo;
         this.users = users;
         this.lastMessage = lastMessage;
-        this.unreadCount = unreadCount;
     }
-    public Discussion(String id, String name ){
 
-        this.id=id;
-        this.dialogName = name;
-    }
 
     @Override
     public String getId() {
@@ -43,22 +36,22 @@ public class Discussion implements IDialog<Messages> {
 
     @Override
     public String getDialogPhoto() {
-        return null;
+        return dialogPhoto ;
     }
 
     @Override
     public String getDialogName() {
-        return null;
+        return dialogName;
     }
 
     @Override
     public List<? extends IUser> getUsers() {
-        return null;
+        return users;
     }
 
     @Override
     public Messages getLastMessage() {
-        return new Messages();
+        return lastMessage;
     }
 
     @Override

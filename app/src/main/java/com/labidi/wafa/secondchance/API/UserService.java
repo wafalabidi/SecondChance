@@ -6,6 +6,7 @@ import com.labidi.wafa.secondchance.Entities.InscriptionBody;
 import com.labidi.wafa.secondchance.Entities.LoginBody;
 import com.labidi.wafa.secondchance.Entities.Response.CommentaireResponse;
 import com.labidi.wafa.secondchance.Entities.Response.DemandesResponse;
+import com.labidi.wafa.secondchance.Entities.Response.DiscussionResponse;
 import com.labidi.wafa.secondchance.Entities.Response.LoginResponse;
 import com.labidi.wafa.secondchance.Entities.Response.PostsResponse;
 import com.labidi.wafa.secondchance.Entities.Response.SearchResponse;
@@ -14,6 +15,7 @@ import com.labidi.wafa.secondchance.Entities.User;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -158,5 +160,15 @@ public interface UserService {
         @POST("insertCommentaire.php")
         Call<ConfirmationResponse>comment(@Body com.labidi.wafa.secondchance.Entities.Commentaire commentaire);
     }
+    public interface deletePost {
 
+        @DELETE("deletePost.php")
+        Call<PostsResponse> deletePost(@Query("idPost") int idPost);
+
+    }
+
+    interface getDiscussion {
+        @GET("getThread.php")
+        Call<DiscussionResponse> getDiscussion(@Query(encoded=false, value = "idUser") String id);
+    }
 }

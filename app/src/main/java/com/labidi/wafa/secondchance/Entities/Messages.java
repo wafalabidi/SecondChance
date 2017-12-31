@@ -18,26 +18,32 @@ public class Messages implements IMessage,
         private String text;
         private Date createdAt;
         private User user;
-        private Messages.Image image;
+
+    public Messages(String id, String text, Date createdAt, User user) {
+        this.id = id;
+        this.text = text;
+        this.createdAt = createdAt;
+        this.user = user;
+    }
 
     @Override
     public String getImageUrl() {
-        return "https://thumb1.shutterstock.com/display_pic_with_logo/166387726/713065900/stock-vector-boo-sign-713065900.jpg";
+        return user.getAvatar();
     }
 
     @Override
     public String getId() {
-        return "3";
+        return id;
     }
 
     @Override
     public String getText() {
-        return "psika";
+        return text;
     }
 
     @Override
     public IUser getUser() {
-       return  new User("psika","psk");
+     return user;
     }
 
     @Override

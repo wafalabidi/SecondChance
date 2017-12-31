@@ -72,6 +72,7 @@
         </provider>
 
         <activity
+
             android:name=".UserProfileActivity"
             android:exported="true"
             android:parentActivityName=".MainActivity">

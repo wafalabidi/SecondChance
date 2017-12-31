@@ -176,12 +176,12 @@ public class User implements IUser {
 
     @Override
     public String getName() {
-        return null;
+        return firstName + " " + lastName;
     }
 
     @Override
     public String getAvatar() {
-        return "https://thumb1.shutterstock.com/display_pic_with_logo/166387726/713065900/stock-vector-boo-sign-713065900.jpg";
+        return img_profile;
     }
     @Override
     public String getId() {
@@ -190,6 +190,12 @@ public class User implements IUser {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public User(String firstName, String lastName, String avatar) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.img_profile = avatar;
     }
 
     public User(String firstName, String lastName) {

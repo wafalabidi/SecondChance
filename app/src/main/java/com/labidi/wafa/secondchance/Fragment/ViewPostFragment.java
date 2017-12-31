@@ -14,12 +14,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.labidi.wafa.secondchance.API.RetrofitClient;
+import com.labidi.wafa.secondchance.API.UserService;
 import com.labidi.wafa.secondchance.Entities.Post;
+import com.labidi.wafa.secondchance.Entities.Response.PostsResponse;
 import com.labidi.wafa.secondchance.Entities.User;
 import com.labidi.wafa.secondchance.R;
 import com.labidi.wafa.secondchance.Utils.SquareImageView;
 import com.labidi.wafa.secondchance.Utils.UniversalImageLoader;
 import com.squareup.picasso.Picasso;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -27,7 +35,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
  * Created by macbook on 26/12/2017.
  */
 
-public class ViewPostFragment extends Fragment {
+public class ViewPostFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "ViewPostFragment";
 
 
@@ -65,6 +73,33 @@ public class ViewPostFragment extends Fragment {
         mHeartRed = (ImageView) view.findViewById(R.id.image_heart_red);
         mHeartWhite = (ImageView) view.findViewById(R.id.image_heart);
         mProfileImage = (ImageView) view.findViewById(R.id.profile_photo);
+        mEllipses.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RetrofitClient retrofitClient = new RetrofitClient();
+                UserService.deletePost service = retrofitClient.getRetrofit().create(UserService.deletePost.class);
+                //UserService.
+                Call<PostsResponse> call = service.deletePost(Post.Id);
+                call.enqueue(new Callback<PostsResponse>() {
+                    @Override
+                    public void onResponse(Call<PostsResponse> call, Response<PostsResponse> response) {
+                        if (response.isSuccessful()) {
+
+                        } else {
+                            Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<PostsResponse> call, Throwable t) {
+                        if (t != null){
+                            Log.e("upload Errors" , t.getMessage());
+                        }
+                    }
+                });
+            }
+
+        });
         Bundle bundle=getArguments();
         mPostImage.setImageURI(Uri.parse((String.valueOf(bundle.getString("email")))));
         Toast.makeText(getApplicationContext(), imageUrl + " is clicked!", Toast.LENGTH_SHORT).show();
@@ -175,6 +210,8 @@ public class ViewPostFragment extends Fragment {
     }
 
 
+    @Override
+    public void onClick(View v) {
 
-
+    }
 }
