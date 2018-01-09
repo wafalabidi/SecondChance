@@ -72,7 +72,7 @@ public class TakePhotoActivity extends BaseActivity implements RevealBackgroundV
     private static final Interpolator DECELERATE_INTERPOLATOR = new DecelerateInterpolator();
     private static final int STATE_TAKE_PHOTO = 0;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
-    private static final int  STATE_SETUP_PHOTO =1;
+    private static final int STATE_SETUP_PHOTO = 1;
 
     @BindView(R.id.vRevealBackground)
     RevealBackgroundView vRevealBackground;
@@ -106,7 +106,10 @@ public class TakePhotoActivity extends BaseActivity implements RevealBackgroundV
         //getPosts();
 
     }
+
     static final Integer CAMERA = 0x5;
+    static final Integer STORAGE = 2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,7 +118,7 @@ public class TakePhotoActivity extends BaseActivity implements RevealBackgroundV
         updateState(STATE_TAKE_PHOTO);
         setupRevealBackground(savedInstanceState);
         setupPhotoFilters();
-        askForPermission(Manifest.permission.CAMERA,CAMERA);
+        askForPermission(Manifest.permission.CAMERA, CAMERA);
         vUpperPanel.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
@@ -314,23 +317,6 @@ public class TakePhotoActivity extends BaseActivity implements RevealBackgroundV
         }
     }
 
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = this.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
-
-
     private void askForPermission(String permission, Integer requestCode) {
         if (ContextCompat.checkSelfPermission(TakePhotoActivity.this, permission) != PackageManager.PERMISSION_GRANTED) {
 
@@ -345,25 +331,22 @@ public class TakePhotoActivity extends BaseActivity implements RevealBackgroundV
 
                 ActivityCompat.requestPermissions(TakePhotoActivity.this, new String[]{permission}, requestCode);
             }
-        } else {
+
+        } else
+
+        {
             Toast.makeText(this, "" + permission + " is already granted.", Toast.LENGTH_SHORT).show();
         }
+
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(ActivityCompat.checkSelfPermission(this, permissions[0]) == PackageManager.PERMISSION_GRANTED){
-
-                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-//                        startActivityForResult(takePictureIntent, 12);
-                    }
+        if(requestCode ==CAMERA)
+            askForPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, STORAGE);
 
 
 
-            Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
-        }
     }
 }

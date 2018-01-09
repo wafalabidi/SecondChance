@@ -1,5 +1,6 @@
 package com.labidi.wafa.secondchance;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +20,7 @@ import android.widget.Toast;
 import com.labidi.wafa.secondchance.Entities.User;
 import com.labidi.wafa.secondchance.Fragment.ProfileFragment;
 import com.labidi.wafa.secondchance.Utils.CircleTransformation;
+import com.labidi.wafa.secondchance.Utils.LocalFiles;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindDimen;
@@ -75,14 +78,23 @@ public class BaseDrawerActivity extends BaseActivity implements NavigationView.O
             tvName.setText(name);
         }
 
+        ImageButton ibMenuLogOut = headerView.findViewById(R.id.ibMenuLogOut);
+        ibMenuLogOut.setOnClickListener(v -> {
+            User.Disconect();
+            LocalFiles.LogOut(getSharedPreferences(LocalFiles.USER_FILE , Context.MODE_PRIVATE));
+            Intent intent = new Intent(BaseDrawerActivity.this, LoginActivity.class);
+            startActivity(intent);
+        });
+
         ivMenuUserProfilePhoto = (ImageView) headerView.findViewById(R.id.ivMenuUserProfilePhoto);
-        ivMenuUserProfilePhoto.setOnClickListener(v->{
+        ivMenuUserProfilePhoto.setOnClickListener(v -> {
             //TODO ici ouvrir le profil de la perosonne conécté
         });
+
         if (!TextUtils.isEmpty(User.imgprofile)) {
             Picasso.with(this).load(User.imgprofile).into(ivMenuUserProfilePhoto);
 
-        }else {
+        } else {
 
         }
         headerView.findViewById(R.id.vGlobalMenuHeader).setOnClickListener(new View.OnClickListener() {
@@ -92,13 +104,15 @@ public class BaseDrawerActivity extends BaseActivity implements NavigationView.O
             }
         });
 
-        Picasso.with(this)
+
+       /* Picasso.with(this)
                 .load(profilePhoto)
                 .placeholder(R.drawable.img_circle_placeholder)
                 .resize(avatarSize, avatarSize)
                 .centerCrop()
                 .transform(new CircleTransformation())
                 .into(ivMenuUserProfilePhoto);
+    */
     }
 
     public void onGlobalMenuHeaderClick(final View v) {

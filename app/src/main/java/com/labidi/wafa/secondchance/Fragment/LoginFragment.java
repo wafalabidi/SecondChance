@@ -25,13 +25,13 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.labidi.wafa.secondchance.API.RetrofitClient;
 import com.labidi.wafa.secondchance.API.UserService;
-import com.labidi.wafa.secondchance.DialogListActivity;
 import com.labidi.wafa.secondchance.Entities.ConfirmationResponse;
 import com.labidi.wafa.secondchance.Entities.InscriptionBody;
 import com.labidi.wafa.secondchance.Entities.LoginBody;
 import com.labidi.wafa.secondchance.Entities.Response.LoginResponse;
 import com.labidi.wafa.secondchance.Entities.User;
 import com.labidi.wafa.secondchance.FirstLoginActivity;
+import com.labidi.wafa.secondchance.HomeActivity;
 import com.labidi.wafa.secondchance.MainActivity;
 import com.labidi.wafa.secondchance.R;
 import com.labidi.wafa.secondchance.customfonts.MyEditText;
@@ -144,12 +144,10 @@ public class LoginFragment extends Fragment {
                                 User.Work = user.getWork();
                                 User.Studies = user.getStudies();
                                 User.Hobbies = user.getHobbies();
-                                User.Id = user.getId1();
+                                User.Id = user.getId();
                                 User.imgprofile = RetrofitClient.BASE_URL + user.getImg_profile();
-                                User.imgcouverture = RetrofitClient.BASE_URL + user.getImg_couverture();
-
                                 progressDialog.dismiss();
-                                Intent intent = new Intent(getActivity(), DialogListActivity.class);
+                                Intent intent = new Intent(getActivity(), MainActivity.class);
                                 startActivity(intent);
                             }else {
                                 progressDialog.dismiss();

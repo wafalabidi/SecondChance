@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -35,12 +36,16 @@ import com.labidi.wafa.secondchance.Adapters.FeedAdapter;
 import com.labidi.wafa.secondchance.Adapters.FeedItemAnimator;
 import com.labidi.wafa.secondchance.Adapters.ResearchResultAdapter;
 import com.labidi.wafa.secondchance.Entities.Demande;
+import com.labidi.wafa.secondchance.Entities.Like;
+import com.labidi.wafa.secondchance.Entities.LikeDAO;
 import com.labidi.wafa.secondchance.Entities.Post;
 import com.labidi.wafa.secondchance.Entities.Response.DemandesResponse;
+import com.labidi.wafa.secondchance.Entities.Response.LikesResponse;
 import com.labidi.wafa.secondchance.Entities.Response.PostsResponse;
 import com.labidi.wafa.secondchance.Entities.Response.SearchResponse;
 import com.labidi.wafa.secondchance.Entities.User;
 import com.labidi.wafa.secondchance.Utils.FriendsWatcherService;
+import com.labidi.wafa.secondchance.Utils.LocalFiles;
 import com.labidi.wafa.secondchance.view.FeedContextMenu;
 import com.labidi.wafa.secondchance.view.FeedContextMenuManager;
 
@@ -64,7 +69,6 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
 
     private static final int ANIM_DURATION_TOOLBAR = 300;
     private static final int ANIM_DURATION_FAB = 400;
-    List<Demande> friendList;
 
     @BindView(R.id.rvFeed)
     RecyclerView rvFeed;
@@ -81,15 +85,14 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        feedAdapter = new FeedAdapter(this);
+       // feedAdapter = new FeedAdapter(this);
         if (savedInstanceState == null) {
             pendingIntroAnimation = true;
         } else {
+            if(feedAdapter != null )
             feedAdapter.updateItems(false);
         }
-    }
 
-    private void setupFeed() {
     }
 
     @Override
@@ -158,7 +161,7 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
                 .setStartDelay(300)
                 .setDuration(ANIM_DURATION_FAB)
                 .start();
-
+        if(feedAdapter != null)
         feedAdapter.updateItems(true);
         getPosts();
 
@@ -226,7 +229,9 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
 
         RetrofitClient retrofitClient = new RetrofitClient();
         UserService.insertPost service = retrofitClient.getRetrofit().create(UserService.insertPost.class);
-        Call<PostsResponse> call = service.getAllPost(User.Id);// TODO change user ID
+        LocalFiles localFiles = new LocalFiles(getSharedPreferences(LocalFiles.USER_FILE, Context.MODE_PRIVATE));
+        Integer currentUserId = localFiles.getInt(LocalFiles.Id);
+        Call<PostsResponse> call = service.getAllPost(currentUserId);// TODO change user ID
         call.enqueue(new Callback<PostsResponse>() {
             @Override
             public void onResponse(Call<PostsResponse> call, Response<PostsResponse> response) {
@@ -237,36 +242,7 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
                         p.setImage(RetrofitClient.BASE_URL + p.getImage());
                     }
 
-
-                    feedAdapter = new FeedAdapter(MainActivity.this, (ArrayList) response.body().getPost());
-                    feedAdapter.setOnFeedItemClickListener(MainActivity.this);
-                    rvFeed.setAdapter(feedAdapter);
-                    feedAdapter.notifyDataSetChanged();
-                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MainActivity.this) {
-                        @Override
-                        protected int getExtraLayoutSpace(RecyclerView.State state) {
-                            return 300;
-                        }
-
-                        @Override
-                        public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
-                            try {
-                                super.onLayoutChildren(recycler, state);
-                            } catch (IndexOutOfBoundsException e) {
-                                Log.e("Error", "IndexOutOfBoundsException in RecyclerView happens");
-                            }
-                        }
-
-                    };
-                    rvFeed.setLayoutManager(linearLayoutManager);
-
-                    rvFeed.setOnScrollListener(new RecyclerView.OnScrollListener() {
-                        @Override
-                        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                            FeedContextMenuManager.getInstance().onScrolled(recyclerView, dx, dy);
-                        }
-                    });
-                    rvFeed.setItemAnimator(new FeedItemAnimator());
+                    getLikes((ArrayList<Post>) response.body().getPost());
                 }
                 Log.e("Responsoe", response.message());
 
@@ -278,6 +254,61 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
 
             }
         });
+    }
+
+    private void getLikes(ArrayList<Post> posts) {
+        LocalFiles localFiles = new LocalFiles(getSharedPreferences(LocalFiles.USER_FILE, Context.MODE_PRIVATE));
+        Integer currentUserId = localFiles.getInt(LocalFiles.Id);
+        LikeDAO likeDAO = new LikeDAO();
+        likeDAO.getLikes(new Like(0, currentUserId)).enqueue(new Callback<LikesResponse>() {
+            @Override
+            public void onResponse(Call<LikesResponse> call, Response<LikesResponse> response) {
+                ArrayList<Like> likes  = new ArrayList<>();
+                if (response.body().getLikes() != null) {
+                  likes  = response.body().getLikes();
+
+                }
+
+                feedAdapter = new FeedAdapter(MainActivity.this, posts, likes);
+                feedAdapter.setOnFeedItemClickListener(MainActivity.this);
+                rvFeed.setAdapter(feedAdapter);
+                feedAdapter.notifyDataSetChanged();
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MainActivity.this) {
+                    @Override
+                    protected int getExtraLayoutSpace(RecyclerView.State state) {
+                        return 300;
+                    }
+
+                    @Override
+                    public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
+                        try {
+                            super.onLayoutChildren(recycler, state);
+                        } catch (IndexOutOfBoundsException e) {
+                            Log.e("Error", "IndexOutOfBoundsException in RecyclerView happens");
+                        }
+                    }
+
+                };
+                rvFeed.setLayoutManager(linearLayoutManager);
+
+                rvFeed.setOnScrollListener(new RecyclerView.OnScrollListener() {
+                    @Override
+                    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                        FeedContextMenuManager.getInstance().onScrolled(recyclerView, dx, dy);
+                    }
+                });
+                rvFeed.setItemAnimator(new FeedItemAnimator());
+
+
+            }
+
+            @Override
+            public void onFailure(Call<LikesResponse> call, Throwable t) {
+                Log.e("getLikes", t.getMessage());
+            }
+        });
+
+
     }
 
     public void ResearchClicked(View view) {

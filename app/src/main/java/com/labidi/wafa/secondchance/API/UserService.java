@@ -6,7 +6,6 @@ import com.labidi.wafa.secondchance.Entities.InscriptionBody;
 import com.labidi.wafa.secondchance.Entities.LoginBody;
 import com.labidi.wafa.secondchance.Entities.Response.CommentaireResponse;
 import com.labidi.wafa.secondchance.Entities.Response.DemandesResponse;
-import com.labidi.wafa.secondchance.Entities.Response.DiscussionResponse;
 import com.labidi.wafa.secondchance.Entities.Response.LoginResponse;
 import com.labidi.wafa.secondchance.Entities.Response.PostsResponse;
 import com.labidi.wafa.secondchance.Entities.Response.SearchResponse;
@@ -15,7 +14,6 @@ import com.labidi.wafa.secondchance.Entities.User;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -112,25 +110,6 @@ public interface UserService {
         @GET("getOnPost.php")
         Call<PostsResponse> getOnPost(@Query("idUser") int idUser);
     }
-    public interface insertThreqd {
-
-        @FormUrlEncoded
-        @POST("addThread.php")
-        Call<ResponseBody> insertThread(@Field("description") String description,
-                                      @Field("image") String image,
-                                      @Field("idUser") int idUser,
-                                      @Field("title") String imageTitle
-        );
-
-        @GET("getPost.php")
-        Call<PostsResponse> getPost(@Query("idUser") int idUser);
-
-        @GET("getAllPost.php")
-        Call<PostsResponse> getAllPost(@Query("idUser") int idUser);
-
-        @GET("getOnPost.php")
-        Call<PostsResponse> getOnPost(@Query("idUser") int idUser);
-    }
 
     public interface profilepic {
         @FormUrlEncoded
@@ -160,18 +139,5 @@ public interface UserService {
         @POST("insertCommentaire.php")
         Call<ConfirmationResponse>comment(@Body com.labidi.wafa.secondchance.Entities.Commentaire commentaire);
     }
-    public interface deletePost {
-        @FormUrlEncoded
-        @POST("deletePost.php")
-        Call<PostsResponse> deletePost(
-                @Field("idPost") int idPost);
-    }
 
-    interface getDiscussion {
-        @FormUrlEncoded
-        @POST("getThread.php")
-        Call<DiscussionResponse> getDiscussion(
-                @Field("idUser") int id
-        );
-    }
 }

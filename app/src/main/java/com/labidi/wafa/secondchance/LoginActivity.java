@@ -1,5 +1,8 @@
 package com.labidi.wafa.secondchance;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,8 +10,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.labidi.wafa.secondchance.Entities.User;
 import com.labidi.wafa.secondchance.Tools.CustomViewPager;
 import com.labidi.wafa.secondchance.Tools.ViewPagerAdapter;
+import com.labidi.wafa.secondchance.Utils.LocalFiles;
 
 
 /**
@@ -19,7 +24,6 @@ public class LoginActivity extends BaseActivity {
     private static final int LOGIN_FRAGMENT = 0;
     private static final int SIGNUP_FRAGMENT = 1;
     private static final int RESET_PASSWORD_FRAGMENT = 2;
-    private Fragment newFragment;
     private CustomViewPager viewPager;
     private ViewPagerAdapter viewPagerAdapter;
 
@@ -29,18 +33,21 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        viewPager = (CustomViewPager) findViewById(R.id.viewpager);
+        viewPager = findViewById(R.id.viewpager);
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
         viewPager.setPagingEnabled(false);
         changeFragment(LOGIN_FRAGMENT);
         //Background animation
-        relativeLayout = (ImageView)findViewById(R.id.relativeLayout);
+        relativeLayout = findViewById(R.id.relativeLayout);
         animationDrawable = (AnimationDrawable) relativeLayout.getBackground();
         animationDrawable.setEnterFadeDuration(1000);
         animationDrawable.setExitFadeDuration(2000);
-
-
+        LocalFiles localFiles = new LocalFiles(getSharedPreferences(LocalFiles.USER_FILE , Context.MODE_PRIVATE));
+        if (localFiles.getInt(LocalFiles.Id) != -1 ){
+            Intent intent = new Intent( this , MainActivity.class);
+            startActivity(intent);
+        }
     }
     @Override
     protected void onResume() {

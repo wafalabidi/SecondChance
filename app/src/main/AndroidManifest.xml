@@ -47,8 +47,7 @@
             android:name=".TakePhotoActivity"
             android:theme="@style/AppTheme.TransparentActivity.FullScreen" />
         <activity android:name=".HomeActivity" />
-        <activity android:name=".MainActivity"
-            />
+        <activity android:name=".MainActivity" />
         <activity
             android:name=".SearchPeoplesActivity"
             android:launchMode="singleTop"
@@ -73,7 +72,6 @@
         </provider>
 
         <activity
-
             android:name=".UserProfileActivity"
             android:exported="true"
             android:parentActivityName=".MainActivity">
@@ -87,6 +85,7 @@
         <activity
             android:name=".FriendsListActivity"
             android:parentActivityName=".MainActivity" />
+
         <service
             android:name=".Utils.FriendsWatcherService"
             android:exported="true"
@@ -94,11 +93,7 @@
 
         <activity android:name=".FirstLoginActivity"
            />
-        <activity android:name=".DialogListActivity"
-            android:parentActivityName=".DialogsActivity">
 
-        </activity>
-        <activity android:name=".DialogsActivity"></activity>
         <activity android:name=".PublishActivity" />
         <activity android:name=".CommentActivity"
             android:parentActivityName=".MainActivity"

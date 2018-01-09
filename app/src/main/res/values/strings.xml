@@ -76,6 +76,7 @@
     <string name="facebook_app_id">150711968906309</string>
     <string name="fb_login_protocol_scheme">fb150711968906309</string>
     <string name="error_message">Please accept terms and conditions first.</string>
+    <string name="enter_descprition">enter a ddescprtion</string>
 
 
 </resources>

@@ -90,7 +90,6 @@ public class SignUpFragment extends Fragment {
                     ((MyEditText) getView().findViewById(R.id.email_edittext)).setError(getString(R.string.empty));
                     ok = false;
                 }
-                Log.e("hello","fama mochkla");
 
                 if (ok){
                     final InscriptionBody user = new InscriptionBody();

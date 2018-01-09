@@ -237,7 +237,6 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             int adapterPosition = getAdapterPosition();
             Picasso.with(FeedAdapter.this.context).load(post.getImage()).into(ivFeedCenter);
             ivUserProfile.setText(post.getFirstName());
-            ivFeedBottom.setText(post.getSaying());
             if(post.getImg_profile()!=""){
                 Picasso.with(context).load(RetrofitClient.BASE_URL+post.getImg_profile()).into(userProfilpic);
             }

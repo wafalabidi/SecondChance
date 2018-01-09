@@ -80,6 +80,7 @@
                     android:padding="16dp">
 
                     <ImageView
+                        android:scaleType="centerCrop"
                         android:id="@+id/ivPhoto"
                         android:layout_width="@dimen/publish_photo_thumbnail_size"
                         android:layout_height="@dimen/publish_photo_thumbnail_size"
@@ -93,6 +94,7 @@
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:gravity="top"
+                        android:hint="@string/enter_descprition"
                         android:lines="3"
                         android:padding="8dp"
                         android:textColor="#333333"
