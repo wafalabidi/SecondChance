@@ -6,6 +6,7 @@ import com.labidi.wafa.secondchance.Entities.InscriptionBody;
 import com.labidi.wafa.secondchance.Entities.LoginBody;
 import com.labidi.wafa.secondchance.Entities.Response.CommentaireResponse;
 import com.labidi.wafa.secondchance.Entities.Response.DemandesResponse;
+import com.labidi.wafa.secondchance.Entities.Response.LikesResponse;
 import com.labidi.wafa.secondchance.Entities.Response.LoginResponse;
 import com.labidi.wafa.secondchance.Entities.Response.PostsResponse;
 import com.labidi.wafa.secondchance.Entities.Response.SearchResponse;
@@ -139,5 +140,17 @@ public interface UserService {
         @POST("insertCommentaire.php")
         Call<ConfirmationResponse>comment(@Body com.labidi.wafa.secondchance.Entities.Commentaire commentaire);
     }
+    interface Likes {
+        @FormUrlEncoded
+        @POST ("getLikes.php")
+        Call<LikesResponse> getLikes (@Field("idUser") Integer idUser );
+        @FormUrlEncoded
+        @POST ("like.php")
+        Call<ConfirmationResponse> like (@Field("idUser") Integer idUser , @Field("idPost") Integer idPost);
+        @FormUrlEncoded
+        @POST ("unlike.php")
+        Call<ConfirmationResponse> unlike (@Field("idUser") Integer idUser , @Field("idPost") Integer idPost);
 
+
+    }
 }

@@ -2,6 +2,7 @@ package com.labidi.wafa.secondchance.Fragment;
 
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -34,6 +35,7 @@ import com.labidi.wafa.secondchance.FirstLoginActivity;
 import com.labidi.wafa.secondchance.HomeActivity;
 import com.labidi.wafa.secondchance.MainActivity;
 import com.labidi.wafa.secondchance.R;
+import com.labidi.wafa.secondchance.Utils.LocalFiles;
 import com.labidi.wafa.secondchance.customfonts.MyEditText;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
@@ -87,7 +89,6 @@ public class LoginFragment extends Fragment {
                 GraphRequest  graphRequest = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
-                        displayUserInfo(object);
                     }
                 });
                         Bundle parameters = new Bundle();
@@ -107,63 +108,49 @@ public class LoginFragment extends Fragment {
 
             }
         });
-        getView().findViewById(R.id.login_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                boolean ok = true;
-                if (((MyEditText) getView().findViewById(R.id.email_edittext)).getText().length() == 0) {
-                    ((MyEditText) getView().findViewById(R.id.email_edittext)).setError(getString(R.string.empty));
-                    ok = false;
-                }
-                if (((MyEditText) getView().findViewById(R.id.password_edittext)).getText().length() == 0) {
-                    ((MyEditText) getView().findViewById(R.id.password_edittext)).setError(getString(R.string.empty));
-                    ok = false;
-                }
-                if (ok) {
-                    final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-                    progressDialog.setTitle("Processing ...");
-                    progressDialog.show();
-                    LoginBody user = new LoginBody();
-                    user.setMail(email_edittext.getText().toString());
-                    user.setPassword(password_edittext.getText().toString());
-                    RetrofitClient retrofitClient = new RetrofitClient();
-                    UserService.LoginInterface loginInterface = retrofitClient.getRetrofit().create(UserService.LoginInterface.class);
-                    Call<LoginResponse> call = loginInterface.userLogin(user);
-                    call.enqueue(new retrofit2.Callback<LoginResponse>() {
-                        public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                            if (response.body() != null) {
-                                User user = response.body().getUser();
-                                user.FirstName = user.getFirstName();
-                                User.LastName = user.getLastName();
-                                User.Password = user.getPassword();
-                                User.Mail = user.getMail();
-                                User.BirthDate = user.getBirthDate();
-                                user.Eyes = user.getEyes();
-                                User.Shape = user.getShape();
-                                User.SkinColour = user.getSkinColour();
-                                User.Work = user.getWork();
-                                User.Studies = user.getStudies();
-                                User.Hobbies = user.getHobbies();
-                                User.Id = user.getId();
-                                User.imgprofile = RetrofitClient.BASE_URL + user.getImg_profile();
-                                progressDialog.dismiss();
-                                Intent intent = new Intent(getActivity(), MainActivity.class);
-                                startActivity(intent);
-                            }else {
-                                progressDialog.dismiss();
-                                Toast.makeText(getActivity(), "Invalid creditential", Toast.LENGTH_SHORT).show();
-                            }
-
-                        }
-
-                        public void onFailure(Call<LoginResponse> call, Throwable t) {
-                            Toast.makeText(getActivity(),
-                                    t.getMessage(), Toast.LENGTH_SHORT).show();
+        getView().findViewById(R.id.login_button).setOnClickListener(view1 -> {
+            boolean ok = true;
+            if (((MyEditText) getView().findViewById(R.id.email_edittext)).getText().length() == 0) {
+                ((MyEditText) getView().findViewById(R.id.email_edittext)).setError(getString(R.string.empty));
+                ok = false;
+            }
+            if (((MyEditText) getView().findViewById(R.id.password_edittext)).getText().length() == 0) {
+                ((MyEditText) getView().findViewById(R.id.password_edittext)).setError(getString(R.string.empty));
+                ok = false;
+            }
+            if (ok) {
+                final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+                progressDialog.setTitle("Processing ...");
+                progressDialog.show();
+                LoginBody user = new LoginBody();
+                user.setMail(email_edittext.getText().toString());
+                user.setPassword(password_edittext.getText().toString());
+                RetrofitClient retrofitClient = new RetrofitClient();
+                UserService.LoginInterface loginInterface = retrofitClient.getRetrofit().create(UserService.LoginInterface.class);
+                Call<LoginResponse> call = loginInterface.userLogin(user);
+                call.enqueue(new Callback<LoginResponse>() {
+                    public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                        if (response.body() != null) {
+                            LocalFiles localFiles = new LocalFiles(getActivity().getSharedPreferences(LocalFiles.USER_FILE,Context.MODE_PRIVATE));
+                           User user1 = response.body().getUser();
+                           user1.setImg_profile(retrofitClient.BASE_URL+user1.getImg_profile());
+                            localFiles.logIn(user1);
                             progressDialog.dismiss();
+                            Intent intent = new Intent(getActivity(), MainActivity.class);
+                            startActivity(intent);
+                        }else {
+                            progressDialog.dismiss();
+                            Toast.makeText(getActivity(), "Invalid creditential", Toast.LENGTH_SHORT).show();
                         }
-                    });
 
-                }
+                    }
+
+                    public void onFailure(Call<LoginResponse> call, Throwable t) {
+                        Toast.makeText(getActivity(),
+                                t.getMessage(), Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                    }
+                });
 
             }
 
@@ -201,7 +188,6 @@ public class LoginFragment extends Fragment {
                     bundle.putString("password", user.getPassword());
                     bundle.putString("birthdate",user.getBirthdate());
                     intent.putExtras(bundle);
-
 
                     startActivity(intent);
 
