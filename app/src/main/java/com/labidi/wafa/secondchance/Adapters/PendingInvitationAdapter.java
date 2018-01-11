@@ -50,9 +50,9 @@ public class PendingInvitationAdapter extends RecyclerView.Adapter<PendingInvita
     @Override
     public void onBindViewHolder(Holder holder, int position) {
         Demande user = items.get(position);
-        holder.tvName.setText(user.getFirstName() + "  " + user.getLastName());
-        if (!TextUtils.isEmpty(user.getImg_profile())) {
-            Picasso.with(context).load(user.getImg_profile()).into(holder.imageView);
+        holder.tvName.setText(user.getSender().getFirstName() + "  " + user.getSender().getLastName());
+        if (!TextUtils.isEmpty(user.getSender().getImg_profile())) {
+            Picasso.with(context).load(user.getSender().getImg_profile()).into(holder.imageView);
         }
 
         holder.ibAccept.setOnClickListener(view -> {
@@ -63,14 +63,15 @@ public class PendingInvitationAdapter extends RecyclerView.Adapter<PendingInvita
         });
     }
 
-    public void accepterDemande(int idSender, int idReciver, int position) {
+    private void accepterDemande(int idSender, int idReciver, int position) {
+        items.remove(position);
+        Toast.makeText(context , "Invitation Rejected" , Toast.LENGTH_SHORT).show();
         RetrofitClient retrofitClient = new RetrofitClient();
         UserService.RegisterInterface accept = retrofitClient.getRetrofit().create(UserService.RegisterInterface.class);
         Call<ConfirmationResponse> call = accept.accepterDemande(idSender, idReciver);
         call.enqueue(new Callback<ConfirmationResponse>() {
             @Override
             public void onResponse(Call<ConfirmationResponse> call, Response<ConfirmationResponse> response) {
-                items.remove(position);
                 PendingInvitationAdapter.this.notifyDataSetChanged();
                 Toast.makeText(context, "Invitation accepted", Toast.LENGTH_SHORT).show();
             }
@@ -82,14 +83,15 @@ public class PendingInvitationAdapter extends RecyclerView.Adapter<PendingInvita
         });
     }
 
-    public void refuserDemande(int idSender, int idReciver, int postion) {
+    private void refuserDemande(int idSender, int idReciver, int postion) {
+        items.remove(postion);
+        Toast.makeText(context , "Invitation Rejected" , Toast.LENGTH_SHORT).show();
         RetrofitClient retrofitClient = new RetrofitClient();
         UserService.RegisterInterface accept = retrofitClient.getRetrofit().create(UserService.RegisterInterface.class);
         Call<ConfirmationResponse> call = accept.refuserDemande(idSender, idReciver);
         call.enqueue(new Callback<ConfirmationResponse>() {
             @Override
             public void onResponse(Call<ConfirmationResponse> call, Response<ConfirmationResponse> response) {
-                items.remove(postion);
                 PendingInvitationAdapter.this.notifyDataSetChanged();
                 Toast.makeText(context, "Invitation accepted", Toast.LENGTH_SHORT).show();
             }

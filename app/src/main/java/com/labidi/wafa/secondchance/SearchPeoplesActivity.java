@@ -29,6 +29,7 @@ import com.labidi.wafa.secondchance.Entities.Demande;
 import com.labidi.wafa.secondchance.Entities.Response.DemandesResponse;
 import com.labidi.wafa.secondchance.Entities.Response.SearchResponse;
 import com.labidi.wafa.secondchance.Entities.User;
+import com.labidi.wafa.secondchance.Utils.LocalFiles;
 import com.labidi.wafa.secondchance.Utils.SearchQueryProvider;
 
 import java.util.ArrayList;
@@ -141,13 +142,14 @@ public class SearchPeoplesActivity extends BaseDrawerActivity implements SearchV
                                 ) {
                             u.setImg_profile(RetrofitClient.BASE_URL + u.getImg_profile());
                         }
-
-                        adapter = new ResearchResultAdapter(SearchPeoplesActivity.this, response.body().getUsers());
-                        adapter.setFriendRequests((ArrayList<Demande>) friendList);
-                        rvSearchResult.setAdapter(adapter);
-                        adapter.notifyDataSetChanged();
-                        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-                        progressBar.setVisibility(View.GONE);
+                        if (friendList != null ) {
+                            adapter = new ResearchResultAdapter(SearchPeoplesActivity.this, response.body().getUsers(), (ArrayList<Demande>) friendList);
+                            rvSearchResult.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+                            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                            progressBar.setVisibility(View.GONE);
+                        }else
+                            Log.e("Empty" , "empty");
                     }
                 }
             }
@@ -166,7 +168,8 @@ public class SearchPeoplesActivity extends BaseDrawerActivity implements SearchV
         progressDialog.show();
         RetrofitClient retrofitClient = new RetrofitClient();
         UserService.RegisterInterface registerInterface = retrofitClient.getRetrofit().create(UserService.RegisterInterface.class);
-        Call<DemandesResponse> call = registerInterface.checkInvitationById(User.Id);
+        LocalFiles localFiles = new LocalFiles(getSharedPreferences(LocalFiles.USER_FILE, Context.MODE_PRIVATE));
+        Call<DemandesResponse> call = registerInterface.checkInvitationById(localFiles.getInt(LocalFiles.Id));
         call.enqueue(new Callback<DemandesResponse>() {
             @Override
             public void onResponse(Call<DemandesResponse> call, Response<DemandesResponse> response) {

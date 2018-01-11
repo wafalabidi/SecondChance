@@ -70,49 +70,33 @@ public class BaseDrawerActivity extends BaseActivity implements NavigationView.O
     }
 
     private void setupHeader() {
+        LocalFiles localFiles = new LocalFiles(getSharedPreferences(LocalFiles.USER_FILE , Context.MODE_PRIVATE)) ;
+
         vNavigation.setNavigationItemSelectedListener(this);
         View headerView = vNavigation.getHeaderView(0);
         TextView tvName = headerView.findViewById(R.id.tvNameDrawer);
-        if (!TextUtils.isEmpty(User.FirstName)) {
-            String name = User.FirstName + "  " + User.LastName;
+        if (!TextUtils.isEmpty(localFiles.getString(LocalFiles.FirstName))) {
+            String name = localFiles.getString(LocalFiles.FirstName) + "  " + localFiles.getString(LocalFiles.LastName);
             tvName.setText(name);
         }
 
         ImageButton ibMenuLogOut = headerView.findViewById(R.id.ibMenuLogOut);
         ibMenuLogOut.setOnClickListener(v -> {
-            User.Disconect();
             LocalFiles.LogOut(getSharedPreferences(LocalFiles.USER_FILE , Context.MODE_PRIVATE));
             Intent intent = new Intent(BaseDrawerActivity.this, LoginActivity.class);
             startActivity(intent);
         });
 
-        ivMenuUserProfilePhoto = (ImageView) headerView.findViewById(R.id.ivMenuUserProfilePhoto);
+        ivMenuUserProfilePhoto =  headerView.findViewById(R.id.ivMenuUserProfilePhoto);
         ivMenuUserProfilePhoto.setOnClickListener(v -> {
             //TODO ici ouvrir le profil de la perosonne conécté
         });
 
         if (!TextUtils.isEmpty(User.imgprofile)) {
-            Picasso.with(this).load(User.imgprofile).into(ivMenuUserProfilePhoto);
-
-        } else {
+            Picasso.with(this).load(localFiles.getString(LocalFiles.imgprofile)).into(ivMenuUserProfilePhoto);
 
         }
-        headerView.findViewById(R.id.vGlobalMenuHeader).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onGlobalMenuHeaderClick(v);
-            }
-        });
-
-
-       /* Picasso.with(this)
-                .load(profilePhoto)
-                .placeholder(R.drawable.img_circle_placeholder)
-                .resize(avatarSize, avatarSize)
-                .centerCrop()
-                .transform(new CircleTransformation())
-                .into(ivMenuUserProfilePhoto);
-    */
+        headerView.findViewById(R.id.vGlobalMenuHeader).setOnClickListener(v -> onGlobalMenuHeaderClick(v));
     }
 
     public void onGlobalMenuHeaderClick(final View v) {

@@ -1,5 +1,6 @@
 package com.labidi.wafa.secondchance;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import com.labidi.wafa.secondchance.Adapters.friendsListAdapter;
 import com.labidi.wafa.secondchance.Entities.Demande;
 import com.labidi.wafa.secondchance.Entities.Response.DemandesResponse;
 import com.labidi.wafa.secondchance.Entities.User;
+import com.labidi.wafa.secondchance.Utils.LocalFiles;
 
 import java.util.ArrayList;
 
@@ -67,7 +69,8 @@ public class FriendsListActivity extends BaseDrawerActivity implements SearchVie
     private void getFriends() {
         RetrofitClient retrofitClient = new RetrofitClient();
         UserService.RegisterInterface getFriends = retrofitClient.getRetrofit().create(UserService.RegisterInterface.class);
-        Call<DemandesResponse> call = getFriends.getFriendList(User.Id);
+        LocalFiles localFiles = new LocalFiles(getSharedPreferences(LocalFiles.USER_FILE , Context.MODE_PRIVATE)) ;
+        Call<DemandesResponse> call = getFriends.getFriendList(localFiles.getInt(LocalFiles.Id));
         call.enqueue(new Callback<DemandesResponse>() {
             @Override
             public void onResponse(Call<DemandesResponse> call, Response<DemandesResponse> response) {

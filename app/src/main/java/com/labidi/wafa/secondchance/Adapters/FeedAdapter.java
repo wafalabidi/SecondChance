@@ -281,7 +281,8 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 Log.e("not Like", "not like");
 
             }
-            Picasso.with(FeedAdapter.this.context).load(post.getImage()).into(ivFeedCenter);
+           Picasso.with(FeedAdapter.this.context).load(post.getImage()).placeholder(R.drawable.source).into(ivFeedCenter);
+           // ivFeedCenter.setImageResource(R.drawable.source);
             ivUserProfile.setText(post.getFirstName());
             if (post.getImg_profile() != "") {
                 Picasso.with(context).load(RetrofitClient.BASE_URL + post.getImg_profile()).into(userProfilpic);
@@ -327,8 +328,6 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             this.likesCount = likesCount;
             this.isLiked = isLiked;
         }
-
-
     }
 
     public interface OnFeedItemClickListener {

@@ -29,7 +29,6 @@ import android.widget.Toast;
 import com.labidi.wafa.secondchance.API.RetrofitClient;
 import com.labidi.wafa.secondchance.API.UserService;
 import com.labidi.wafa.secondchance.Adapters.RvHomeAdapter;
-import com.labidi.wafa.secondchance.DialogListActivity;
 import com.labidi.wafa.secondchance.Entities.Post;
 import com.labidi.wafa.secondchance.Entities.Response.PostsResponse;
 import com.labidi.wafa.secondchance.Entities.User;

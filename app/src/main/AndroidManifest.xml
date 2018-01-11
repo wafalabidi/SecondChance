@@ -11,8 +11,6 @@
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
-
-
     <uses-feature
         android:name="android.hardware.camera.front"
         android:required="false" />
@@ -89,7 +87,6 @@
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <activity android:name=".FirstLoginActivity" />
-
         <activity android:name=".PublishActivity" />
         <activity
             android:name=".CommentActivity"
@@ -99,6 +96,10 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
+
+        <activity
+            android:name=".FilterActivity"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

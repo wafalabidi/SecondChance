@@ -123,7 +123,7 @@ public class PrivateProfileFragment extends Fragment implements View.OnClickList
 
         RetrofitClient retrofitClient = new RetrofitClient();
         UserService.insertPost service = retrofitClient.getRetrofit().create(UserService.insertPost.class);
-        Call<PostsResponse> call = service.getPost(currentUser.getId1());// TODO change user ID
+        Call<PostsResponse> call = service.getPost(currentUser.getId());// TODO change user ID
         call.enqueue(new Callback<PostsResponse>() {
             @Override
             public void onResponse(Call<PostsResponse> call, Response<PostsResponse> response) {

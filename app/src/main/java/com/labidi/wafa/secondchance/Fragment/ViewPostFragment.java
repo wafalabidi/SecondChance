@@ -189,7 +189,7 @@ public class ViewPostFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if(v.getId()==R.id.ivEllipses){
+      /*  if(v.getId()==R.id.ivEllipses){
            RetrofitClient retrofitClient = new RetrofitClient();
             UserService.deletePost service = retrofitClient.getRetrofit().create(UserService.deletePost.class);
             //UserService.
@@ -215,7 +215,7 @@ public class ViewPostFragment extends Fragment implements View.OnClickListener {
             });
             Toast.makeText(getApplicationContext(), imageUrl + " is clicked!", Toast.LENGTH_SHORT).show();
 
-        }
+        }*/
 
     }
 }

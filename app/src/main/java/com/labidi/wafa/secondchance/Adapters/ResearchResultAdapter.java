@@ -19,6 +19,7 @@ import com.labidi.wafa.secondchance.Entities.Demande;
 import com.labidi.wafa.secondchance.Entities.User;
 import com.labidi.wafa.secondchance.R;
 import com.labidi.wafa.secondchance.UserProfileActivity;
+import com.labidi.wafa.secondchance.Utils.LocalFiles;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -37,17 +38,13 @@ public class ResearchResultAdapter extends RecyclerView.Adapter<ResearchResultAd
     ArrayList<Demande> friendRequests;
 
 
-    public ArrayList<Demande> getFriendRequests() {
-        return friendRequests;
-    }
 
-    public void setFriendRequests(ArrayList<Demande> friendRequests) {
-        this.friendRequests = friendRequests;
-    }
 
-    public ResearchResultAdapter(Context context, ArrayList<User> items) {
+
+    public ResearchResultAdapter(Context context, ArrayList<User> items, ArrayList<Demande> friendRequests) {
         this.items = items;
         this.context = context;
+        this.friendRequests = friendRequests ;
     }
 
     @Override
@@ -68,12 +65,14 @@ public class ResearchResultAdapter extends RecyclerView.Adapter<ResearchResultAd
         if (checkFriend(user)) {
             holder.add.setEnabled(true);
             holder.add.setOnClickListener(view -> {
-                sendInvitation(new Demande(User.Id, user.getId1()), view);
+                LocalFiles localFiles = new LocalFiles(context.getSharedPreferences(LocalFiles.USER_FILE, Context.MODE_PRIVATE) );
+
+                sendInvitation(new Demande(localFiles.getInt(LocalFiles.Id), user.getId()), view);
             });
         } else {
             holder.add.setImageDrawable(context.getDrawable(R.drawable.ic_profil));
             holder.add.setOnClickListener(view -> {
-                openProfil(view , user.getId1());
+                openProfil(view , user.getId());
             });
         }
 
@@ -88,12 +87,14 @@ public class ResearchResultAdapter extends RecyclerView.Adapter<ResearchResultAd
     }
 
     private boolean checkFriend(User user) {
+        LocalFiles localFiles = new LocalFiles(context.getSharedPreferences(LocalFiles.USER_FILE , Context.MODE_PRIVATE));
+        int currentUser = localFiles.getInt(LocalFiles.Id);
         Demande friendRequest1 = new Demande();
-        friendRequest1.setIdUser(User.Id);
-        friendRequest1.setIdUser2(user.getId1());
+        friendRequest1.setIdUser(currentUser);
+        friendRequest1.setIdUser2(user.getId());
         Demande friendRequest2 = new Demande();
-        friendRequest2.setIdUser(user.getId1());
-        friendRequest2.setIdUser2(User.Id);
+        friendRequest2.setIdUser(user.getId());
+        friendRequest2.setIdUser2(currentUser);
         if (friendRequests != null) {
             if (friendRequests.contains(friendRequest1) || friendRequests.contains(friendRequest2)) {
                 return false;

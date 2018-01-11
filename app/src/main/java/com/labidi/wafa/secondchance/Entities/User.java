@@ -8,7 +8,7 @@ import com.stfalcon.chatkit.commons.models.IUser;
  * Created by Wafa on 19/11/2017.
  */
 
-public class User implements IUser {
+public class User{
     public static String FirstName;
     public static String LastName;
     public static String Password;
@@ -170,22 +170,15 @@ public class User implements IUser {
         this.img_couverture = img_couverture;
     }
 
-    public int getId1() {
-        return id;
-    }
 
-    @Override
+
     public String getName() {
         return firstName + " " + lastName;
     }
 
-    @Override
-    public String getAvatar() {
-        return img_profile;
-    }
-    @Override
-    public String getId() {
-        return null;
+
+    public int getId() {
+        return this.id;
     }
 
     public void setId(int id) {

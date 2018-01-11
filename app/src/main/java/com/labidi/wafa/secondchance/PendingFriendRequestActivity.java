@@ -1,5 +1,6 @@
 package com.labidi.wafa.secondchance;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import com.labidi.wafa.secondchance.Adapters.PendingInvitationAdapter;
 import com.labidi.wafa.secondchance.Entities.Demande;
 import com.labidi.wafa.secondchance.Entities.Response.DemandesResponse;
 import com.labidi.wafa.secondchance.Entities.User;
+import com.labidi.wafa.secondchance.Utils.LocalFiles;
 
 import java.util.ArrayList;
 
@@ -25,7 +27,7 @@ import retrofit2.Response;
  * Created by sofien on 12/12/2017.
  */
 
-public class PendingFriendRequestActivity extends BaseDrawerActivity {
+public class PendingFriendRequestActivity extends BaseActivity {
     ArrayList<Demande> demandes;
     @BindView(R.id.rvPendingFriendsRequest)
     RecyclerView rvPendingFriendsRequest;
@@ -44,7 +46,8 @@ public class PendingFriendRequestActivity extends BaseDrawerActivity {
     public void getCurrentUserDemands() {
         RetrofitClient retrofitClient = new RetrofitClient();
         UserService.RegisterInterface demands = retrofitClient.getRetrofit().create(UserService.RegisterInterface.class);
-        Call<DemandesResponse> call = demands.checkInvitationById(User.Id);
+        LocalFiles localFiles = new LocalFiles(getSharedPreferences(LocalFiles.USER_FILE , Context.MODE_PRIVATE) );
+        Call<DemandesResponse> call = demands.checkInvitation(localFiles.getInt(LocalFiles.Id));
 
         call.enqueue(new Callback<DemandesResponse>() {
             @Override
@@ -58,7 +61,7 @@ public class PendingFriendRequestActivity extends BaseDrawerActivity {
 
             @Override
             public void onFailure(Call<DemandesResponse> call, Throwable t) {
-                Log.e("Invitation erruers ", t.getMessage());
+                Log.e("Invitation erreur ", t.getMessage());
             }
         });
     }

@@ -85,4 +85,6 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.0.1'
     compile 'com.squareup.okhttp3:logging-interceptor:3.9.1'
     compile 'com.squareup.retrofit2:converter-scalars:2.3.0'
+    implementation 'info.androidhive:imagefilters:1.0.7'
+
 }

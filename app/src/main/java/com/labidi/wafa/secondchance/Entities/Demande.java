@@ -1,22 +1,35 @@
 package com.labidi.wafa.secondchance.Entities;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by sofien on 09/12/2017.
  */
 
-public class Demande extends User {
+public class Demande {
     public static int friend;
 
 
     @SerializedName("idUser")
+    @Expose
     int idUser;
     @SerializedName("idUser2")
+    @Expose
     int idUser2;
     @SerializedName("state")
+    @Expose
     int state;
+    @SerializedName("sender")
+    private  User sender ;
 
+    public User getSender() {
+        return sender;
+    }
+
+    public void setSender(User sender) {
+        this.sender = sender;
+    }
 
     @Override
     public String toString() {

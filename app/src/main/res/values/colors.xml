@@ -46,6 +46,9 @@
     <color name="btn_context_menu_text_red">#ffff0000</color>
 
     <color name="text_like_counter">#2b5a83</color>
+    <color name="color_option_menu">#FF3990</color>
+    <color name="filter_label_normal">#8A8889</color>
+    <color name="filter_label_selected">#221F20</color>
 
 
 </resources>

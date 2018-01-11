@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.labidi.wafa.secondchance.API.RetrofitClient;
 import com.labidi.wafa.secondchance.Entities.Demande;
 import com.labidi.wafa.secondchance.R;
 import com.squareup.picasso.Picasso;
@@ -44,11 +45,12 @@ public class friendsListAdapter extends RecyclerView.Adapter<friendsListAdapter.
     @Override
     public void onBindViewHolder(Holder holder, int position) {
         Demande demande = demandes.get(position);
-        if (!TextUtils.isEmpty(demande.getImg_profile())) {
-            Picasso.with(context).load(demande.getImg_profile()).into(holder.image);
+        if (demande != null) {
+            if (!TextUtils.isEmpty(demande.getSender().getImg_profile())) {
+                Picasso.with(context).load(RetrofitClient.BASE_URL+demande.getSender().getImg_profile()).into(holder.image);
+            }
+            holder.nom.setText(demande.getSender().getFirstName() + "  " + demande.getSender().getLastName());
         }
-        holder.nom.setText(demande.getFirstName() + "  " + demande.getLastName());
-
     }
 
     @Override

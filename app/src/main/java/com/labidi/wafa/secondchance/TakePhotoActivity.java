@@ -15,21 +15,16 @@ import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
-import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
@@ -39,27 +34,12 @@ import com.commonsware.cwac.camera.CameraHostProvider;
 import com.commonsware.cwac.camera.CameraView;
 import com.commonsware.cwac.camera.PictureTransaction;
 import com.commonsware.cwac.camera.SimpleCameraHost;
-
-import butterknife.BindView;
-import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import com.labidi.wafa.secondchance.API.RetrofitClient;
-import com.labidi.wafa.secondchance.API.UserService;
-import com.labidi.wafa.secondchance.Adapters.RvHomeAdapter;
-import com.labidi.wafa.secondchance.Entities.Post;
-import com.labidi.wafa.secondchance.Entities.Response.PostsResponse;
-import com.labidi.wafa.secondchance.Entities.User;
-import com.labidi.wafa.secondchance.R;
-import com.labidi.wafa.secondchance.Adapters.PhotoFiltersAdapter;
 import com.labidi.wafa.secondchance.view.RevealBackgroundView;
 
 import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by Miroslaw Stanek on 08.02.15.
@@ -73,7 +53,8 @@ public class TakePhotoActivity extends BaseActivity implements RevealBackgroundV
     private static final int STATE_TAKE_PHOTO = 0;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int STATE_SETUP_PHOTO = 1;
-
+    @BindView(R.id.cancelButton)
+    ImageButton cancelButton ;
     @BindView(R.id.vRevealBackground)
     RevealBackgroundView vRevealBackground;
     @BindView(R.id.vPhotoRoot)
@@ -88,14 +69,13 @@ public class TakePhotoActivity extends BaseActivity implements RevealBackgroundV
     ViewSwitcher vLowerPanel;
     @BindView(R.id.cameraView)
     CameraView cameraView;
-    @BindView(R.id.rvFilters)
-    RecyclerView rvFilters;
     @BindView(R.id.btnTakePhoto)
     Button btnTakePhoto;
+    @BindView(R.id.btnBack)
+    ImageButton btnBack;
 
     private boolean pendingIntro;
     private int currentState;
-    String mCurrentPhotoPath;
 
     private File photoPath;
 
@@ -117,7 +97,6 @@ public class TakePhotoActivity extends BaseActivity implements RevealBackgroundV
         updateStatusBarColor();
         updateState(STATE_TAKE_PHOTO);
         setupRevealBackground(savedInstanceState);
-        setupPhotoFilters();
         askForPermission(Manifest.permission.CAMERA, CAMERA);
         vUpperPanel.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
@@ -128,6 +107,17 @@ public class TakePhotoActivity extends BaseActivity implements RevealBackgroundV
                 vLowerPanel.setTranslationY(vLowerPanel.getHeight());
                 return true;
             }
+        });
+        btnBack.setOnClickListener(v->{
+            int[] startingLocation = new int[2];
+            v.getLocationOnScreen(startingLocation);
+            startingLocation[0] += v.getWidth() / 2;
+            TakePhotoActivity.startCameraFromLocation(startingLocation, this);
+            overridePendingTransition(0, 0);
+        });
+        cancelButton.setOnClickListener(v->{
+            Intent intent = new Intent(TakePhotoActivity.this , MainActivity.class);
+            startActivity(intent);
         });
     }
 
@@ -156,12 +146,6 @@ public class TakePhotoActivity extends BaseActivity implements RevealBackgroundV
         }
     }
 
-    private void setupPhotoFilters() {
-        PhotoFiltersAdapter photoFiltersAdapter = new PhotoFiltersAdapter(this);
-        rvFilters.setHasFixedSize(true);
-        rvFilters.setAdapter(photoFiltersAdapter);
-        rvFilters.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-    }
 
     @Override
     protected void onResume() {
@@ -179,13 +163,12 @@ public class TakePhotoActivity extends BaseActivity implements RevealBackgroundV
     public void onTakePhotoClick() {
         btnTakePhoto.setEnabled(false);
         cameraView.takePicture(true, true);
-
         animateShutter();
     }
 
     @OnClick(R.id.btnAccept)
     public void onAcceptClick() {
-        PublishActivity.openWithPhotoUri(this, Uri.fromFile(photoPath));
+        FilterActivity.openWithPhotoUri(this, Uri.fromFile(photoPath));
     }
 
     private void animateShutter() {
@@ -210,6 +193,7 @@ public class TakePhotoActivity extends BaseActivity implements RevealBackgroundV
             }
         });
         animatorSet.start();
+        vLowerPanel.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -286,12 +270,14 @@ public class TakePhotoActivity extends BaseActivity implements RevealBackgroundV
     @Override
     public void onBackPressed() {
         if (currentState == STATE_SETUP_PHOTO) {
-            btnTakePhoto.setEnabled(true);
-            vUpperPanel.showNext();
-            vLowerPanel.showNext();
-            updateState(STATE_TAKE_PHOTO);
-        } else {
-            super.onBackPressed();
+            int[] startingLocation = new int[2];
+            cameraView.getLocationOnScreen(startingLocation);
+            startingLocation[0] += cameraView.getWidth() / 2;
+            TakePhotoActivity.startCameraFromLocation(startingLocation, this);
+            overridePendingTransition(0, 0);
+        }else {
+            Intent intent = new Intent(this , MainActivity.class) ;
+            startActivity(intent);
         }
     }
 
@@ -332,10 +318,6 @@ public class TakePhotoActivity extends BaseActivity implements RevealBackgroundV
                 ActivityCompat.requestPermissions(TakePhotoActivity.this, new String[]{permission}, requestCode);
             }
 
-        } else
-
-        {
-            Toast.makeText(this, "" + permission + " is already granted.", Toast.LENGTH_SHORT).show();
         }
 
     }
