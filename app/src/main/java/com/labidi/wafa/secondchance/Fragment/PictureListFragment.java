@@ -1,11 +1,9 @@
 package com.labidi.wafa.secondchance.Fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -22,7 +20,6 @@ import com.labidi.wafa.secondchance.Adapters.PhotosAdapter;
 import com.labidi.wafa.secondchance.Entities.Post;
 import com.labidi.wafa.secondchance.Entities.Response.PostsResponse;
 import com.labidi.wafa.secondchance.Entities.User;
-import com.labidi.wafa.secondchance.MainActivity;
 import com.labidi.wafa.secondchance.MeasUtils;
 import com.labidi.wafa.secondchance.R;
 import com.labidi.wafa.secondchance.RecyclerViewClickListener;

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.labidi.wafa.secondchance.API.RetrofitClient;
 import com.labidi.wafa.secondchance.Entities.Commentaire;
 import com.labidi.wafa.secondchance.R;
 import com.squareup.picasso.Picasso;
@@ -24,10 +25,15 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.Holder> 
 
     Context context;
     ArrayList<Commentaire> items;
-
+    public ArrayList<Commentaire> getItems(){
+        return  this.items;
+    }
     public CommentAdapter(Context context, ArrayList<Commentaire> items) {
         this.context = context;
-        this.items = items;
+        if (items != null)
+            this.items = items;
+        else
+            this.items = new ArrayList<>();
     }
 
     @Override
@@ -42,10 +48,14 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.Holder> 
     @Override
     public void onBindViewHolder(Holder holder, int position) {
         Commentaire commentaire = items.get(position);
-        if(!TextUtils.isEmpty(commentaire.getImg_profile())){
-            Picasso.with(context).load(commentaire.getImg_profile()).into(holder.ivRowComment);
+        if (!TextUtils.isEmpty(commentaire.getUser().getImg_profile())) {
+            if (!commentaire.getUser().getImg_profile().contains(RetrofitClient.BASE_URL))
+                Picasso.with(context).load(RetrofitClient.BASE_URL + commentaire.getUser().getImg_profile()).into(holder.ivRowComment);
+            else
+                Picasso.with(context).load(commentaire.getUser().getImg_profile()).into(holder.ivRowComment);
+
         }
-        String name = commentaire.getFirstName() + "  "+ commentaire.getLastName();
+        String name = commentaire.getUser().getFirstName() + "  " + commentaire.getUser().getLastName();
         holder.tvRowCommentName.setText(name);
         holder.tvRowCommentSaying.setText(commentaire.getSayin());
 

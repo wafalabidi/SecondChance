@@ -65,7 +65,7 @@ public class RvHomeAdapter extends RecyclerView.Adapter<RvHomeAdapter.HomeViewAd
     public void onBindViewHolder(HomeViewAdapter holder, int position) {
         // if (items.get(position) != null) {
         String saying = items.get(position).getSaying();
-        String name = items.get(position).getFirstName() + " " + items.get(position).getLastName();
+        String name = items.get(position).getUser().getFirstName() + " " + items.get(position).getUser().getLastName();
         Picasso.with(context).load(items.get(position).getImage()).into(holder.ivRow);//TODO FIX this
         holder.tvSayaing.setText(saying);
         holder.tvUserName.setText(name);

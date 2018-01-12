@@ -1,7 +1,6 @@
 package com.labidi.wafa.secondchance.Adapters;
 
 import android.content.Context;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -16,8 +15,8 @@ import com.labidi.wafa.secondchance.API.RetrofitClient;
 import com.labidi.wafa.secondchance.API.UserService;
 import com.labidi.wafa.secondchance.Entities.ConfirmationResponse;
 import com.labidi.wafa.secondchance.Entities.Demande;
-import com.labidi.wafa.secondchance.Entities.User;
 import com.labidi.wafa.secondchance.R;
+import com.labidi.wafa.secondchance.Utils.LocalFiles;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -33,10 +32,11 @@ import retrofit2.Response;
 public class PendingInvitationAdapter extends RecyclerView.Adapter<PendingInvitationAdapter.Holder> {
     ArrayList<Demande> items;
     Context context;
-
+    LocalFiles localFiles ;
     public PendingInvitationAdapter(ArrayList<Demande> items, Context context) {
         this.items = items;
         this.context = context;
+        localFiles = new LocalFiles(context.getSharedPreferences(LocalFiles.USER_FILE, Context.MODE_PRIVATE));
     }
 
     @Override
@@ -52,20 +52,19 @@ public class PendingInvitationAdapter extends RecyclerView.Adapter<PendingInvita
         Demande user = items.get(position);
         holder.tvName.setText(user.getSender().getFirstName() + "  " + user.getSender().getLastName());
         if (!TextUtils.isEmpty(user.getSender().getImg_profile())) {
-            Picasso.with(context).load(user.getSender().getImg_profile()).into(holder.imageView);
+            Picasso.with(context).load(RetrofitClient.BASE_URL+user.getSender().getImg_profile()).into(holder.imageView);
         }
 
         holder.ibAccept.setOnClickListener(view -> {
-            accepterDemande(items.get(position).getIdUser(), User.Id, position);
+            accepterDemande(items.get(position).getIdUser(), localFiles.getInt(LocalFiles.Id), position);
         });
         holder.ibRefuse.setOnClickListener(view -> {
-            refuserDemande(items.get(position).getIdUser(), User.Id, position);
+            refuserDemande(items.get(position).getIdUser(), localFiles.getInt(LocalFiles.Id), position);
         });
     }
 
     private void accepterDemande(int idSender, int idReciver, int position) {
         items.remove(position);
-        Toast.makeText(context , "Invitation Rejected" , Toast.LENGTH_SHORT).show();
         RetrofitClient retrofitClient = new RetrofitClient();
         UserService.RegisterInterface accept = retrofitClient.getRetrofit().create(UserService.RegisterInterface.class);
         Call<ConfirmationResponse> call = accept.accepterDemande(idSender, idReciver);
@@ -85,7 +84,6 @@ public class PendingInvitationAdapter extends RecyclerView.Adapter<PendingInvita
 
     private void refuserDemande(int idSender, int idReciver, int postion) {
         items.remove(postion);
-        Toast.makeText(context , "Invitation Rejected" , Toast.LENGTH_SHORT).show();
         RetrofitClient retrofitClient = new RetrofitClient();
         UserService.RegisterInterface accept = retrofitClient.getRetrofit().create(UserService.RegisterInterface.class);
         Call<ConfirmationResponse> call = accept.refuserDemande(idSender, idReciver);
@@ -93,7 +91,7 @@ public class PendingInvitationAdapter extends RecyclerView.Adapter<PendingInvita
             @Override
             public void onResponse(Call<ConfirmationResponse> call, Response<ConfirmationResponse> response) {
                 PendingInvitationAdapter.this.notifyDataSetChanged();
-                Toast.makeText(context, "Invitation accepted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context , "Invitation Rejected" , Toast.LENGTH_SHORT).show();
             }
 
             @Override

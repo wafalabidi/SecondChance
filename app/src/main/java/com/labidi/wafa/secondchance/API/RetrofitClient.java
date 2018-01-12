@@ -14,9 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient extends AppCompatActivity {
 
-    //  private static final String BASE_URL ="http://172.16.153.116:8888/DivroceBook/";public static final String BASE_URL ="http://172.19.6.94:8888/DivroceBook/";
-    //public static final String BASE_URL ="http://192.168.1.3:8888/DivroceBook/";
-    //public static final String BASE_URL = "http://172.16.4.4:8888/DivroceBook/";
+
     public static final String BASE_URL ="http://172.16.153.116:8888/DivroceBook/";
     protected Retrofit retrofit;
 
@@ -24,9 +22,6 @@ public class RetrofitClient extends AppCompatActivity {
         return retrofit;
     }
 
-    public void setRetrofit(Retrofit retrofit) {
-        this.retrofit = retrofit;
-    }
 
     public RetrofitClient() {
         Gson gson = new GsonBuilder()

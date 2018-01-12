@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by sofien on 19/12/2017.
  */
 
-public class Commentaire extends User {
+public class Commentaire {
     @Expose
     @SerializedName("Sayin")
     String sayin;
@@ -20,6 +20,17 @@ public class Commentaire extends User {
     @Expose
     @SerializedName("IdUser")
     int idUser ;
+    @Expose
+    @SerializedName("user")
+    User user ;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public int getIdUser() {
         return idUser;

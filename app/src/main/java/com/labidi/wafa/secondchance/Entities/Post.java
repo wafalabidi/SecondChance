@@ -12,7 +12,7 @@ import java.util.Base64;
  * Created by sofien on 20/11/2017.
  */
 
-public class Post extends User {
+public class Post {
     public static String img;
 
     @SerializedName("Image")
@@ -33,9 +33,16 @@ public class Post extends User {
     @SerializedName("likes")
     @Expose
     private int likes;
+    @SerializedName("user")
+    @Expose
+    private User user ;
 
-    public Post(String firstName, String lastName) {
-        super(firstName, lastName);
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Post(){
@@ -56,7 +63,7 @@ public class Post extends User {
                 "image='" + image + '\'' +
                 ", title='" + title + '\'' +
                 ", saying='" + description + '\'' +
-                ", id=" + id +
+
                 ", idUser=" + idUser +
                 ", likes=" + likes +
                 '}';

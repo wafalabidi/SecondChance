@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
-import android.support.v4.util.ArraySet;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,13 +24,13 @@ import com.labidi.wafa.secondchance.Entities.ConfirmationResponse;
 import com.labidi.wafa.secondchance.Entities.Like;
 import com.labidi.wafa.secondchance.Entities.LikeDAO;
 import com.labidi.wafa.secondchance.Entities.Post;
-import com.labidi.wafa.secondchance.Entities.Response.LikesResponse;
-import com.labidi.wafa.secondchance.Entities.User;
 import com.labidi.wafa.secondchance.MainActivity;
 import com.labidi.wafa.secondchance.R;
 import com.labidi.wafa.secondchance.Utils.LocalFiles;
 import com.labidi.wafa.secondchance.view.LoadingFeedItemView;
 import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -62,9 +62,6 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     LocalFiles localFiles;
     private Integer currentUserId;
 
-    public FeedAdapter(Context context) {
-        this.context = context;
-    }
 
     public FeedAdapter(Context context, ArrayList items, ArrayList<Like> likes) {
         this.context = context;
@@ -96,68 +93,25 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return null;
     }
 
-    private void setupClickableViews(final View view, final CellFeedViewHolder cellFeedViewHolder) {
+    private void setupClickableViews(final View view, CellFeedViewHolder cellFeedViewHolder) {
 
         cellFeedViewHolder.btnComments.setOnClickListener(v -> onFeedItemClickListener.onCommentsClick(view, cellFeedViewHolder.getAdapterPosition()));
         cellFeedViewHolder.btnMore.setOnClickListener(v ->
                 onFeedItemClickListener.onMoreClick(v, cellFeedViewHolder.getAdapterPosition()));
+        //Like Button Clicked
         cellFeedViewHolder.ivFeedCenter.setOnClickListener(v -> {
-            int adapterPosition = cellFeedViewHolder.getAdapterPosition();
-//                feedItems.get(adapterPosition).likesCount++;
-            notifyItemChanged(adapterPosition, ACTION_LIKE_IMAGE_CLICKED);
-            if (context instanceof MainActivity) {
-                ((MainActivity) context).showLikedSnackbar();
-            }
+            Like(cellFeedViewHolder);
+            notifyItemChanged(cellFeedViewHolder.getAdapterPosition());
+
+
         });
+        //Like Button Clicked
         cellFeedViewHolder.btnLike.setOnClickListener(v -> {
-            int adapterPosition = Math.abs(items.size() - 1 - cellFeedViewHolder.getAdapterPosition());
-            //feedItems.get(adapterPosition).likesCount++;
-            Post post = items.get(adapterPosition);
-            Integer postId = post.getidPost();
-            if (cellFeedViewHolder.feedItem.isLiked) {
-                ((ImageButton) v).setImageResource(R.drawable.ic_heart_outline_grey);
-                likeDAO.unLike(new Like(postId, currentUserId)).enqueue(new Callback<ConfirmationResponse>() {
-                    @Override
-                    public void onResponse(Call<ConfirmationResponse> call, Response<ConfirmationResponse> response) {
-                        Log.e("Unlike", "Ok");
-                    }
-
-                    @Override
-                    public void onFailure(Call<ConfirmationResponse> call, Throwable t) {
-                        Log.e("Unlike", t.getMessage());
-
-                    }
-                });
-                likes.remove(new Like(postId, currentUserId));
-                Log.e("Poist ID ", " " + postId);
-                cellFeedViewHolder.feedItem.isLiked = ! cellFeedViewHolder.feedItem.isLiked ;
-
-            } else {
-                ((ImageButton) v).setImageResource(R.drawable.ic_heart_red);
-                Log.e("Poist ID ", " Unliked" + postId);
-                likeDAO.Like(new Like(postId, currentUserId)).enqueue(new Callback<ConfirmationResponse>() {
-                    @Override
-                    public void onResponse(Call<ConfirmationResponse> call, Response<ConfirmationResponse> response) {
-                        Log.e("Like", "Ok");
-                        likes.add(new Like(postId, currentUserId));
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<ConfirmationResponse> call, Throwable t) {
-                        Log.e("Like", t.getMessage() + postId);
-
-                    }
-                });
-                likes.add(new Like(postId, currentUserId));
-                cellFeedViewHolder.feedItem.isLiked = ! cellFeedViewHolder.feedItem.isLiked ;
-
-            }
-
-            notifyItemChanged(adapterPosition, ACTION_LIKE_BUTTON_CLICKED);
-
+            Like(cellFeedViewHolder);
+            //notifyItemChanged(cellFeedViewHolder.getAdapterPosition(), ACTION_LIKE_BUTTON_CLICKED);
 
         });
+
         cellFeedViewHolder.ivUserProfile.setOnClickListener(v -> {
             Post post = items.get(cellFeedViewHolder.getAdapterPosition());
             onFeedItemClickListener.onProfileClick(view, post.getIdUser());
@@ -167,16 +121,60 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             if (items.get(cellFeedViewHolder.getAdapterPosition()).getidPost() != 0) {
                 intent.putExtra("idPost", items.get(cellFeedViewHolder.getAdapterPosition()).getidPost());
                 context.startActivity(intent);
-            } else
-                Toast.makeText(context, "Eroor–", Toast.LENGTH_SHORT).show();
+            }
         });
+
+    }
+
+    private void Like(CellFeedViewHolder cellFeedViewHolder) {
+        int adapterPosition = cellFeedViewHolder.getAdapterPosition();
+        if (context instanceof MainActivity) {
+            ((MainActivity) context).showLikedSnackbar();
+        }
+        Post post = items.get(adapterPosition);
+        Integer postId = post.getidPost();
+        if (likes.contains(new Like(post.getidPost(), currentUserId))) {
+            likeDAO.unLike(new Like(postId, currentUserId)).enqueue(new Callback<ConfirmationResponse>() {
+                @Override
+                public void onResponse(Call<ConfirmationResponse> call, Response<ConfirmationResponse> response) {
+                    Log.e("Unlike", "Ok");
+                }
+
+                @Override
+                public void onFailure(Call<ConfirmationResponse> call, Throwable t) {
+                    Log.e("Unlike", t.getMessage());
+
+                }
+            });
+            likes.remove(new Like(postId, currentUserId));
+
+            cellFeedViewHolder.btnLike.setImageResource(R.drawable.ic_heart_outline_grey);
+
+        } else {
+            likeDAO.Like(new Like(postId, currentUserId)).enqueue(new Callback<ConfirmationResponse>() {
+                @Override
+                public void onResponse(Call<ConfirmationResponse> call, Response<ConfirmationResponse> response) {
+                    likes.add(new Like(postId, currentUserId));
+
+                }
+
+                @Override
+                public void onFailure(Call<ConfirmationResponse> call, Throwable t) {
+
+                }
+            });
+            likes.add(new Like(postId, currentUserId));
+            cellFeedViewHolder.btnLike.setImageResource(R.drawable.ic_heart_red);
+
+        }
+
+        Toast.makeText(context, "likes lenght   " + likes.size(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        int row = Math.abs(items.size() - 1 - position);
+        int row = position;
         ((CellFeedViewHolder) viewHolder).bindView(items.get(row));
-
         if (getItemViewType(position) == VIEW_TYPE_LOADER) {
             bindLoadingFeedItem((LoadingCellFeedViewHolder) viewHolder);
         }
@@ -204,23 +202,6 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return items.size();
     }
 
-    public void updateItems(boolean animated) {
-       /* feedItems.clear();
-        feedItems.addAll(Arrays.asList(
-                new FeedItem(33, false),
-                new FeedItem(1, false),
-                new FeedItem(223, false),
-                new FeedItem(2, false),
-                new FeedItem(6, false),
-                new FeedItem(8, false),
-                new FeedItem(99, false)
-        ));
-        if (animated) {
-            notifyItemRangeInserted(0, feedItems.size());
-        } else {
-            notifyDataSetChanged();
-        }*/
-    }
 
     public void setOnFeedItemClickListener(OnFeedItemClickListener onFeedItemClickListener) {
         this.onFeedItemClickListener = onFeedItemClickListener;
@@ -255,53 +236,35 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         @BindView(R.id.userProfilePic)
         CircleImageView userProfilpic;
         FeedItem feedItem;
-        User currentUser;
 
-        public User getCurrentUser() {
-            return currentUser;
-        }
 
-        public void setCurrentUser(User currentUser) {
-            this.currentUser = currentUser;
-        }
-
-        public CellFeedViewHolder(View view) {
+        CellFeedViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }
 
         public void bindView(Post post) {
-            feedItem = new FeedItem(post.getLikes(), false);
+            //this.feedItem = new FeedItem(post.getLikes(), false);
             if (likes.contains(new Like(post.getidPost(), currentUserId))) {
                 btnLike.setImageResource(R.drawable.ic_heart_red);
-                feedItem.isLiked = true;
-                Log.e("Islike", "islikde");
+                //feedItem.isLiked = true;
             } else {
                 btnLike.setImageResource(R.drawable.ic_heart_outline_grey);
-                Log.e("not Like", "not like");
 
             }
-           Picasso.with(FeedAdapter.this.context).load(post.getImage()).placeholder(R.drawable.source).into(ivFeedCenter);
-           // ivFeedCenter.setImageResource(R.drawable.source);
-            ivUserProfile.setText(post.getFirstName());
-            if (post.getImg_profile() != "") {
-                Picasso.with(context).load(RetrofitClient.BASE_URL + post.getImg_profile()).into(userProfilpic);
+            Picasso.with(FeedAdapter.this.context).load(post.getImage()).placeholder(R.drawable.source).into(ivFeedCenter);
+            ivUserProfile.setText(post.getUser().getFirstName());
+            if (!TextUtils.isEmpty(post.getUser().getImg_profile())) {
+                Picasso.with(context).load(RetrofitClient.BASE_URL + post.getUser().getImg_profile()).into(userProfilpic);
             }
 
             ((Activity) context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             ivFeedBottom.setText(post.getSaying());
 
-            // btnLike.setImageResource(R.drawable.ic_heart_outline_grey);// TODO Dynamize
             tsLikesCounter.setCurrentText(vImageRoot.getResources().getQuantityString(
-                    R.plurals.likes_count, post.getLikes(), post.getLikes()
-            ));
+                    R.plurals.likes_count, post.getLikes(), post.getLikes()));
 
-
-        }
-
-        public FeedItem getFeedItem() {
-            return feedItem;
         }
     }
 
@@ -309,7 +272,7 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         LoadingFeedItemView loadingFeedItemView;
 
-        public LoadingCellFeedViewHolder(LoadingFeedItemView view) {
+        LoadingCellFeedViewHolder(LoadingFeedItemView view) {
             super(view);
             this.loadingFeedItemView = view;
         }
@@ -321,10 +284,10 @@ public class FeedAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public static class FeedItem {
-        public int likesCount;
-        public boolean isLiked;
+        int likesCount;
+        boolean isLiked;
 
-        public FeedItem(int likesCount, boolean isLiked) {
+        FeedItem(int likesCount, boolean isLiked) {
             this.likesCount = likesCount;
             this.isLiked = isLiked;
         }

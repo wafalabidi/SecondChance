@@ -49,17 +49,12 @@ public class ViewPostFragment extends Fragment implements View.OnClickListener {
 
     //widgets
     private SquareImageView mPostImage;
-    //private BottomNavigationViewEx bottomNavigationView;
     private TextView mBackLabel, mCaption, mUsername, mTimestamp;
-    private ImageView mBackArrow, mEllipses, mHeartRed, mHeartWhite, mProfileImage;
+    private ImageView  mEllipses, mHeartRed, mHeartWhite, mProfileImage;
 
 
     //vars
     Post post;
-    private int mActivityNumber = 0;
-    private String photoUsername = "";
-    private String profilePhotoUrl = "";
-    //private UserAccountSettings mUserAccountSettings;
 
     @Nullable
     @Override
@@ -79,8 +74,7 @@ public class ViewPostFragment extends Fragment implements View.OnClickListener {
         mEllipses.setOnClickListener(this);
         mProfileImage.setOnClickListener(this);
         Bundle bundle=getArguments();
-        Post post = new Post();
-        mCaption.setText(String.valueOf(bundle.getString("")));
+        mCaption.setText(post.getSaying());
         mPostImage.setImageURI(Uri.parse((String.valueOf(bundle.getString("")))));
         Toast.makeText(getApplicationContext(), imageUrl + " is clicked!", Toast.LENGTH_SHORT).show();
         if(imageUrl!=""){
@@ -96,7 +90,6 @@ public class ViewPostFragment extends Fragment implements View.OnClickListener {
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
 
-        setupBottomNavigationView();
         getPhotoDetails();
         //setupWidgets();
 
@@ -108,89 +101,10 @@ public class ViewPostFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    private void setupWidgets(){
-       /* String timestampDiff = getTimestampDifference();
-        if(!timestampDiff.equals("0")){
-            mTimestamp.setText(timestampDiff + " DAYS AGO");
-        }else{
-            mTimestamp.setText("TODAY");
-        }
-        UniversalImageLoader.setImage(mUserAccountSettings.getProfile_photo(), mProfileImage, null, "");
-        mUsername.setText(mUserAccountSettings.getUsername());*/
-    }
-
-    /**
-     * Returns a string representing the number of days ago the post was made
-     * @return
-     */
-    private void getTimestampDifference(){
-       /* Log.d(TAG, "getTimestampDifference: getting timestamp difference.");
-
-        String difference = "";
-        Calendar c = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.CANADA);
-        sdf.setTimeZone(TimeZone.getTimeZone("Canada/Pacific"));//google 'android list of timezones'
-        Date today = c.getTime();
-        sdf.format(today);
-        Date timestamp;
-        //final String photoTimestamp = mPhoto.getDate_created();
-       try{
-            //timestamp = sdf.parse(photoTimestamp);
-            //difference = String.valueOf(Math.round(((today.getTime() - timestamp.getTime()) / 1000 / 60 / 60 / 24 )));
-        }catch (ParseException e){
-            Log.e(TAG, "getTimestampDifference: ParseException: " + e.getMessage() );
-            difference = "0";
-        }
-        return difference/*/
-    }
-
-    /**
-     * retrieve the activity number from the incoming bundle from profileActivity interface
-     * @return
-     */
-    private void getActivityNumFromBundle(){
-        /*Log.d(TAG, "getActivityNumFromBundle: arguments: " + getArguments());
-
-        Bundle bundle = this.getArguments();
-        if(bundle != null) {
-            return bundle.getInt(getString(R.string.activity_number));
-        }else{
-            return 0;
-        }*/
-    }
-
-    /**
-     * retrieve the photo from the incoming bundle from profileActivity interface
-     * @return
-     */
-    private Post getPhotoFromBundle(){
-        Log.d(TAG, "getPhotoFromBundle: arguments: " + getArguments());
-
-        Bundle bundle = this.getArguments();
-        if(bundle != null) {
-            return bundle.getParcelable(getString(R.string.photo));
-        }else{
-            return null;
-        }
-    }
-
-    /**
-     * BottomNavigationView setup
-     */
-    private void setupBottomNavigationView(){
-      /*  Log.d(TAG, "setupBottomNavigationView: setting up BottomNavigationView");
-        BottomNavigationViewHelper.setupBottomNavigationView(bottomNavigationView);
-        BottomNavigationViewHelper.enableNavigation(getActivity(),getActivity() ,bottomNavigationView);
-        Menu menu = bottomNavigationView.getMenu();
-        MenuItem menuItem = menu.getItem(mActivityNumber);
-        menuItem.setChecked(true); */
-    }
-
-
     @Override
     public void onClick(View v) {
-      /*  if(v.getId()==R.id.ivEllipses){
-           RetrofitClient retrofitClient = new RetrofitClient();
+        if(v.getId()==R.id.ivEllipses){
+            RetrofitClient retrofitClient = new RetrofitClient();
             UserService.deletePost service = retrofitClient.getRetrofit().create(UserService.deletePost.class);
             //UserService.
             Call<PostsResponse> call = service.deletePost(post.getidPost());
@@ -215,7 +129,7 @@ public class ViewPostFragment extends Fragment implements View.OnClickListener {
             });
             Toast.makeText(getApplicationContext(), imageUrl + " is clicked!", Toast.LENGTH_SHORT).show();
 
-        }*/
+        }
 
     }
 }

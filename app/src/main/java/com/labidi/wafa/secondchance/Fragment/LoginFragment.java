@@ -134,6 +134,7 @@ public class LoginFragment extends Fragment {
                             LocalFiles localFiles = new LocalFiles(getActivity().getSharedPreferences(LocalFiles.USER_FILE,Context.MODE_PRIVATE));
                            User user1 = response.body().getUser();
                            user1.setImg_profile(retrofitClient.BASE_URL+user1.getImg_profile());
+                           user1.setImg_couverture(retrofitClient.BASE_URL+user1.getImg_couverture());
                             localFiles.logIn(user1);
                             progressDialog.dismiss();
                             Intent intent = new Intent(getActivity(), MainActivity.class);

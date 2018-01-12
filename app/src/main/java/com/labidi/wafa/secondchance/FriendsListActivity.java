@@ -78,7 +78,7 @@ public class FriendsListActivity extends BaseDrawerActivity implements SearchVie
                 if (list != null) {
                     adapter = new friendsListAdapter(FriendsListActivity.this , list) ;
                     rvFriendList.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
+                   // adapter.notifyDataSetChanged();
 
                 }
             }

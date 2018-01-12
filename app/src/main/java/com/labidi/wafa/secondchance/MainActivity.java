@@ -85,13 +85,12 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-       // feedAdapter = new FeedAdapter(this);
-        if (savedInstanceState == null) {
-            pendingIntroAnimation = true;
-        } else {
-            if(feedAdapter != null )
-            feedAdapter.updateItems(false);
-        }
+        getPosts();
+        ComponentName name = new ComponentName(this ,FriendsWatcherService.class );
+
+        jobInfo = new JobInfo.Builder(0 , name).setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY).setPeriodic(1000 * 60 * 15).build();
+        JobScheduler jobScheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
+        jobScheduler.schedule(jobInfo);
 
     }
 
@@ -161,9 +160,6 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
                 .setStartDelay(300)
                 .setDuration(ANIM_DURATION_FAB)
                 .start();
-        if(feedAdapter != null)
-        feedAdapter.updateItems(true);
-        getPosts();
 
 
     }
@@ -241,7 +237,7 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
                             ) {
                         p.setImage(RetrofitClient.BASE_URL + p.getImage());
                     }
-
+                    Log.e("GePost" , "Get Post");
                     getLikes((ArrayList<Post>) response.body().getPost());
                 }
                 Log.e("Responsoe", response.message());
@@ -268,6 +264,7 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
                   likes  = response.body().getLikes();
 
                 }
+                Log.e("Get Likes" , "Get Likes");
 
                 feedAdapter = new FeedAdapter(MainActivity.this, posts, likes);
                 feedAdapter.setOnFeedItemClickListener(MainActivity.this);
@@ -284,7 +281,6 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
                         try {
                             super.onLayoutChildren(recycler, state);
                         } catch (IndexOutOfBoundsException e) {
-                            Log.e("Error", "IndexOutOfBoundsException in RecyclerView happens");
                         }
                     }
 
@@ -299,12 +295,11 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
                 });
                 rvFeed.setItemAnimator(new FeedItemAnimator());
 
-
             }
 
             @Override
             public void onFailure(Call<LikesResponse> call, Throwable t) {
-                Log.e("getLikes", t.getMessage());
+                Log.e("Get lieks ", t.getMessage());
             }
         });
 

@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:cardCornerRadius="5dp"
-    app:cardUseCompatPadding="true">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <LinearLayout
-
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingBottom="4dp">
+        android:paddingBottom="4dp"
+        android:paddingStart="5dp"
+        android:paddingTop="5dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivRowComment"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginBottom="5dp"
+            android:layout_marginEnd="4dp"
             android:src="@drawable/unknown" />
 
         <LinearLayout
@@ -31,8 +32,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
+                android:alpha=".5"
                 android:lineSpacingMultiplier="1"
-                android:paddingStart="0dp"
+                android:paddingStart="20dp"
                 android:text="Captain Wafe Ebdelli"
                 android:textColor="@color/black" />
 
@@ -42,11 +44,19 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="3dp"
-                android:alpha=".7"
+                android:alpha="1"
                 android:lineSpacingMultiplier="1"
                 android:paddingStart="8dp"
                 android:text="Nice picture love it "
                 android:textColor="@color/black" />
+            <FrameLayout
+                android:alpha=".7"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/black" />
         </LinearLayout>
+
     </LinearLayout>
-</android.support.v7.widget.CardView>
+
+
+</LinearLayout>

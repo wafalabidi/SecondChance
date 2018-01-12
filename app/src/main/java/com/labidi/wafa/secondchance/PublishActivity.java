@@ -49,16 +49,11 @@ import retrofit2.http.POST;
 public class PublishActivity extends BaseActivity {
     public static final String ARG_TAKEN_PHOTO_URI = "arg_taken_photo_uri";
 
-    @BindView(R.id.tbFollowers)
-    ToggleButton tbFollowers;
-    @BindView(R.id.tbDirect)
-    ToggleButton tbDirect;
     @BindView(R.id.ivPhoto)
     ImageView ivPhoto;
     @BindView(R.id.etDescription)
     EditText etDescription;
 
-    private boolean propagatingToggleState = false;
     private Uri photoUri;
     private int photoSize;
 
@@ -80,7 +75,7 @@ public class PublishActivity extends BaseActivity {
           String uri =  getRealPathFromUri(this , getIntent().getParcelableExtra(ARG_TAKEN_PHOTO_URI));
             photoUri = Uri.parse(uri);
         } else
-            Toast.makeText(this, "Failed get Parceable", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Internal Error please retry later", Toast.LENGTH_SHORT).show();
         ivPhoto.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
@@ -113,8 +108,8 @@ public class PublishActivity extends BaseActivity {
     }
 
     private void loadThumbnailPhoto() {
-        ivPhoto.setScaleX(0);
-        ivPhoto.setScaleY(0);
+       // ivPhoto.setScaleX(0);
+       // ivPhoto.setScaleY(0);
         ivPhoto.setImageURI(photoUri);
 
     }
@@ -153,38 +148,12 @@ public class PublishActivity extends BaseActivity {
             String title = "alpha" + timesMill;
             post.setTitle(title);
             post.setIdUser(localFiles.getInt(LocalFiles.Id));
-            Upload(post);
+           // Upload(post);
         } else {
             // Toast.makeText(this, "Bitmap is null", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void Upload(Post post) {
-        RetrofitClient retrofitClient = new RetrofitClient();
-        UserService.insertPost insertPost = retrofitClient.getRetrofit().create(UserService.insertPost.class);
-        Call<ResponseBody> call = insertPost.insertPost(
-                post.getSaying(),
-                post.getImage(),
-                post.getIdUser(),
-                post.getTitle()
-        );
-        call.enqueue(new retrofit2.Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                    Intent intent = new Intent(PublishActivity.this, MainActivity.class);
-                    //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    intent.setAction(MainActivity.ACTION_SHOW_LOADING_ITEM);
-                    startActivity(intent);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.e("Upload Error", t.getMessage());
-            }
-        });
-    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -192,23 +161,8 @@ public class PublishActivity extends BaseActivity {
         outState.putParcelable(ARG_TAKEN_PHOTO_URI, photoUri);
     }
 
-    @OnCheckedChanged(R.id.tbFollowers)
-    public void onFollowersCheckedChange(boolean checked) {
-        if (!propagatingToggleState) {
-            propagatingToggleState = true;
-            tbDirect.setChecked(!checked);
-            propagatingToggleState = false;
-        }
-    }
 
-    @OnCheckedChanged(R.id.tbDirect)
-    public void onDirectCheckedChange(boolean checked) {
-        if (!propagatingToggleState) {
-            propagatingToggleState = true;
-            tbFollowers.setChecked(!checked);
-            propagatingToggleState = false;
-        }
-    }
+
 
 
     private void askForPermission(String permission, Integer requestCode) {

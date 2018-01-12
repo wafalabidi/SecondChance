@@ -71,18 +71,7 @@ public class LocalFiles {
 
         sharedPreferences.edit().clear().apply();
     }
-/*
-    public void setArraySet(String label, android.support.v4.util.ArraySet<String> set) {
 
-        sharedPreferences.edit().putStringSet(label, set).apply();
-
-    }
-
-    public Set<String> getArraySet(String label) {
-
-        return sharedPreferences.getStringSet(label, new ArraySet<String>());
-    }
-*/
     public void logIn(User user) {
         this.insertString(LocalFiles.FirstName, user.getFirstName());
         insertString(LocalFiles.LastName, user.getLastName());
@@ -97,6 +86,7 @@ public class LocalFiles {
         insertString(Hobbies, user.getHobbies());
         insertInt(Id, user.getId());
         insertString(imgprofile, user.getImg_profile());
+        insertString(imgcouverture,user.getImg_couverture());
         setStaticUser(sharedPreferences);
     }
 
@@ -114,6 +104,7 @@ public class LocalFiles {
         User.Hobbies = sharedPreferences.getString(Hobbies, "");
         User.Id = sharedPreferences.getInt(Id, 0);
         User.imgprofile = sharedPreferences.getString(imgprofile, "");
+        User.imgcouverture= sharedPreferences.getString(imgcouverture,"");
 
     }
 }

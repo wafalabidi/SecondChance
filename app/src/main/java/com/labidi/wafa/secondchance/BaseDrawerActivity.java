@@ -60,12 +60,7 @@ public class BaseDrawerActivity extends BaseActivity implements NavigationView.O
 
         super.setupToolbar();
         if (getToolbar() != null) {
-            getToolbar().setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    drawerLayout.openDrawer(Gravity.LEFT);
-                }
-            });
+            getToolbar().setNavigationOnClickListener(v -> drawerLayout.openDrawer(Gravity.LEFT));
         }
     }
 

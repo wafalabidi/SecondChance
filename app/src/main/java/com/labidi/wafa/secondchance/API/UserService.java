@@ -155,4 +155,19 @@ public interface UserService {
 
 
     }
+
+    public interface deletePost {
+        @FormUrlEncoded
+        @POST("deletePost.php")
+        Call<PostsResponse> deletePost(
+                @Field("idPost") int idPost);
+    }
+
+    public interface editProfile {
+        @FormUrlEncoded
+        @POST("editProfile.php")
+        Call<PostsResponse> deletePost(
+                @Field("id") int id);
+    }
+
 }

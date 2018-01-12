@@ -1,1 +1,1 @@
-include ':app', ':diagonallayout'
+include ':app', ':diagonallayout', ':library', ':libraryd'

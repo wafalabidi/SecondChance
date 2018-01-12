@@ -1,6 +1,7 @@
 package com.labidi.wafa.secondchance;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,6 +19,7 @@ import com.labidi.wafa.secondchance.Entities.Commentaire;
 import com.labidi.wafa.secondchance.Entities.ConfirmationResponse;
 import com.labidi.wafa.secondchance.Entities.Response.CommentaireResponse;
 import com.labidi.wafa.secondchance.Entities.User;
+import com.labidi.wafa.secondchance.Utils.LocalFiles;
 
 import java.util.ArrayList;
 
@@ -36,7 +38,7 @@ public class CommentActivity extends Activity {
     RecyclerView comments;
     @BindView(R.id.button)
     Button button;
-
+    LocalFiles localFiles;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +58,9 @@ public class CommentActivity extends Activity {
         } else {
             commentaire = new Commentaire();
             commentaire.setIdPost(getIntent().getIntExtra("idPost", 0));
-            commentaire.setIdUser(User.Id);
+            localFiles = new LocalFiles(getSharedPreferences(LocalFiles.USER_FILE, Context.MODE_PRIVATE));
+            int idUSer  = localFiles.getInt(LocalFiles.Id);
+            commentaire.setIdUser(idUSer);
             commentaires = new ArrayList<>();
             getComments(commentaire.getIdPost());
 
@@ -94,10 +98,17 @@ public class CommentActivity extends Activity {
         RetrofitClient retrofitClient = new RetrofitClient();
         UserService.Commentaire getComments = retrofitClient.getRetrofit().create(UserService.Commentaire.class);
         Call<ConfirmationResponse> call = getComments.comment(commentaire);
+        User user = new User() ;
+        user.setId(localFiles.getInt(LocalFiles.Id));
+        user.setFirstName(localFiles.getString(LocalFiles.FirstName));
+        user.setLastName(localFiles.getString(LocalFiles.LastName));
+        user.setImg_profile(localFiles.getString(LocalFiles.imgprofile));
+        commentaire.setUser(user);
         call.enqueue(new Callback<ConfirmationResponse>() {
             @Override
             public void onResponse(Call<ConfirmationResponse> call, Response<ConfirmationResponse> response) {
-
+                ((CommentAdapter)comments.getAdapter()).getItems().add(commentaire) ;
+                comments.getAdapter().notifyDataSetChanged();
             }
 
             @Override

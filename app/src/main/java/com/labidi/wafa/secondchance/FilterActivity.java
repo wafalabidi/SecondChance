@@ -5,15 +5,16 @@ import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -22,19 +23,21 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.webkit.PermissionRequest;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.labidi.wafa.secondchance.API.RetrofitClient;
+import com.labidi.wafa.secondchance.API.UserService;
+import com.labidi.wafa.secondchance.Entities.Post;
 import com.labidi.wafa.secondchance.Fragment.EditImageFragment;
 import com.labidi.wafa.secondchance.Fragment.FiltersListFragment;
+import com.labidi.wafa.secondchance.Fragment.PublishFragment;
+import com.labidi.wafa.secondchance.Utils.LocalFiles;
 import com.zomato.photofilters.imageprocessors.Filter;
 import com.zomato.photofilters.imageprocessors.subfilters.BrightnessSubFilter;
 import com.zomato.photofilters.imageprocessors.subfilters.ContrastSubFilter;
@@ -45,6 +48,11 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Response;
+import retrofit2.http.POST;
 
 public class FilterActivity extends AppCompatActivity implements FiltersListFragment.FiltersListFragmentListener, EditImageFragment.EditImageFragmentListener {
 
@@ -153,7 +161,7 @@ public class FilterActivity extends AppCompatActivity implements FiltersListFrag
 
         adapter.addFragment(filtersListFragment, getString(R.string.tab_filters));
         adapter.addFragment(editImageFragment, getString(R.string.tab_edit));
-
+        adapter.addFragment(new PublishFragment(),"Say Something");
         viewPager.setAdapter(adapter);
     }
 
@@ -281,8 +289,7 @@ public class FilterActivity extends AppCompatActivity implements FiltersListFrag
                 Log.e("Not NUll URI ", uri.toString());
 
                 PublishActivity.openWithPhotoUri(this, uri);
-            }
-            else {
+            } else {
                 Log.e("Uri", uri.toString());
             }
             return true;
@@ -380,4 +387,43 @@ public class FilterActivity extends AppCompatActivity implements FiltersListFrag
             return null;
         }
     }
+
+    private void Upload(Post post) {
+        RetrofitClient retrofitClient = new RetrofitClient();
+        UserService.insertPost insertPost = retrofitClient.getRetrofit().create(UserService.insertPost.class);
+        Call<ResponseBody> call = insertPost.insertPost(
+                post.getSaying(),
+                post.getImage(),
+                post.getIdUser(),
+                post.getTitle()
+        );
+        call.enqueue(new retrofit2.Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    Intent intent = new Intent(FilterActivity.this, MainActivity.class);
+                    intent.setAction(MainActivity.ACTION_SHOW_LOADING_ITEM);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("Upload Error", t.getMessage());
+            }
+        });
+    }
+
+    public void publish(String saying) {
+        Post post = new Post();
+        post.convertImageToString(finalImage);
+        long timesMill = System.currentTimeMillis();
+        String title = "alpha" + timesMill;
+        post.setTitle(title);
+        post.setSaying(saying);
+        LocalFiles localFiles = new LocalFiles(getSharedPreferences(LocalFiles.USER_FILE , Context.MODE_PRIVATE));
+        post.setIdUser(localFiles.getInt(LocalFiles.Id));
+        Upload(post);
+    }
+
 }

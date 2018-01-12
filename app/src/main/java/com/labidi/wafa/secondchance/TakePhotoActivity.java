@@ -26,7 +26,6 @@ import android.view.animation.Interpolator;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.commonsware.cwac.camera.CameraHost;
@@ -73,6 +72,9 @@ public class TakePhotoActivity extends BaseActivity implements RevealBackgroundV
     Button btnTakePhoto;
     @BindView(R.id.btnBack)
     ImageButton btnBack;
+    @BindView(R.id.swictchCamera)
+    ImageButton swictchCamera ;
+    static Boolean isUsingFrontCamera = true ;
 
     private boolean pendingIntro;
     private int currentState;
@@ -118,6 +120,10 @@ public class TakePhotoActivity extends BaseActivity implements RevealBackgroundV
         cancelButton.setOnClickListener(v->{
             Intent intent = new Intent(TakePhotoActivity.this , MainActivity.class);
             startActivity(intent);
+        });
+        swictchCamera.setOnClickListener(e->{
+            isUsingFrontCamera =! isUsingFrontCamera;
+            this.RestartActivity();
         });
     }
 
@@ -232,6 +238,12 @@ public class TakePhotoActivity extends BaseActivity implements RevealBackgroundV
         }
 
         @Override
+        protected boolean useFrontFacingCamera() {
+
+            return isUsingFrontCamera;
+        }
+
+        @Override
         public Camera.Size getPictureSize(PictureTransaction xact, Camera.Parameters parameters) {
             return previewSize;
         }
@@ -270,17 +282,19 @@ public class TakePhotoActivity extends BaseActivity implements RevealBackgroundV
     @Override
     public void onBackPressed() {
         if (currentState == STATE_SETUP_PHOTO) {
-            int[] startingLocation = new int[2];
-            cameraView.getLocationOnScreen(startingLocation);
-            startingLocation[0] += cameraView.getWidth() / 2;
-            TakePhotoActivity.startCameraFromLocation(startingLocation, this);
-            overridePendingTransition(0, 0);
+            RestartActivity();
         }else {
             Intent intent = new Intent(this , MainActivity.class) ;
             startActivity(intent);
         }
     }
-
+    private  void RestartActivity(){
+        int[] startingLocation = new int[2];
+        swictchCamera.getLocationOnScreen(startingLocation);
+        startingLocation[0] += swictchCamera.getWidth() / 2;
+        TakePhotoActivity.startCameraFromLocation(startingLocation, this);
+        overridePendingTransition(0, 0);
+    }
     private void updateState(int state) {
         currentState = state;
         if (currentState == STATE_TAKE_PHOTO) {

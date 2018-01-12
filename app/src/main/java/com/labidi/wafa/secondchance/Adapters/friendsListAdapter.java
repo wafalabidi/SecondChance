@@ -3,12 +3,14 @@ package com.labidi.wafa.secondchance.Adapters;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.labidi.wafa.secondchance.API.RetrofitClient;
 import com.labidi.wafa.secondchance.Entities.Demande;
@@ -31,6 +33,7 @@ public class friendsListAdapter extends RecyclerView.Adapter<friendsListAdapter.
     public friendsListAdapter(Context context, ArrayList<Demande> demandes) {
         this.demandes = demandes;
         this.context = context;
+        Log.e("URL", RetrofitClient.BASE_URL );
 
     }
 
@@ -45,12 +48,13 @@ public class friendsListAdapter extends RecyclerView.Adapter<friendsListAdapter.
     @Override
     public void onBindViewHolder(Holder holder, int position) {
         Demande demande = demandes.get(position);
-        if (demande != null) {
-            if (!TextUtils.isEmpty(demande.getSender().getImg_profile())) {
-                Picasso.with(context).load(RetrofitClient.BASE_URL+demande.getSender().getImg_profile()).into(holder.image);
-            }
-            holder.nom.setText(demande.getSender().getFirstName() + "  " + demande.getSender().getLastName());
+        Log.e("URL", RetrofitClient.BASE_URL + demande.getSender().getImg_profile());
+
+        Toast.makeText(context, RetrofitClient.BASE_URL + demande.getSender().getImg_profile(), Toast.LENGTH_SHORT).show();
+        if (!TextUtils.isEmpty(demande.getSender().getImg_profile())) {
+            Picasso.with(context).load(RetrofitClient.BASE_URL + demande.getSender().getImg_profile()).into(holder.image);
         }
+        holder.nom.setText(demande.getSender().getFirstName() + "  " + demande.getSender().getLastName());
     }
 
     @Override
