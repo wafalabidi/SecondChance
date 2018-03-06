@@ -14,7 +14,7 @@
         android:background="@color/black">
 
     </FrameLayout>
-    <com.labidi.wafa.secondchance.Tools.CustomViewPager
+    <com.esprit.secondchance.Tools.CustomViewPager
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/viewpager"/>

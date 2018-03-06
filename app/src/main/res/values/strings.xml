@@ -12,7 +12,7 @@
     <string name="password">Password</string>
     <string name="name">Name</string>
     <string name="lastname">Last name</string>
-    <string name="email">Email</string>
+
     <string name="birthday">Birthday</string>
     <string name="already_have_account">Already have an account?</string>
     <string name="reset_password">Reset Password</string>
@@ -73,7 +73,7 @@
         <item>Chubby </item>
         <item>Slim </item>
     </string-array>
-    <string name="facebook_app_id">150711968906309</string>
+    <string name="facebook_app_id">271998153332076</string>
     <string name="fb_login_protocol_scheme">fb150711968906309</string>
     <string name="error_message">Please accept terms and conditions first.</string>
     <string name="enter_descprition">enter a ddescprtion</string>
@@ -96,5 +96,19 @@
     <string name="action_open">OPEN</string>
     <string name="say_something">Say something</string>
     <string name="publish">Publish</string>
+    <string name="pending_request">Pending Request</string>
+    <string name="jump_to_profil">Jump To profil</string>
+    <string name="share_photo">SHARE PHOTO</string>
+    <string name="cancel">CANCEL</string>
+    <string name="share">Share</string>
+    <string name="are_you_sure_you_wanna_delete_this_post">Are you sure you wanna delete this post ?</string>
+    <string name="delete">Delete</string>
+    <string name="unfollow">Unfollow</string>
+    <string name="city">city</string>
+    <string name="country">country</string>
+    <string name="studies">studies</string>
+    <string name="work">work</string>
+    <string name="description">Description</string>
+    <string name="email">Email</string>
 
 </resources>

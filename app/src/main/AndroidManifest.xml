@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.labidi.wafa.secondchance">
+    package="com.esprit.secondchance">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -26,27 +26,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <provider
-            android:name=".Utils.SearchQueryProvider"
-            android:authorities="com.labidi.wafa.secondchance.Utils.SearchQueryProvider" />
+            android:name="com.esprit.secondchance.Utils.SearchQueryProvider"
+            android:authorities="com.esprit.secondchance.Utils.SearchQueryProvider" />
 
         <activity
-            android:name=".LoginActivity"
-            android:screenOrientation="sensorPortrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:name="com.esprit.secondchance.LoginActivity"
+            android:screenOrientation="sensorPortrait" />
         <activity
-            android:name=".TakePhotoActivity"
+            android:name="com.esprit.secondchance.TakePhotoActivity"
             android:theme="@style/AppTheme.TransparentActivity.FullScreen" />
-        <activity android:name=".HomeActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name="com.esprit.secondchance.MainActivity" />
         <activity
-            android:name=".SearchPeoplesActivity"
+            android:name="com.esprit.secondchance.SearchPeoplesActivity"
             android:launchMode="singleTop"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName="com.esprit.secondchance.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -58,7 +52,7 @@
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.labidi.wafa.secondchance"
+            android:authorities="com.esprit.secondchance"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -67,30 +61,39 @@
         </provider>
 
         <activity
-            android:name=".UserProfileActivity"
+            android:name="com.esprit.secondchance.UserProfileActivity"
             android:exported="true"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName="com.esprit.secondchance.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".PendingFriendRequestActivity"
-            android:parentActivityName=".MainActivity" />
+            android:name="com.esprit.secondchance.PendingFriendRequestActivity"
+            android:parentActivityName="com.esprit.secondchance.MainActivity" />
         <activity
-            android:name=".FriendsListActivity"
-            android:parentActivityName=".MainActivity" />
+            android:name="com.esprit.secondchance.FriendsListActivity"
+            android:parentActivityName="com.esprit.secondchance.MainActivity" />
 
         <service
-            android:name=".Utils.FriendsWatcherService"
+            android:name="com.esprit.secondchance.Utils.FriendsWatcherService"
             android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
-        <activity android:name=".FirstLoginActivity" />
-        <activity android:name=".PublishActivity" />
+        <activity android:name="com.esprit.secondchance.FirstLoginActivity" />
         <activity
-            android:name=".CommentActivity"
-            android:parentActivityName=".MainActivity"
+            android:name="com.esprit.secondchance.PublishActivity"
+            android:theme="@style/SplashTheme">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.esprit.secondchance.CommentActivity"
+            android:parentActivityName="com.esprit.secondchance.MainActivity"
             android:theme="@android:style/Theme.Material.Light.Dialog.NoActionBar" />
 
         <meta-data
@@ -98,7 +101,7 @@
             android:value="@string/facebook_app_id" />
 
         <activity
-            android:name=".FilterActivity"
+            android:name="com.esprit.secondchance.FilterActivity"
             android:theme="@style/AppTheme" />
     </application>
 

@@ -1,4 +1,5 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <group android:id="@+id/menu_group_1">
         <item
             android:id="@+id/menu_search_peoples"
@@ -11,24 +12,15 @@
         <item
             android:id="@+id/menu_pending_request"
             android:icon="@drawable/ic_request"
-            android:title="Pending Request" />
-        <item
-            android:id="@+id/menu_popular"
-            android:icon="@drawable/ic_global_menu_popular"
-            android:title="Popular" />
-        <item
-            android:id="@+id/menu_photos_nearby"
-            android:icon="@drawable/ic_global_menu_nearby"
-            android:title="Photos Nearby" />
-        <item
-            android:id="@+id/menu_photo_you_liked"
-            android:icon="@drawable/ic_global_menu_likes"
-            android:title="Photos You've Liked" />
+            android:title="Pending Request"
+            app:actionViewClass="android.widget.TextView" />
+
+
     </group>
     <group android:id="@+id/menu_group_2">
         <item
-            android:id="@+id/menu_settings"
-            android:title="Settings" />
+            android:id="@+id/menu_log_out"
+            android:title="Log out" />
         <item
             android:id="@+id/menu_about"
             android:title="About" />

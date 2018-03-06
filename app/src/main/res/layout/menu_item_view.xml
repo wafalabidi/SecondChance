@@ -5,4 +5,4 @@
     android:layout_height="?attr/actionBarSize"
     android:id="@+id/inbox"
     android:background="@drawable/btn_default_light"
-    android:src="@drawable/paperplane" />
+    android:src="@drawable/ic_hm" />

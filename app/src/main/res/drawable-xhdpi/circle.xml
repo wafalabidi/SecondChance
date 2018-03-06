@@ -5,5 +5,5 @@
         <!--android:width="1px"-->
         <!--android:color="@color/colorPrimary" />-->
     <solid
-        android:color="@color/colorPrimary"  />
+        android:color="@color/pinkk"  />
 </shape>

@@ -6,8 +6,6 @@
       <module fileurl="file://C:\Users\wafel\Music\SecondChance\SecondChance.iml" filepath="C:\Users\wafel\Music\SecondChance\SecondChance.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/diagonallayout/diagonallayout.iml" filepath="$PROJECT_DIR$/diagonallayout/diagonallayout.iml" />
-      <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
-      <module fileurl="file://$PROJECT_DIR$/libraryd/libraryd.iml" filepath="$PROJECT_DIR$/libraryd/libraryd.iml" />
     </modules>
   </component>
 </project>
