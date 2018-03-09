@@ -6,6 +6,8 @@
     android:layout_height="?attr/actionBarSize"
     android:background="@color/rose"
     app:elevation="@dimen/default_elevation"
+    app:title="@string/app_name"
+    app:titleTextColor="@color/white"
     app:layout_scrollFlags="scroll|enterAlways"
     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
@@ -14,16 +16,15 @@
         android:layout_height="match_parent"
         android:gravity="end|center_horizontal"
         android:orientation="horizontal">
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:backgroundTint="@android:color/transparent"
-            android:onClick="ResearchClicked"
-            android:src="@drawable/ic_search"
-            android:tint="@color/white"
-            />
-
+        <!--
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:backgroundTint="@android:color/transparent"
+                android:onClick="ResearchClicked"
+                android:src="@drawable/ic_search"
+                android:tint="@color/white" />
+          -->
 
     </LinearLayout>
 </android.support.v7.widget.Toolbar>
