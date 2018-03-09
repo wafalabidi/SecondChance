@@ -110,5 +110,6 @@
     <string name="work">work</string>
     <string name="description">Description</string>
     <string name="email">Email</string>
+    <string name="this_is_an_open_beta_of_the_upcoming_social_meeting_app">This is an open beta of the upcoming social meeting app</string>
 
 </resources>

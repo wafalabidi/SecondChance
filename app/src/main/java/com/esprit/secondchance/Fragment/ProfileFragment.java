@@ -101,6 +101,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, P
 
         if (localFiles.getString(LocalFiles.imgprofile) != "") {
             Picasso.with(getActivity()).load(localFiles.getString(LocalFiles.imgprofile)).into(cim_img_profile);
+
         } else {
             cim_img_profile.setImageResource(R.drawable.couple);
         }
@@ -270,7 +271,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, P
 
     public String convertImageToString(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
         byte[] imageBytes = byteArrayOutputStream.toByteArray();
         return android.util.Base64.encodeToString(imageBytes, android.util.Base64.DEFAULT);
 

@@ -2,12 +2,15 @@ package com.esprit.secondchance;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Toolbar;
 
 import com.esprit.secondchance.API.RetrofitClient;
 import com.esprit.secondchance.API.UserService;
@@ -26,10 +29,11 @@ import retrofit2.Response;
  * Created by Wafa on 11/12/2017.
  */
 
-public class UserProfileActivity extends BaseDrawerActivity {
+public class UserProfileActivity extends AppCompatActivity {
     private boolean pendingIntroAnimation = true;
 
     private static final int ANIM_DURATION_TOOLBAR = 300;
+  //  Toolbar toolbar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,6 +44,8 @@ public class UserProfileActivity extends BaseDrawerActivity {
         LocalFiles localFiles = new LocalFiles(getSharedPreferences(LocalFiles.USER_FILE, Context.MODE_PRIVATE));
         if (idUser == 0 || idUser == localFiles.getInt(LocalFiles.Id)) {
             commitFragment(new ProfileFragment());
+           // toolbar.setTitleTextColor(Color.BLACK);
+            //toolbar.setTitle(localFiles.getInt(LocalFiles.FirstName));
         } else {
             getUser(idUser);
 
@@ -74,6 +80,8 @@ public class UserProfileActivity extends BaseDrawerActivity {
                     PrivateProfileFragment privateProfileFragment = new PrivateProfileFragment();
                     privateProfileFragment.setCurrentUser(user);
                     commitFragment(privateProfileFragment);
+//                    toolbar.setTitle(user.getFirstName());
+
 
                 }
 
@@ -102,7 +110,7 @@ public class UserProfileActivity extends BaseDrawerActivity {
     }
 
     private void startIntroAnimation() {
-
+/*
         int actionbarSize = Util.dpToPx(56);
         getToolbar().setTranslationY(-actionbarSize);
         getInboxMenuItem().getActionView().setTranslationY(-actionbarSize);
@@ -117,7 +125,7 @@ public class UserProfileActivity extends BaseDrawerActivity {
                 .setDuration(ANIM_DURATION_TOOLBAR)
                 .setStartDelay(500)
 
-                .start();
+                .start();*/
 
     }
 

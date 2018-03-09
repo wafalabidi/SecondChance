@@ -1,6 +1,7 @@
 package com.esprit.secondchance.Fragment;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -51,7 +52,7 @@ public class PrivateProfileFragment extends Fragment {
     private PictureListFragment pictureListFragment;
     private LocalFiles localFiles;
     private ArrayList<Demande> friendList;
-    private InfoProfileFragment infoProfileFragment ;
+    private InfoProfileFragment infoProfileFragment;
     TabLayout tabLayout;
 
     public void setCurrentUser(User currentUser) {
@@ -63,8 +64,8 @@ public class PrivateProfileFragment extends Fragment {
         tv_work.setText(currentUser.getLastName());
         Log.e("current SUer", currentUser.getImg_couverture());
         Log.e("current SUer", currentUser.getImg_profile());
-        Picasso.with(getActivity()).load(currentUser.getImg_profile()).placeholder(R.drawable.couple).into(cim_img_profile);
-        Picasso.with(getActivity()).load(currentUser.getImg_couverture()).placeholder(R.drawable.couverture).into(couverture_pic);
+        Picasso.with(getActivity()).load(currentUser.getImg_profile()).placeholder(R.drawable.couple).config(Bitmap.Config.ARGB_4444).into(cim_img_profile);
+        Picasso.with(getActivity()).load(currentUser.getImg_couverture()).config(Bitmap.Config.ARGB_4444).placeholder(R.drawable.couverture).into(couverture_pic);
 
     }
 
@@ -79,18 +80,19 @@ public class PrivateProfileFragment extends Fragment {
         cim_img_profile = view.findViewById(R.id.avatar);
         vpProfil = view.findViewById(R.id.vpProfil);
         bFollowProfil = view.findViewById(R.id.bFollowProfil);
+        bFollowProfil.setVisibility(View.GONE);
         tabLayout = view.findViewById(R.id.tabs);
         bFollowProfil.setOnClickListener(v -> {
             Toast.makeText(getActivity(), "here", Toast.LENGTH_SHORT).show();
         });
         Init();
         InitPager();
-        checkInvitation();
+        //checkInvitation();
         return view;
     }
 
     public void InitPager() {
-        infoProfileFragment = new InfoProfileFragment() ;
+        infoProfileFragment = new InfoProfileFragment();
         infoProfileFragment.setUser(currentUser);
         pictureListFragment = new PictureListFragment();
         pictureListFragment.setCurrentUser(currentUser);
@@ -163,7 +165,7 @@ public class PrivateProfileFragment extends Fragment {
 
                     });
                 }
-                ProgressDialogAlternative.ShowDIalog(getActivity());
+                ProgressDialogAlternative.Dissmiss();
 
             }
 

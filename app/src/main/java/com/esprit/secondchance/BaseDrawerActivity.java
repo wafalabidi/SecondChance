@@ -1,6 +1,7 @@
 package com.esprit.secondchance;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +11,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -150,14 +152,14 @@ public class BaseDrawerActivity extends BaseActivity implements NavigationView.O
             @Override
             public void onResponse(Call<DemandesResponse> call, Response<DemandesResponse> response) {
                 if (response.body().getDemandes() != null && response.body().getDemandes().size() > 0) {
-                    demandes = (ArrayList<Demande>) response.body().getDemandes();
+                /*    demandes = (ArrayList<Demande>) response.body().getDemandes();
                     String string = "" + demandes.size();
                     TextView textView = (TextView) vNavigation.getMenu().findItem(R.id.menu_pending_request).getActionView();
                     textView.setText(string);
                     textView.setGravity(Gravity.CENTER_VERTICAL);
                     //textView.setPadding(0,55,0,0);
                     textView.setTextColor(getResources().getColor(R.color.darkRed));
-
+*/
                 }
             }
 
@@ -170,7 +172,7 @@ public class BaseDrawerActivity extends BaseActivity implements NavigationView.O
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.menu_search_peoples) {
+       /* if (item.getItemId() == R.id.menu_search_peoples) {
             Intent intent = new Intent(this, SearchPeoplesActivity.class);
             startActivity(intent);
 
@@ -180,11 +182,19 @@ public class BaseDrawerActivity extends BaseActivity implements NavigationView.O
         } else if (item.getItemId() == R.id.menu_friends) {
             Intent intent = new Intent(this, FriendsListActivity.class);
             startActivity(intent);
-        } else if (item.getItemId() == R.id.menu_log_out) {
+        } else */
+        if (item.getItemId() == R.id.menu_log_out) {
             LocalFiles.LogOut(getSharedPreferences(LocalFiles.USER_FILE, Context.MODE_PRIVATE));
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
+        } else if (item.getItemId() == R.id.menu_about) {
+            AlertDialog alertDialog = new AlertDialog.Builder(BaseDrawerActivity.this).create();
+            alertDialog.setTitle("Second Chance");
+            alertDialog.setMessage("Developped and powered by DotSoft");
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    (dialog, which) -> dialog.dismiss());
+            alertDialog.show();
         }
-        return false;
+        return true;
     }
 }
