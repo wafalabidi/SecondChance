@@ -4,23 +4,32 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="@color/purple_500"
+    android:background="@color/rose"
     app:elevation="@dimen/default_elevation"
     app:layout_scrollFlags="scroll|enterAlways"
-    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    app:title="@string/app_name"
+    app:titleTextColor="@color/white"
+    >
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/search"
-        android:backgroundTint="@android:color/transparent"
-        android:onClick="ResearchClicked"
-        android:textColorHint="@color/white_transparent" />
+    <!-- <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:gravity="end|center_horizontal"
+         android:orientation="horizontal">
+         <TextView
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content" />
 
-    <ImageView
-        android:id="@+id/ivLogo"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:scaleType="center" />
+         <ImageButton
+             android:layout_width="wrap_content"
+             android:layout_height="match_parent"
+             android:backgroundTint="@android:color/transparent"
+             android:onClick="ResearchClicked"
+             android:src="@drawable/ic_search"
+             android:tint="@color/white"
+             />
+
+
+    </LinearLayout>-->
 </android.support.v7.widget.Toolbar>

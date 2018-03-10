@@ -4,16 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <GridView
+    <ListView
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
         android:paddingTop="8dp"
         android:id="@+id/gvfriendsList"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:columnWidth="150dp"
-        android:horizontalSpacing="20dp"
-        android:numColumns="2"
+        android:horizontalSpacing="10dp"
+        android:numColumns="1"
         android:verticalSpacing="10dp"
         tools:listitem="@layout/gr_friends_list" />
 </android.support.constraint.ConstraintLayout>

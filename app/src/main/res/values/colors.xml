@@ -28,6 +28,8 @@
 
 
     <color name="divider">#8c9e9e9e</color>
+    <color name="pinkk">#ba2d65</color>
+    <color name="rose">#1B9B8D</color>
 
 
     <color name="dark_text">#1D1D26</color>
@@ -50,6 +52,5 @@
     <color name="filter_label_selected">#221F20</color>
     <color name="text_like_counter">#2b5a83</color>
     <color name="grey">#bfbfbf</color>
-    <color name="link_blue">#4d94ff</color>
     <color name="darkRed">#cc0000</color>
 </resources>

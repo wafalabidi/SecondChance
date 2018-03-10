@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_feed_top" />
 
-        <com.labidi.wafa.secondchance.view.SquaredFrameLayout
+        <com.esprit.secondchance.view.SquaredFrameLayout
             android:id="@+id/vImageRoot"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -51,13 +51,13 @@
                 android:layout_height="match_parent"
                 android:background="#77ffffff" />
 
-            <com.labidi.wafa.secondchance.view.SendingProgressView
+            <com.esprit.secondchance.view.SendingProgressView
                 android:id="@+id/vSendingProgress"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:layout_gravity="center" />
 
-        </com.labidi.wafa.secondchance.view.SquaredFrameLayout>
+        </com.esprit.secondchance.view.SquaredFrameLayout>
 
         <ImageView
             android:id="@+id/ivFeedBottom"

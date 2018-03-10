@@ -16,6 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/userProfilePic"
             android:layout_height="50dp"
@@ -30,11 +31,14 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Please Work"
-                android:textSize="10sp"
+                android:textSize="15sp"
                 android:layout_marginLeft="20dp"
                 android:textColor="@color/black" />
         </LinearLayout>
-        <com.labidi.wafa.secondchance.view.SquaredFrameLayout
+        <LinearLayout
+            android:layout_width="10dp"
+            android:layout_height="10dp"></LinearLayout>
+        <com.esprit.secondchance.view.SquaredFrameLayout
             android:id="@+id/vImageRoot"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -60,7 +64,7 @@
                 android:src="@drawable/ic_heart_outline_white"
                 android:visibility="invisible" />
 
-        </com.labidi.wafa.secondchance.view.SquaredFrameLayout>
+        </com.esprit.secondchance.view.SquaredFrameLayout>
 
         <TextView
             android:layout_marginLeft="10dp"

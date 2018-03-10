@@ -12,7 +12,6 @@ import com.fivehundredpx.greedolayout.GreedoLayoutSizeCalculator.SizeCalculatorD
  * Created by Julian Villella on 15-08-24.
  */
 
-// TODO: When measuring children we can likely pass getContentWidth() as their widthUsed
 
 public class GreedoLayoutManager extends RecyclerView.LayoutManager {
     private static final String TAG = GreedoLayoutManager.class.getSimpleName();
@@ -23,7 +22,6 @@ public class GreedoLayoutManager extends RecyclerView.LayoutManager {
     // An invalid scroll position value
     static final int INVALID_SCROLL_POSITION = -1;
 
-    // TODO: Can we do away with this?
     private enum Direction { NONE, UP, DOWN }
 
     // First (top-left) position visible at any point
@@ -382,7 +380,6 @@ public class GreedoLayoutManager extends RecyclerView.LayoutManager {
         final View topLeftView = getChildAt(0);
         final View bottomRightView = getChildAt(getChildCount() - 1);
         int pixelsFilled = getContentHeight();
-        // TODO: Split into methods, or a switch case?
         if (dy > 0) {
             boolean isLastChildVisible = (mFirstVisiblePosition + getChildCount()) >= getItemCount();
 

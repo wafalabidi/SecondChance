@@ -32,7 +32,7 @@
         android:gravity="center_vertical"
         android:padding="25dp">
 
-        <com.labidi.wafa.secondchance.customfonts.MyTextView
+        <com.esprit.secondchance.customfonts.MyTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/sign_up"
@@ -62,7 +62,7 @@
                 android:layout_marginRight="20dp"
                 android:src="@drawable/ic_user" />
 
-            <com.labidi.wafa.secondchance.customfonts.MyEditText
+            <com.esprit.secondchance.customfonts.MyEditText
                 android:id="@+id/firstname_edittext"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -73,6 +73,7 @@
                 android:hint="@string/name"
                 android:singleLine="true"
                 android:textColor="@color/white"
+                android:capitalize="words"
                 android:textColorHint="@color/light_text"
                 android:textSize="@dimen/text_size_medium" />
 
@@ -96,12 +97,13 @@
                 android:layout_marginRight="20dp"
                 android:src="@drawable/ic_user" />
 
-            <com.labidi.wafa.secondchance.customfonts.MyEditText
+            <com.esprit.secondchance.customfonts.MyEditText
                 android:id="@+id/username_edittext"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="20dp"
+                android:capitalize="words"
                 android:layout_toRightOf="@+id/user_icon1"
                 android:background="@android:color/transparent"
                 android:hint="@string/lastname"
@@ -130,7 +132,7 @@
                 android:layout_marginRight="20dp"
                 android:src="@drawable/ic_email" />
 
-            <com.labidi.wafa.secondchance.customfonts.MyEditText
+            <com.esprit.secondchance.customfonts.MyEditText
                 android:id="@+id/email_edittext"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -165,7 +167,7 @@
                 android:layout_marginRight="20dp"
                 android:src="@drawable/ic_password" />
 
-            <com.labidi.wafa.secondchance.customfonts.MyEditText
+            <com.esprit.secondchance.customfonts.MyEditText
                 android:id="@+id/password_edittext"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -202,7 +204,7 @@
                 android:src="@drawable/ic_birthday"
                 android:clickable="false"/>
 
-            <com.labidi.wafa.secondchance.customfonts.MyTextView
+            <com.esprit.secondchance.customfonts.MyTextView
                 android:id="@+id/birthday_edittext"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -232,69 +234,6 @@
                 android:layout_alignParentBottom="true"
                 android:background="@color/divider" />
         </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/gender_layout"
-            android:layout_width="match_parent"
-            android:layout_height="50dp">
-
-            <RadioGroup
-                android:id="@+id/rd"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    >
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="20dp"
-                         />
-
-                    <android.support.v7.widget.AppCompatRadioButton
-                        android:id="@+id/br_women"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="40dp"
-                        android:onClick="onRadioButtonClicked"
-                        android:shadowColor="@color/white"
-                        android:textColor="@color/white"
-                        android:text="@string/female" />
-                </RelativeLayout>
-                <RelativeLayout
-                    android:layout_marginLeft="100dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    >
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="20dp"
-                        android:id="@+id/imageView3" />
-
-                    <android.support.v7.widget.AppCompatRadioButton
-                        android:id="@+id/br_man"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:layout_alignParentTop="true"
-                        android:layout_alignStart="@+id/imageView3"
-                        android:onClick="onRadioButtonClicked"
-                        android:text="@string/male"
-                        android:textColor="@color/white"/>
-                </RelativeLayout>
-
-            </RadioGroup>
-
-
-        </RelativeLayout>
     </LinearLayout>
 
     <RelativeLayout
@@ -302,7 +241,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_above="@+id/signin_layout"
-        android:background="@color/colorAccent">
+        android:background="@color/pinkk">
 
         <LinearLayout
             style="@style/Widget.AppCompat.Button.Borderless"
@@ -314,7 +253,7 @@
             android:id="@+id/signup_button"
             android:text="@string/forgot_password">
 
-            <com.labidi.wafa.secondchance.customfonts.MyTextView
+            <com.esprit.secondchance.customfonts.MyTextView
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:gravity="center"
@@ -339,7 +278,7 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <com.labidi.wafa.secondchance.customfonts.MyTextView
+            <com.esprit.secondchance.customfonts.MyTextView
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:background="@android:color/transparent"
@@ -358,7 +297,7 @@
                 android:onClick="signInClick"
                 android:text="@string/forgot_password">
 
-                <com.labidi.wafa.secondchance.customfonts.MyTextView
+                <com.esprit.secondchance.customfonts.MyTextView
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:gravity="center"

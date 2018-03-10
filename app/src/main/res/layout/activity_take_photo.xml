@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.labidi.wafa.secondchance.view.RevealBackgroundView
+    <com.esprit.secondchance.view.RevealBackgroundView
         android:id="@+id/vRevealBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
@@ -40,11 +40,12 @@
                     android:layout_weight="1" />
 
                 <ImageButton
+                    android:id="@+id/openGqllery"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_marginLeft="24dp"
                     android:background="@drawable/btn_default_light"
-                    android:src="@drawable/ic_grid_on_white_24dp" />
+                    android:src="@drawable/ic_collections_white_24dp" />
 
                 <ImageButton
                     android:id="@+id/swictchCamera"
@@ -91,7 +92,7 @@
 
         </ViewSwitcher>
 
-        <com.labidi.wafa.secondchance.view.SquaredFrameLayout
+        <com.esprit.secondchance.view.SquaredFrameLayout
             android:id="@+id/vPhotoRoot"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -116,7 +117,7 @@
                 android:layout_height="match_parent"
                 android:background="#ffffff"
                 android:visibility="gone" />
-        </com.labidi.wafa.secondchance.view.SquaredFrameLayout>
+        </com.esprit.secondchance.view.SquaredFrameLayout>
 
         <ViewSwitcher
             android:id="@+id/vLowerPanel"
@@ -134,6 +135,7 @@
                     android:layout_weight="1">
 
                     <ImageButton
+                        android:visibility="gone"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:layout_gravity="center"
@@ -160,6 +162,7 @@
                     android:layout_weight="1">
 
                     <ImageButton
+                        android:visibility="gone"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:layout_gravity="center"

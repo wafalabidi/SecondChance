@@ -9,15 +9,6 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/relLayout1">
-
-            <include layout="@layout/snippet_top_editprofiletoolbar"/>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/relLayout1"
             android:id="@+id/relLayout2">
